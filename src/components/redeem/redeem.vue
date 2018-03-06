@@ -1,0 +1,339 @@
+<template>
+  <transition name="slide">
+    <div class="box">
+      <navbar title="申请赎回" @back="back" :showClose="showClose"></navbar>
+      <div class="content">
+        <div class="item_head">
+          <i class="iconfont icon-item"></i>
+          <span class="title">{{currentProduct.name}}</span>
+        </div>
+        <div class="item_body">
+          <div class="item__left">
+            <span>申购份额：</span>
+            <span class="new_data">{{currentProduct.subscribe_money}}万份</span>
+          </div>
+          <div class="item__right">
+            <span>申购时间：</span>
+            <span class="all_data">{{currentProduct.subscribe_time}}</span>
+          </div>
+        </div>
+        <div class="item_foot" v-if="currentProduct.recast_start_time">
+          <span>复投开始：</span>
+          <span>{{currentProduct.recast_start_time}}</span>
+        </div>
+        <div class="item_foot" v-if="currentProduct.recast_end_time">
+          <span>复投结束：</span>
+          <span>{{currentProduct.recast_end_time}}</span>
+        </div>
+        <div class="item_foot" style='display:flex'>
+          <span>结算时间：</span>
+          <div style="flex:1;display:flex;flex-wrap:wrap;">
+            <div style="display:flex;width:50%;" v-for="(t, i) in currentProduct.settlement_time" :key="i">
+              <span style='flex:1'>{{t}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form class="form_area" method="post" @submit.prevent="formSubmit()">
+        <div class="input_area">
+          <div class="input_form">
+            <i class="iconfont icon-redeemed"></i>
+            <span class='unit'>万份</span>
+            <input type="number" v-model="redeemAmt" maxlength="20" placeholder="请输入赎回份额" />
+          </div>
+          <div class="redeem_tip">
+            <i class="iconfont icon-risk"></i>
+            <span>赎回剩余份额必须大于等于100万份</span>
+          </div>
+        </div>
+        <div class="btn_area">
+          <button type="submit" :disabled="btnDisabled" :class="{'weui-btn_disabled': btnDisabled}" class="weui-btn weui-btn_primary"><i :class="{'weui-loading': btnLoading}"></i>{{redeemBtnTxt}}</button>
+        </div>
+      </form>
+      <div class="redeem_rule">
+        <div class="rule_title">
+          <i class="iconfont icon-rule"></i>
+          <span class="tit"> 赎回管理规则</span>
+        </div>
+        <span>1.最小赎回份额为1万份，递增份额为1万份；</span>
+        <span>2.全部赎回时只能赎回申购份额；</span>
+        <span>3.部分赎回时赎回后剩余赎回份额不低于最小申购份额；</span>
+        <span>4.查看赎回记录请到我的页面；</span>
+      </div>
+    </div>
+  </transition>
+</template>
+
+<script type="text/ecmascript-6">
+/* eslint-disable */
+  import $ from 'jquery'
+  import Navbar from 'base/navbar/navbar'
+  import {getUserInfo, getProduct} from 'common/js/storage'
+  import * as API from 'common/js/http'
+  import 'weui'
+  import weui from 'weui.js'
+
+  export default {
+    data() {
+      return {
+        showClose: false,
+        currentProduct: null,
+        redeemAmt: '',
+        redeemBtnTxt: '申请赎回',
+        btnLoading: false,
+        btnDisabled: false
+      }
+    },
+    created() {
+      this.currentProduct = getProduct()
+    },
+    mounted() {
+    },
+    methods: {
+      back() {
+        this.$router.back()
+      },
+      // 提交赎回
+      formSubmit() {
+        let param = this.redeemAmt
+        if (this.checkRedeem(param)) {
+          weui.confirm('您确认要赎回' + param + '万份吗', () => {
+            this.redeemBtnTxt = "申请赎回中"
+            this.btnDisabled = true
+            this.btnLoading = true
+            this.mySubmit(param)
+          }, () => {
+            console.log('已取消')
+          }, {
+            title: '赎回提示'
+          })
+        }
+      },
+      // 校验赎回金额
+      checkRedeem(param) {
+        var amt = param
+        var max = getProduct().subscribe_money
+        if (!amt) {
+          weui.alert('请输入赎回份额', {
+            title: '提示'
+          })
+          return false
+        } else if (amt < 1) {
+          weui.alert('最小赎回份额为1万份', {
+            title: '提示'
+          })
+          return false
+        } else if (amt > max) {
+          weui.alert('赎回份额不能大于申购份额', {
+            title: '提示'
+          })
+          return false
+        } else if (amt % 1 !== 0) {
+          weui.alert('赎回递增份额为1万份', {
+            title: '提示'
+          })
+          return false
+        } else {
+          return true
+        }
+      },
+      mySubmit(param) {
+        var redeemAmt = parseInt(param)
+        var customer_id = getUserInfo().id
+        var subscribe_id = getProduct().subscribe_id
+        $.ajax({
+          type: "POST",
+          url: API.api + '/api/v1/redeem/addRedeem',
+          data: {
+            subscribe_id: subscribe_id,
+            customer_id: customer_id,
+            redeem_money: redeemAmt * 10000
+          },
+          dataType: "jsonp",
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          success: (res) => {
+            if (!res.ret) {
+              weui.toast(res.msg, {
+                duration: 1500
+              })
+              this.redeemBtnTxt = "申请赎回"
+              this.btnDisabled = false
+              this.btnLoading = false
+              return false
+            }
+            weui.toast(res.msg, {
+              duration: 1500
+            })
+            setTimeout(() => {
+              this.redeemBtnTxt = "申请赎回"
+              this.btnDisabled = false
+              this.btnLoading = false
+              this.$router.push({
+                path: '/'
+              })
+            }, 500)
+          },
+          error: (err) => {
+            console.log(err)
+            weui.toast(res.msg, {
+              duration: 1500
+            })
+            this.redeemBtnTxt = "申请赎回"
+            this.btnDisabled = false
+            this.btnLoading = false
+          }
+        })
+      }
+    },
+    components: {
+      Navbar
+    }
+  }
+</script>
+
+<style scoped lang="scss">
+.content {
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  padding:15px 15px 5px;
+  box-sizing:border-box;
+}
+.item_head{
+  position: relative;
+  line-height:30px;
+  padding-bottom:10px;
+}
+.item_head i{
+  color: #ff5251;
+  font-size: 18px;
+}
+.item_head .title{
+  padding-left: 10px;
+  font-size: 18px;
+  color: #212121;
+}
+.item_body{
+  display: flex;
+  line-height: 1.5;
+}
+.item__left,.item__right{
+  flex: 1;
+  color: #333333;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+.new_data,.all_data{
+  font-size: 16px;
+  color: #ff5251;
+  flex: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.item_foot{
+  color: #333333;
+  line-height: 1.5;
+  font-size: 14px;
+  display: flex;
+}
+.form_area{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  padding: 15px 0;
+}
+.input_area{
+  flex:1;
+  padding:0 15px;
+}
+.input_form{
+  position:relative;
+  box-sizing:border-box;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+}
+.input_form i{
+  font-size:18px;
+  position:absolute;
+  left:0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ff5251;
+}
+.input_form .unit{
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ff5251;
+}
+.input_form input{
+  height:50px;
+  line-height:16px;
+  padding:17px 25px;
+  font-size: 16px;
+  flex:1;
+  border-bottom:1px solid #BDBDBD;
+  border-radius: 0;
+  box-sizing: border-box;
+  background: #fff;
+  outline: none;
+}
+.redeem_tip i{
+  font-size: 12px;
+  color: #ff5251;
+  padding: 0 5px;
+}
+.redeem_tip span{
+  font-size: 12px;
+  color: #ff5251;
+}
+.btn_area{
+  margin-top: 30px;
+  padding:0 15px;
+}
+.btn_area .devide{
+  position: relative;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+}
+.btn_area .devide::after{
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  top: 50%;
+  transition: translateY(-50%);
+  border: 1px solid #BDBDBD;
+}
+.redeem_rule{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  padding:15px;
+  box-sizing:border-box;
+}
+.redeem_rule span{
+  line-height: 1.5;
+  color: #666666;
+  font-size: 12px;
+}
+.rule_title{
+  margin-bottom:15px;
+}
+.rule_title i{
+  font-size:20px;
+  color:#ff5251;
+}
+.rule_title .tit{
+  font-size:18px;
+  color:#222;
+}
+</style>

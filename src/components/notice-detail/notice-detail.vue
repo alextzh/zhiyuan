@@ -1,0 +1,77 @@
+<template>
+  <transition name="slide">
+    <div class="m-container">
+      <navbar title="公告详情" @back="back" :showClose="showClose"></navbar>
+      <div class="box">
+        <div class="title"><span>{{curNotice.title}}</span></div>
+        <div class="pub_time"><span>发布时间：{{curNotice.pub_time}}</span></div>
+        <div class="content" v-html="content"></div>
+      </div>
+    </div>
+  </transition>
+</template>
+
+<script type="text/ecmascript-6">
+/* eslint-disable */
+  import Navbar from 'base/navbar/navbar'
+  import {getNotice} from 'common/js/storage'
+
+  export default {
+    data() {
+      return {
+        showClose: false,
+        curNotice: null
+      }
+    },
+    computed: {
+      content() {
+        return this.curNotice.content.trim()
+      }
+    },
+    created() {
+      this.curNotice = getNotice()
+    },
+    mounted() {
+    },
+    methods: {
+      back() {
+        this.$router.back()
+      }
+    },
+    components: {
+      Navbar
+    }
+  }
+</script>
+
+<style scoped lang="scss">
+  .m-container {
+    position: relative;
+    width: 100%;
+    background: #fff;
+  }
+  .box {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:15px;
+    width:100%;
+    box-sizing:border-box;
+  }
+  .title {
+    padding-bottom: 10px;
+  }
+  .title span {
+    font-size: 18px;
+    color: #ff5251;
+  }
+  .pub_time span {
+    font-size: 12px;
+    color: #999999;
+  }
+  .content{
+    font-size: 14px;
+    padding: 10px 0;
+    white-space: pre-wrap;
+  }
+</style>
