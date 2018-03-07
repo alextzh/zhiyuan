@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="m-container">
-      <navbar title="更改方案" :showClose="showClose" @back="back"></navbar>
+      <navbar :title="$t('navigator.plan')" :showClose="showClose" @back="back"></navbar>
       <div class="list">
         <scroll ref="scroll" class="scroll_list"
                 v-if="productPlanList.length > 0"
@@ -114,6 +114,7 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
       this.loading = weui.loading('加载中')
       this.customer_id = getUserInfo().id
     },
@@ -183,7 +184,7 @@
       modifyAction(e) {
         setProduct(e)
         this.$router.push({
-          path: '/modify-plan'
+          path: '/modify-plan/' + this.$i18n.locale
         })
       },
       cancelAction(e) {
@@ -211,7 +212,7 @@
               })
               setTimeout(() => {
                 this.$router.push({
-                  path: '/'
+                  path: '/' + this.$i18n.locale
                 })
               }, 1500)
             },
@@ -297,6 +298,7 @@
     font-size: 14px;
     display: flex;
     align-items: center;
+    width: 50%;
   }
   .new_data,.all_data{
     font-size: 16px;

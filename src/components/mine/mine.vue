@@ -17,55 +17,55 @@
             <div class="weui-grid__icon">
               <img src="./notice.svg" alt="">
             </div>
-            <p class="weui-grid__label">系统公告</p>
+            <p class="weui-grid__label">{{$t('navigator.notice')}}</p>
           </a>
           <a href="javascript:;" class="weui-grid" @click="toPurchase">
             <div class="weui-grid__icon">
               <img src="./shengou.svg" alt="">
             </div>
-            <p class="weui-grid__label">立即申购</p>
+            <p class="weui-grid__label">{{$t('navigator.purchase')}}</p>
           </a>
           <a href="javascript:;" class="weui-grid" @click="toPurchaseRecord">
             <div class="weui-grid__icon">
               <img src="./shengoujilu.svg" alt="">
             </div>
-            <p class="weui-grid__label">申购记录</p>
+            <p class="weui-grid__label">{{$t('navigator.purchaseRecord')}}</p>
           </a>
           <a href="javascript:;" class="weui-grid" @click="toRedeemRecord">
             <div class="weui-grid__icon">
               <img src="./shuhuijilu.svg" alt="">
             </div>
-            <p class="weui-grid__label">赎回记录</p>
+            <p class="weui-grid__label">{{$t('navigator.redeemRecord')}}</p>
           </a>
           <a href="javascript:;" class="weui-grid" @click="toProductPlan" v-if="isShowPlan">
             <div class="weui-grid__icon">
               <img src="./fanganxiugai.svg" alt="">
             </div>
-            <p class="weui-grid__label">更改方案</p>
+            <p class="weui-grid__label">{{$t('navigator.plan')}}</p>
           </a>
           <a href="javascript:;" class="weui-grid" @click="toManagement">
             <div class="weui-grid__icon">
               <img src="./management.svg" alt="">
             </div>
-            <p class="weui-grid__label">合同管理</p>
+            <p class="weui-grid__label">{{$t('navigator.contract')}}</p>
           </a>
           <a href="javascript:;" class="weui-grid" @click="toQuestion">
             <div class="weui-grid__icon">
               <img src="./question.svg" alt="">
             </div>
-            <p class="weui-grid__label">常见问题</p>
+            <p class="weui-grid__label">{{$t('navigator.question')}}</p>
           </a>
           <a href="tel:400-000-6887" class="weui-grid">
             <div class="weui-grid__icon">
               <img src="./dianhua.svg" alt="">
             </div>
-            <p class="weui-grid__label">联系我们</p>
+            <p class="weui-grid__label">{{$t('navigator.contact')}}</p>
           </a>
           <a href="javascript:;" class="weui-grid" @click="toSetting">
             <div class="weui-grid__icon">
               <img src="./shezhi.svg" alt="">
             </div>
-            <p class="weui-grid__label">我的设置 </p>
+            <p class="weui-grid__label">{{$t('navigator.setting')}}</p>
           </a>
         </div>
       </div>
@@ -90,6 +90,12 @@ export default {
     }
   },
   created() {
+    var lang = this.$i18n.locale
+    console.log(this.$i18n.locale)
+    if (lang !== this.$route.params.lang) {
+      let newPath = this.$route.path.substring(0, -2) + lang
+      this.$router.replace(newPath)
+    }
     this.userInfo = getUserInfo()
   },
   mounted() {
@@ -130,42 +136,42 @@ export default {
     },
     toPurchase() {
       this.$router.push({
-        path: '/purchase'
+        path: '/purchase/' + this.$i18n.locale
       })
     },
     toPurchaseRecord() {
       this.$router.push({
-        path: '/purchase-record'
+        path: '/purchase-record/' + this.$i18n.locale
       })
     },
     toRedeemRecord() {
       this.$router.push({
-        path: '/redeem-record'
+        path: '/redeem-record/' + this.$i18n.locale
       })
     },
     toProductPlan() {
       this.$router.push({
-        path: '/product-plan'
+        path: '/product-plan/' + this.$i18n.locale
       })
     },
     toNotice() {
       this.$router.push({
-        path: '/notice'
+        path: '/notice/' + this.$i18n.locale
       })
     },
     toManagement() {
       this.$router.push({
-        path: '/management'
+        path: '/management/' + this.$i18n.locale
       })
     },
     toQuestion() {
       this.$router.push({
-        path: '/question'
+        path: '/question/' + this.$i18n.locale
       })
     },
     toSetting() {
       this.$router.push({
-        path: '/setting'
+        path: '/setting/' + this.$i18n.locale
       })
     }
   }

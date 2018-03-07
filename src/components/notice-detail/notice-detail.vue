@@ -1,10 +1,10 @@
 <template>
   <transition name="slide">
     <div class="m-container">
-      <navbar title="公告详情" @back="back" :showClose="showClose"></navbar>
+      <navbar :title="$t('navigator.noticeDetail')" @back="back" :showClose="showClose"></navbar>
       <div class="box">
         <div class="title"><span>{{curNotice.title}}</span></div>
-        <div class="pub_time"><span>发布时间：{{curNotice.pub_time}}</span></div>
+        <div class="pub_time"><span>{{$t('notice.releaseTime')}}：{{curNotice.pub_time}}</span></div>
         <div class="content" v-html="content"></div>
       </div>
     </div>
@@ -29,6 +29,7 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
       this.curNotice = getNotice()
     },
     mounted() {

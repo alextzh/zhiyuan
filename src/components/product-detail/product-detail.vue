@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="box">
-      <navbar title="产品详情" @back="back" :showClose="showClose"></navbar>
+      <navbar :title="$t('navigator.productDetail')" @back="back" :showClose="showClose"></navbar>
       <div class="content">
         <div class="item_head">
           <i class="iconfont icon-item"></i>
@@ -9,11 +9,11 @@
         </div>
         <div class="item_body">
           <div class="item__left">
-            <span>产品类型：</span>
+            <span>{{$t('purchase.productType')}}：</span>
             <span class="new_data">{{currentProduct.type}}</span>
           </div>
           <div class="item__right">
-            <span>产品状态：</span>
+            <span>{{$t('purchase.productStatus')}}：</span>
             <span class="all_data">{{currentProduct.status}}</span>
           </div>
         </div>
@@ -28,11 +28,11 @@
           </div>
         </div>
         <div class="item_foot" v-if="currentProduct.status !== '操盘中'">
-          <span>申购时间：</span>
+          <span>{{$t('purchase.purchaseTime')}}：</span>
           <span>{{currentProduct.sg_start_time}} <span style="color:#ff5251;">~</span> {{currentProduct.sg_end_time}}</span>
         </div>
         <div class="item_foot">
-          <span>操盘时间：</span>
+          <span>{{$t('purchase.diskTime')}}：</span>
           <span>{{currentProduct.caopan_time}}</span>
         </div>
         <div class="item_foot" style="display: flex;" v-if="currentProduct.describe">
@@ -48,7 +48,7 @@
             <div style="padding: 0 10px;">
               <div class="select_type" v-if="pickerArr.length > 1">
                 <i class="iconfont icon-unfold"></i>
-                <span class="type_title">方案类型：</span>
+                <span class="type_title">{{$t('purchase.schemeType')}}：</span>
                 <input type="text" palceholder="请选择方案类型" @click="selectPlan" readonly :value="curValue" />
               </div>
             </div>
@@ -64,7 +64,7 @@
                 </div>
               </div>
               <div class="item_foot" style='display:flex'>
-                <span>结算时间：</span>
+                <span>{{$t('purchase.settlementTime')}}：</span>
                 <div style="flex:1;display:flex;flex-wrap:wrap;">
                   <div style="display:flex;width:50%;" v-for="(t, i) in currentPlan.settlement_time" :key="i">
                     <span style="flex:1">{{t}}</span>
@@ -81,7 +81,7 @@
             <div style="padding: 0 10px 5px;" v-if="showArr.length > 1">
               <div class="item_body">
                 <div class="item__left">
-                  <span>方案名称：</span>
+                  <span>{{$t('purchase.schemeName')}}：</span>
                   <span class="new_data">{{currentPlan.name}}</span>
                 </div>
                 <div class="item__right">
@@ -90,7 +90,7 @@
                 </div>
               </div>
               <div class="item_foot" style='display:flex'>
-                <span>结算时间：</span>
+                <span>{{$t('purchase.settlementTime')}}：</span>
                 <div style="flex:1;display:flex;flex-wrap:wrap;">
                   <div style="display:flex;width:50%;" v-for="(t, i) in currentPlan.settlement_time" :key="i">
                     <span style="flex:1">{{t}}</span>
@@ -152,6 +152,7 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
       this.currentProduct = getProduct()
       this.customer_id = getUserInfo().id
     },
@@ -336,7 +337,7 @@
               that.btnDisabled = false
               that.btnLoading = false
               that.$router.push({
-                path: '/'
+                path: '/' + that.$i18n.locale
               })
             }, 500)
           },
@@ -390,6 +391,7 @@
   font-size: 14px;
   display: flex;
   align-items: center;
+  width: 50%;
 }
 .new_data,.all_data{
   font-size: 16px;

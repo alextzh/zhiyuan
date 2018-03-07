@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="m-container">
-      <navbar title="产品列表" :showClose="showClose" @back="back"></navbar>
+      <navbar :title="$t('navigator.product')" :showClose="showClose" @back="back"></navbar>
       <div class="list">
         <scroll ref="scroll" class="scroll_list"
                 v-if="productList.length > 0"
@@ -19,11 +19,11 @@
               </div>
               <div class="item_body">
                 <div class="item__left">
-                  <span>产品类型：</span>
+                  <span>{{$t('purchase.productType')}}：</span>
                   <span class="new_data">{{item.type}}</span>
                 </div>
                 <div class="item__right">
-                  <span>产品状态：</span>
+                  <span>{{$t('purchase.productStatus')}}：</span>
                   <span class="all_data" style="color: #D9D6CF;" v-if="item.status === '已发布'">{{item.status}}</span>
                   <span class="all_data" style="color: #FE4C40;" v-if="item.status === '申购中'">{{item.status}}</span>
                   <span class="all_data" style="color: #ADA0A5;" v-if="item.status === '申购结束'">{{item.status}}</span>
@@ -32,15 +32,15 @@
                 </div>
               </div>
               <div class="item_foot" v-if="item.status !== '操盘中'">
-                <span>申购时间：</span>
+                <span>{{$t('purchase.purchaseTime')}}：</span>
                 <span>{{item.sg_start_time}} <span style="color:#ff5251;">~</span> {{item.sg_end_time}}</span>
               </div>
               <div class="item_foot">
-                <span>操盘时间：</span>
+                <span>{{$t('purchase.diskTime')}}：</span>
                 <span>{{item.caopan_time}}</span>
               </div>
               <div class="item_foot" style="display: flex;">
-                <span>结算时间：</span>
+                <span>{{$t('purchase.settlementTime')}}：</span>
                 <div style="flex:1;display:flex;flex-wrap:wrap;">
                   <div style="display:flex;width:50%;" v-for="(t, i) in item.settlement_time" :key="i">
                     <span style='flex:1'>{{t}}</span>
@@ -136,6 +136,7 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
       this.loading = weui.loading('加载中')
       this.pageData.customer_id = getUserInfo().id
     },
@@ -266,7 +267,7 @@
       toDetail(e) {
         setProduct(e)
         this.$router.push({
-          path: '/product-detail'
+          path: '/product-detail/' + this.$i18n.locale
         })
       }
     },
@@ -338,6 +339,7 @@
     font-size: 14px;
     display: flex;
     align-items: center;
+    width: 50%;
   }
   .new_data,.all_data{
     font-size: 16px;

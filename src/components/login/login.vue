@@ -10,11 +10,11 @@
         <div class="input_area">
           <div class="input_form">
             <i class="iconfont icon-phone"></i>
-            <input v-model="user.mobile" maxlength="11" type="number" placeholder="请输入手机号" @focus="onFocus" @blur="onBlur" />
+            <input v-model="user.mobile" maxlength="11" type="number" :placeholder="phoneNumber" @focus="onFocus" @blur="onBlur" />
           </div>
           <div class="input_form">
             <i class="iconfont icon-pwd"></i>
-            <input v-model="user.password" maxlength="20" type="password" placeholder="请输入密码" @focus="onFocus" @blur="onBlur" />
+            <input v-model="user.password" maxlength="20" type="password" :placeholder="userPwd" @focus="onFocus" @blur="onBlur" />
           </div>
         </div>
         <div class="btn_area">
@@ -45,7 +45,6 @@
           password: ''
         },
         interval: null,
-        loginBtnTxt: "登录",
         btnLoading: false,
         btnDisabled: false,
         lng: 0,
@@ -68,6 +67,35 @@
         }]
       }
     },
+    computed: {
+      phoneNumber() {
+        return this.$i18n.t('login.phoneNumber')
+      },
+      userPwd() {
+        return this.$i18n.t('login.password')
+      },
+      loginBtnTxt() {
+        return this.$i18n.t('login.loginBtnTxt')
+      },
+      tip() {
+        return this.$i18n.t('common.tip')
+      },
+      tip1() {
+        return this.$i18n.t('login.tip1')
+      },
+      tip2() {
+        return this.$i18n.t('login.tip2')
+      },
+      tip3() {
+        return this.$i18n.t('login.tip3')
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
+      }
+    },
+    created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
+    },
     methods: {
       onFocus() {
         setTimeout(() => {
@@ -82,7 +110,6 @@
         let param = this.user
         let flag = this.checkMobile(param) && this.checkPwd(param)
         if (flag) {
-          this.loginBtnTxt = "登录中"
           this.btnDisabled = true
           this.btnLoading = true
           this.mySubmit(param)
@@ -93,8 +120,8 @@
         if (mobile.length === 11) {
           return true
         } else {
-          weui.alert('请输入有效的手机号码', {
-            title: '提示'
+          weui.alert(this.tip1, {
+            title: this.tip
           })
           return false
         }
@@ -102,13 +129,13 @@
       checkPwd(param) {
         let pwd = param.password.trim()
         if (pwd.length <= 0) {
-          weui.alert('请输入密码', {
-            title: '提示'
+          weui.alert(this.tip2, {
+            title: this.tip
           })
           return false
         } else if (pwd.length < 6 || pwd.length > 20) {
-          weui.alert('请输入6-20位密码', {
-            title: '提示'
+          weui.alert(this.tip3, {
+            title: this.tip
           })
           return false
         } else {
@@ -134,7 +161,6 @@
               weui.toast(data.msg, {
                 duration: 1500
               })
-              this.loginBtnTxt = "登录"
               this.btnDisabled = false
               this.btnLoading = false
               return false
@@ -168,20 +194,18 @@
               duration: 1500
             })
             setTimeout(() => {
-              this.loginBtnTxt = "登录"
               this.btnDisabled = false
               this.btnLoading = false
               this.$router.push({
-                path: '/'
+                path: '/' + this.$i18n.locale
               })
             }, 500)
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
-            this.loginBtnTxt = "登录"
             this.btnDisabled = false
             this.btnLoading = false
           }

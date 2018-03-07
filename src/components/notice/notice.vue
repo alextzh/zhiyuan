@@ -1,19 +1,26 @@
 <template>
   <transition name="slide">
     <div class="m-container">
-      <navbar title="至元公告" @back="back" :showClose="showClose"></navbar>
-      <div class="list">
-        <div class="item-box" v-for="(item, index) in noticeList" :key="index">
-          <div class="item" @click="toItem(item)">
+      <navbar :title="$t('navigator.notice')" @back="back" :showClose="showClose"></navbar>
+      <div class="list" v-if="noticeList">
+        <div class="item-box">
+          <div class="item" @click="toItem('PTGG')">
             <div class="item_left">
-              <span class="title">{{index + 1}}、{{item.text}}</span>
+              <span class="title">1、{{$t('notice.noticeItem1')}}</span>
             </div>
           </div>
         </div>
-        <div v-if="hasData">
-          <div class="no_data">
-            <i class="iconfont icon-nodata"></i>
+        <div class="item-box">
+          <div class="item" @click="toItem('CPGG')">
+            <div class="item_left">
+              <span class="title">2、{{$t('notice.noticeItem2')}}</span>
+            </div>
           </div>
+        </div>
+      </div>
+      <div v-if="hasData">
+        <div class="no_data">
+          <i class="iconfont icon-nodata"></i>
         </div>
       </div>
     </div>
@@ -38,6 +45,7 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
       this.loading = weui.loading('加载中')
     },
     mounted() {
@@ -83,10 +91,9 @@
           }
         })
       },
-      toItem(item) {
-        let id = item.id
+      toItem(id) {
         this.$router.push({
-          path: '/notice-item/'+ id
+          path: '/notice-item/' + id + '/' + this.$i18n.locale
         })
       }
     },

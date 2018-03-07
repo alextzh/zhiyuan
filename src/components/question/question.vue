@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="m-container">
-      <navbar title="常见问题" @back="back" :showClose="showClose"></navbar>
+      <navbar :title="$t('navigator.question')" @back="back" :showClose="showClose"></navbar>
       <div class="list">
         <scroll ref="scroll" class="scroll_list"
                 v-if="noticeList.length > 0"
@@ -68,6 +68,7 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
       this.loading = weui.loading('加载中')
     },
     mounted() {
@@ -123,7 +124,7 @@
       toDetail(item) {
         setNotice(item)
         this.$router.push({
-          path: '/question-detail'
+          path: '/question-detail/' + this.$i18n.locale
         })
       }
     },

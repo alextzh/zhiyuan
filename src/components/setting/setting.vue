@@ -1,12 +1,17 @@
 <template>
   <transition name="slide">
     <div class="box">
-      <navbar title="设置" @back="back" :showClose="showClose"></navbar>
+      <navbar :title="$t('navigator.setting')" @back="back" :showClose="showClose"></navbar>
       <div class="list">
         <div class="item" @click="toModifyPwd()">
           <i class="iconfont icon-config" style="color:#2196F3;"></i>
           <span class="text">修改密码</span>
           <i class="iconfont icon-goto fc999"></i>
+        </div>
+        <div class="item" @click="toSwitchLanguage()">
+          <i class="iconfont icon-config" style="color:#2196F3;"></i>
+          <span class="text">切换语言</span>
+          <span class="value" >{{currentLanguage}}</span>
         </div>
         <div class="btn_area">
           <button class="btn" @click="loginOut()">退出账号</button>
@@ -26,12 +31,20 @@
   export default {
     data() {
       return {
-        showClose: false
+        showClose: false,
+        pickerArr: [{label: '简体中文', value: 0, type: 'zh'}, {label: 'English', value: 1, type: 'en'}],
+        currentLanguage: ''
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
     },
     mounted() {
+      if (this.$i18n.locale === 'zh') {
+        this.currentLanguage = '简体中文'
+      } else if(this.$i18n.locale === 'en') {
+        this.currentLanguage = 'English'
+      }
     },
     methods: {
       back() {
@@ -41,7 +54,7 @@
         weui.confirm('您确认要退出该账户吗', () => {
           clearStorage()
           this.$router.push({
-            path: '/login'
+            path: '/login/' + this.$i18n.locale
           })
         }, () => {
           console.log('已取消')
@@ -51,8 +64,28 @@
       },
       toModifyPwd() {
         this.$router.push({
-          path: '/modify-pwd'
+          path: '/modify-pwd/' + this.$i18n.locale
         })
+      },
+      toSwitchLanguage() {
+        weui.picker(this.pickerArr, {
+          container: 'body',
+          defaultValue: [0],
+          onChange: (result) => {
+            console.log('change' + result)
+          },
+          onConfirm: (result) => {
+            this.currentLanguage = this.pickerArr[result].label
+            this.changeLanguage(this.pickerArr[result].type)
+          }
+        })
+      },
+      changeLanguage(lang) {
+        if (this.$route.params.lang !== lang) {
+          this.$i18n.locale = lang
+          let newPath = this.$route.path.substring(0, -2) + lang
+          this.$router.replace(newPath)
+        }
       }
     },
     components: {

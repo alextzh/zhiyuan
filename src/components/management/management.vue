@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="m-container">
-      <navbar title="合同管理" :showClose="showClose" @back="back"></navbar>
+      <navbar :title="$t('navigator.contract')" :showClose="showClose" @back="back"></navbar>
       <div class="list">
         <scroll ref="scroll" class="scroll_list"
                 v-if="contractList.length > 0"
@@ -91,6 +91,7 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
       this.loading = weui.loading('加载中')
       this.customer_id = getUserInfo().id
     },

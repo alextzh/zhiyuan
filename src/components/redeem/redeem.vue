@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="box">
-      <navbar title="申请赎回" @back="back" :showClose="showClose"></navbar>
+      <navbar :title="$t('navigator.redeem')" @back="back" :showClose="showClose"></navbar>
       <div class="content">
         <div class="item_head">
           <i class="iconfont icon-item"></i>
@@ -85,6 +85,7 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
       this.currentProduct = getProduct()
     },
     mounted() {
@@ -171,7 +172,7 @@
               this.btnDisabled = false
               this.btnLoading = false
               this.$router.push({
-                path: '/'
+                path: '/' + this.$i18n.locale
               })
             }, 500)
           },

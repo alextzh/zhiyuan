@@ -16,7 +16,7 @@
                 <span class="pub_time">{{item.pub_time}}</span>
               </div>
               <div class="item_right">
-                <span class="btn">查看详情</span>
+                <span class="btn">{{$t('notice.viewDetail')}}</span>
               </div>
             </div>
           </li>
@@ -45,7 +45,6 @@
     data() {
       return {
         id: '',
-        title: '',
         showClose: false,
         loading: null,
         noticeList: [],
@@ -59,6 +58,11 @@
       }
     },
     computed: {
+      title: function () {
+        let id = this.$route.path.split('/')[2]
+        this.id = id
+        return id === 'PTGG'? this.$i18n.t('navigator.systemNotice') : id === 'CPGG'? this.$i18n.t('navigator.productNotice') : ''
+      },
       scrollbarObj: function () {
         return this.scrollbar ? {fade: this.scrollbarFade} : false
       },
@@ -70,14 +74,8 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
       this.loading = weui.loading('加载中')
-      let id = this.$route.params.id
-      this.id = id
-      if (id === 'PTGG') {
-        this.title = '系统公告'
-      } else if (id === 'CPGG') {
-        this.title = '产品公告'
-      }
     },
     mounted() {
       setTimeout(() => {
@@ -136,7 +134,7 @@
       toDetail(item) {
         setNotice(item)
         this.$router.push({
-          path: '/notice-detail'
+          path: '/notice-detail/' + this.$i18n.locale
         })
       }
     },
@@ -203,8 +201,6 @@
   }
   .item_right{
     flex: 0 1 auto;
-  }
-  .item_right .btn {
   }
   span {
     font-size: 14px;

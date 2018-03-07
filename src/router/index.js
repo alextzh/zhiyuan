@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import i18n from '../language/index'
 import {getUserInfo} from 'common/js/storage'
 
 // 懒加载路由模块导入
@@ -32,12 +33,19 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     {
-      path: '/login',
+      path: '/',
+      meta: {
+        requireAuth: true
+      },
+      component: Mine
+    },
+    {
+      path: '/login/:lang',
       name: 'login',
       component: Login
     },
     {
-      path: '/',
+      path: '/:lang',
       name: 'mine',
       meta: {
         requireAuth: true
@@ -45,7 +53,7 @@ const router = new Router({
       component: Mine
     },
     {
-      path: '/notice',
+      path: '/notice/:lang',
       name: 'notice',
       meta: {
         requireAuth: true
@@ -53,15 +61,14 @@ const router = new Router({
       component: Notice
     },
     {
-      path: '/notice-item/:id',
-      name: 'noticeItem',
+      path: '/notice-item/:id/:lang',
       meta: {
         requireAuth: true
       },
       component: NoticeItem
     },
     {
-      path: '/notice-detail',
+      path: '/notice-detail/:lang',
       name: 'noticeDetail',
       meta: {
         requireAuth: true
@@ -69,7 +76,7 @@ const router = new Router({
       component: NoticeDetail
     },
     {
-      path: '/purchase',
+      path: '/purchase/:lang',
       name: 'purchase',
       meta: {
         requireAuth: true
@@ -77,7 +84,7 @@ const router = new Router({
       component: Purchase
     },
     {
-      path: '/product-detail',
+      path: '/product-detail/:lang',
       name: 'productDetail',
       meta: {
         requireAuth: true
@@ -85,7 +92,7 @@ const router = new Router({
       component: ProductDetail
     },
     {
-      path: '/purchase-record',
+      path: '/purchase-record/:lang',
       name: 'purchaseRecord',
       meta: {
         requireAuth: true
@@ -93,7 +100,7 @@ const router = new Router({
       component: PurchaseRecord
     },
     {
-      path: '/add-apply',
+      path: '/add-apply/:lang',
       name: 'addApply',
       meta: {
         requireAuth: true
@@ -101,7 +108,7 @@ const router = new Router({
       component: AddApply
     },
     {
-      path: '/edit-apply',
+      path: '/edit-apply/:lang',
       name: 'editApply',
       meta: {
         requireAuth: true
@@ -109,7 +116,7 @@ const router = new Router({
       component: EditApply
     },
     {
-      path: '/modify-additional',
+      path: '/modify-additional/:lang',
       name: 'modifyAdditional',
       meta: {
         requireAuth: true
@@ -117,7 +124,7 @@ const router = new Router({
       component: ModifyAdditional
     },
     {
-      path: '/redeem-record',
+      path: '/redeem-record/:lang',
       name: 'redeemRecord',
       meta: {
         requireAuth: true
@@ -125,7 +132,7 @@ const router = new Router({
       component: RedeemRecord
     },
     {
-      path: '/redeem',
+      path: '/redeem/:lang',
       name: 'redeem',
       meta: {
         requireAuth: true
@@ -133,7 +140,7 @@ const router = new Router({
       component: Redeem
     },
     {
-      path: '/product-plan',
+      path: '/product-plan/:lang',
       name: 'productPlan',
       meta: {
         requireAuth: true
@@ -141,7 +148,7 @@ const router = new Router({
       component: ProductPlan
     },
     {
-      path: '/modify-plan',
+      path: '/modify-plan/:lang',
       name: 'modifyPlan',
       meta: {
         requireAuth: true
@@ -149,7 +156,7 @@ const router = new Router({
       component: ModifyPlan
     },
     {
-      path: '/question',
+      path: '/question/:lang',
       name: 'question',
       meta: {
         requireAuth: true
@@ -157,7 +164,7 @@ const router = new Router({
       component: Question
     },
     {
-      path: '/question-detail',
+      path: '/question-detail/:lang',
       name: 'questionDetail',
       meta: {
         requireAuth: true
@@ -165,7 +172,7 @@ const router = new Router({
       component: QuestionDetail
     },
     {
-      path: '/setting',
+      path: '/setting/:lang',
       name: 'setting',
       meta: {
         requireAuth: true
@@ -173,7 +180,7 @@ const router = new Router({
       component: Setting
     },
     {
-      path: '/modify-pwd',
+      path: '/modify-pwd/:lang',
       name: 'modifyPwd',
       meta: {
         requireAuth: true
@@ -181,7 +188,7 @@ const router = new Router({
       component: ModifyPwd
     },
     {
-      path: '/management',
+      path: '/management/:lang',
       name: 'management',
       meta: {
         requireAuth: true
@@ -210,13 +217,13 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  console.log(i18n.locale)
   if (to.matched.some(r => r.meta.requireAuth)) {
     if (getUserInfo().id) {
       next()
     } else {
       next({
-        path: '/login',
-        query: {redirect: to.fullPath}
+        path: '/login/' + i18n.locale
       })
     }
   } else {

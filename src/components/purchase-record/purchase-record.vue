@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="m-container">
-      <navbar title="申购记录" :showClose="showClose" @back="back"></navbar>
+      <navbar :title="$t('navigator.purchaseRecord')" :showClose="showClose" @back="back"></navbar>
       <div class="list">
         <scroll ref="scroll" class="scroll_list"
                 v-if="purchaseList.length > 0"
@@ -148,6 +148,7 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
       this.loading = weui.loading('加载中')
       this.pageData.customer_id = getUserInfo().id
     },
@@ -226,21 +227,21 @@
       redeemAction(e) {
         setProduct(e)
         this.$router.push({
-          path: '/redeem'
+          path: '/redeem/' + this.$i18n.locale
         })
       },
       // 追加份额
       addAction(e) {
         setProduct(e)
         this.$router.push({
-          path: '/add-apply'
+          path: '/add-apply/' + this.$i18n.locale
         })
       },
       // 修改追加
       editFt(e) {
         setProduct(e)
         this.$router.push({
-          path: '/modify-additional'
+          path: '/modify-additional/' + this.$i18n.locale
         })
       },
       // 取消追加
@@ -269,7 +270,7 @@
               })
               setTimeout(() => {
                 this.$router.push({
-                  path: '/'
+                  path: '/' + this.$i18n.locale
                 })
               }, 1500)
             },
@@ -290,7 +291,7 @@
       editAction(e) {
         setProduct(e)
         this.$router.push({
-          path: '/edit-apply'
+          path: '/edit-apply/' + this.$i18n.locale
         })
       },
       // 删除申购记录
@@ -321,7 +322,7 @@
               })
               setTimeout(() => {
                 this.$router.push({
-                  path: '/'
+                  path: '/' + this.$i18n.locale
                 })
               }, 1500)
             },

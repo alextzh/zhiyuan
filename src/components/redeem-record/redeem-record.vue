@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="m-container">
-      <navbar title="赎回记录" :showClose="showClose" @back="back"></navbar>
+      <navbar :title="$t('navigator.redeemRecord')" :showClose="showClose" @back="back"></navbar>
       <div class="list">
         <scroll ref="scroll" class="scroll_list"
                 v-if="redeemRecord.length > 0"
@@ -103,6 +103,7 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
       this.loading = weui.loading('加载中')
       this.pageData.customer_id = getUserInfo().id
     },
@@ -238,7 +239,7 @@
               })
               setTimeout(() => {
                 this.$router.push({
-                  path: '/'
+                  path: '/' + this.$i18n.locale
                 })
               }, 1500)
             },

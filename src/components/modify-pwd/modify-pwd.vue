@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="box" id="box">
-      <navbar title="修改密码" @back="back" :showClose="showClose"></navbar>
+      <navbar :title="$t('navigator.password')" @back="back" :showClose="showClose"></navbar>
       <div class="content">
         <form class="form_area" method="post" @submit.prevent="formSubmit()">
           <div class="input_area">
@@ -49,6 +49,7 @@
       }
     },
     created() {
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
     },
     mounted() {
     },
@@ -158,7 +159,7 @@
               this.btnDisabled = false
               this.btnLoading = false
               this.$router.push({
-                path: '/'
+                path: '/' + this.$i18n.locale
               })
             }, 500)
           },
