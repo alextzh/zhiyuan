@@ -5,7 +5,8 @@ import App from './App'
 import router from './router'
 import fastclick from 'fastclick'
 import AMap from 'vue-amap'
-import 'common/js/browser'
+import i18n from './language'
+// import 'common/js/browser'
 
 import 'common/css/index.css'
 
@@ -26,12 +27,9 @@ document.oncontextmenu = function(e) {
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
-// document.addEventListener('deviceready', function() {
 new Vue({
   el: '#app',
   router,
+  i18n,
   render: h => h(App)
 })
-//   window.navigator.splashscreen.hide()
-// }, false)

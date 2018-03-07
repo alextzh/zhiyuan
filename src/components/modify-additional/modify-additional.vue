@@ -191,7 +191,7 @@
   width:100%;
   display:flex;
   flex-direction:column;
-  padding:15px 15px 5px;
+  padding:65px 15px 5px;
   box-sizing:border-box;
 }
 .item_head{

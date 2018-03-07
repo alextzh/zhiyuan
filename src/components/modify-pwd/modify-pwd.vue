@@ -194,6 +194,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 65px;
 }
 .form_area{
   display:flex;

@@ -63,7 +63,7 @@
 
 <style scoped lang="scss">
 .box {
-  position: fixed;
+  position: absolute;
   top: 0;
   bottom: 0;
   z-index: 100;
@@ -74,6 +74,7 @@
   padding: 15px 0;
   width: 100%;
   box-sizing: border-box;
+  padding-top: 65px;
 }
 .item{
   position: relative;

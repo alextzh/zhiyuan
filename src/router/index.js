@@ -199,9 +199,6 @@ const router = new Router({
     {
       path: '/weixin',
       name: 'weixin',
-      meta: {
-        requireAuth: true
-      },
       component: Weixin
     },
     {

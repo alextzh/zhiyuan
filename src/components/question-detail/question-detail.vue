@@ -57,6 +57,7 @@
     padding:15px;
     width:100%;
     box-sizing:border-box;
+    padding-top: 65px;
   }
   .title {
     padding-bottom: 10px;
