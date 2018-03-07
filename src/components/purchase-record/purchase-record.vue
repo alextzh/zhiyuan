@@ -24,36 +24,36 @@
               </div>
               <div class="item_body">
                 <div class="item__left">
-                  <span>申购份额：</span>
+                  <span>{{$t('purchase.bidShare')}}：</span>
                   <span class="new_data">{{item.subscribe_money}}万份</span>
                 </div>
                 <div class="item__right">
-                  <span>申购时间：</span>
+                  <span>{{$t('purchase.purchaseTime')}}：</span>
                   <span class="all_data">{{item.subscribe_time}}</span>
                 </div>
               </div>
               <div class="item_body" v-if="item.recast_money">
                 <div class="item__left">
-                  <span>追加份额：</span>
+                  <span>{{$t('purchaseRecord.addShare')}}：</span>
                   <span class="new_data">{{item.recast_money / 10000}}万份</span>
                 </div>
               </div>
               <div class="item_body" v-if="item.redeem_money">
                 <div class="item__left">
-                  <span>赎回份额：</span>
+                  <span>{{$t('purchaseRecord.redeemShare')}}：</span>
                   <span class="new_data">{{item.redeem_money / 10000}}万份</span>
                 </div>
               </div>
               <div class="item_foot" v-if="item.recast_start_time">
-                <span>复投开始：</span>
+                <span>{{$t('purchaseRecord.addStart')}}：</span>
                 <span>{{item.recast_start_time}}</span>
               </div>
               <div class="item_foot" v-if="item.recast_end_time">
-                <span>复投结束：</span>
+                <span>{{$t('purchaseRecord.addEnd')}}：</span>
                 <span>{{item.recast_end_time}}</span>
               </div>
               <div class="item_foot" style="display: flex;">
-                <span>结算时间：</span>
+                <span>{{$t('purchase.settlementTime')}}：</span>
                 <div style="flex:1;display:flex;flex-wrap:wrap;">
                   <div style="display:flex;width:50%;" v-for="(t, i) in item.settlement_time" :key="i">
                     <span style='flex:1'>{{t}}</span>
@@ -62,36 +62,36 @@
               </div>
               <div class="item_action" v-if="item.isEdit || item.isDel">
                 <div style="flex: 1;margin-right: 10px;">
-                  <button style='flex:1' class="redeemAllBtn" @click="editAction(item)">修改申购</button>
+                  <button style='flex:1' class="redeemAllBtn" @click="editAction(item)">{{$t('purchaseRecord.modifyPurchase')}}</button>
                 </div>
                 <div style="flex: 1;">
-                  <button class="redeemAllBtn" @click="cancelAction(item)">删除记录</button>
+                  <button class="redeemAllBtn" @click="cancelAction(item)">{{$t('purchaseRecord.cancelPurchase')}}</button>
                 </div>
               </div>
               <div class="item_action" v-if="item.isEditFtBtn || item.isQxFtBtn">
                 <div style="flex: 1;margin-right: 10px;">
-                  <button style='flex:1' class="redeemAllBtn" @click="editFt(item)">修改追加</button>
+                  <button style='flex:1' class="redeemAllBtn" @click="editFt(item)">{{$t('purchaseRecord.modifyAdd')}}</button>
                 </div>
                 <div style="flex: 1;">
-                  <button class="redeemAllBtn" @click="cancelFt(item)">取消追加</button>
+                  <button class="redeemAllBtn" @click="cancelFt(item)">{{$t('purchaseRecord.cancelAdd')}}</button>
                 </div>
               </div>
               <div class="item_action" v-if="item.isRedeem && item.isRecast">
                 <div style="flex: 1;margin-right: 10px;">
-                  <button style='flex:1' class="redeemAllBtn" @click="redeemAction(item)">申请赎回</button>
+                  <button style='flex:1' class="redeemAllBtn" @click="redeemAction(item)">{{$t('purchaseRecord.applyRedeem')}}</button>
                 </div>
                 <div style="flex: 1;">
-                  <button style='flex:1' class="redeemAllBtn" @click="addAction(item)">追加份额</button>
+                  <button style='flex:1' class="redeemAllBtn" @click="addAction(item)">{{$t('purchaseRecord.applyAdd')}}</button>
                 </div>
               </div>
               <div class="item_action" v-if="item.isRedeem && !item.isRecast">
                 <div style="flex: 1;" v-if="item.isRedeem">
-                  <button style='flex:1' class="redeemAllBtn" @click="redeemAction(item)">申请赎回</button>
+                  <button style='flex:1' class="redeemAllBtn" @click="redeemAction(item)">{{$t('purchaseRecord.applyRedeem')}}</button>
                 </div>
               </div>
               <div class="item_action" v-if="!item.isRedeem && item.isRecast">
                 <div style="flex: 1;">
-                  <button style='flex:1' class="redeemAllBtn" @click="addAction(item)">追加份额</button>
+                  <button style='flex:1' class="redeemAllBtn" @click="addAction(item)">{{$t('purchaseRecord.applyAdd')}}</button>
                 </div>
               </div>
             </div>
@@ -411,6 +411,7 @@
     font-size: 14px;
     display: flex;
     align-items: center;
+    width: 50%;
   }
   .new_data,.all_data{
     font-size: 16px;

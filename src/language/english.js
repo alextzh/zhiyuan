@@ -13,14 +13,14 @@ export default {
     contact: 'Contact Us',
     setting: 'Setting',
     password: 'Password Modification',
-    redeem: 'Redeem',
+    applyRedeem: 'Apply Redeem',
     systemNotice: 'System Notice',
     productNotice: 'Product Notice',
     noticeDetail: 'Notice Detail',
     questionDetail: 'Question Detail',
     productDetail: 'Product Detail',
-    addApply: 'Add Purchase',
-    editApply: 'Edit Purchase',
+    applyAdd: 'Apply Add',
+    modifyPurchase: 'Modify Purchase',
     modifyAdd: 'Modify Additional',
     modifyPlan: 'Modify Plan'
   },
@@ -43,12 +43,65 @@ export default {
 
   purchase: {
     productType: 'ProductType',
+    productName: 'ProductName',
     productStatus: 'ProductStatus',
+    productDetail: 'ProductDetail',
     purchaseTime: 'PurchaseTime',
     diskTime: 'DiskTime',
     settlementTime: 'SettlementTime',
     schemeType: 'SchemeType',
-    schemeName: 'SchemeName'
+    schemeName: 'SchemeName',
+    schemeDetail: 'SchemeDetail',
+    minShare: 'MinShare',
+    increasingShare: 'IncreasingShare',
+    productIntroduction: 'ProductIntroduction',
+    bidShare: 'BidShare',
+    maxNumber: 'MaxNumber',
+    tip1: 'Please enter the bid share',
+    tip2: 'Min purchase share',
+    tip3: 'Max bid share is 1 billion',
+    top4: 'Bid for increasing share',
+    tip5: 'Purchase hints',
+    tip6: 'Are you sure purchase the current product',
+    purchaseBtnTxt: 'Purchase'
+  },
+
+  purchaseRecord: {
+    addShare: 'AddShare',
+    redeemShare: 'RedeemShare',
+    addStart: 'AddStart',
+    addEnd: 'AddEnd',
+    modifyPurchase: 'ModifyPurchase',
+    cancelPurchase: 'CancelPurchase',
+    modifyAdd: 'ModifyAdd',
+    cancelAdd: 'CancelAdd',
+    applyRedeem: 'ApplyRedeem',
+    applyAdd: 'ApplyAdd'
+  },
+
+  redeemRecord: {
+    applyTime: 'ApplyTime',
+    cancelRedeem: 'CancelRedeem'
+  },
+
+  plan: {
+    targetScheme: 'TargetScheme',
+    modifyShare: 'ModifyShare',
+    applyModify: 'ApplyModify',
+    cancelModify: 'CancelModify',
+    tip: 'Three trading days before settlement can not be modified'
+  },
+
+  management: {
+    download: 'Download',
+    view: 'View',
+    signContract: 'Sign Contract'
+  },
+
+  setting: {
+    language: 'Language',
+    modifyPwd: 'Modify Password',
+    logOut: 'Log Out'
   },
 
   common: {

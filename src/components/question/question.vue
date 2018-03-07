@@ -16,7 +16,7 @@
                 <span class="pub_time">{{item.pub_time}}</span>
               </div>
               <div class="item_right">
-                <span class="btn">查看详情</span>
+                <span class="btn">{{$t('notice.viewDetail')}}</span>
               </div>
             </div>
           </li>

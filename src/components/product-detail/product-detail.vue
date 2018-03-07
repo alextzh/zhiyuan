@@ -19,11 +19,11 @@
         </div>
         <div class="item_body">
           <div class="item__left">
-            <span>起投份额：</span>
+            <span>{{$t('purchase.minShare')}}：</span>
             <span class="new_data">{{currentProduct.start_money / 10000}}万份</span>
           </div>
           <div class="item__right">
-            <span>递增份额：</span>
+            <span>{{$t('purchase.increasingShare')}}：</span>
             <span class="all_data">1万份</span>
           </div>
         </div>
@@ -36,7 +36,7 @@
           <span>{{currentProduct.caopan_time}}</span>
         </div>
         <div class="item_foot" style="display: flex;" v-if="currentProduct.describe">
-          <span>产品简介：</span>
+          <span>{{$t('purchase.productIntroduction')}}：</span>
           <div style="flex: 1;">
             <span style="line-height: 1;">{{currentProduct.describe}}</span>
           </div>
@@ -55,11 +55,11 @@
             <div style="padding: 10px;" v-if="showArr.length === 1">
               <div class="item_body">
                 <div class="item__left">
-                  <span>产品名称：</span>
+                  <span>{{$t('purchase.productName')}}：</span>
                   <span class="new_data">{{currentPlan.name}}</span>
                 </div>
                 <div class="item__right">
-                  <span>最大人数：</span>
+                  <span>{{$t('purchase.maxNumber')}}：</span>
                   <span class="all_data">{{currentPlan.max_amount}}</span>
                 </div>
               </div>
@@ -72,7 +72,7 @@
                 </div>
               </div>
               <div class="item_foot" style="display: flex;">
-                <span>产品详情：</span>
+                <span>{{$t('purchase.productDetail')}}：</span>
                 <div style="flex: 1;">
                   <span style="line-height: 1;">{{currentPlan.describe}}</span>
                 </div>
@@ -85,7 +85,7 @@
                   <span class="new_data">{{currentPlan.name}}</span>
                 </div>
                 <div class="item__right">
-                  <span>最大人数：</span>
+                  <span>{{$t('purchase.maxNumber')}}：</span>
                   <span class="all_data">{{currentPlan.max_amount}}</span>
                 </div>
               </div>
@@ -98,7 +98,7 @@
                 </div>
               </div>
               <div class="item_foot" style="display: flex;">
-                <span>方案详情：</span>
+                <span>{{$t('purchase.schemeDetail')}}：</span>
                 <div style="flex: 1;">
                   <span>{{currentPlan.describe}}</span>
                 </div>
@@ -106,9 +106,9 @@
             </div>
             <div v-if="isHidden" style="padding: 0 10px;">
               <div class="input_area">
-                <div class="input_title">申购金额：</div>
+                <div class="input_title">{{$t('purchase.bidShare')}}：</div>
                 <div class="input_con">
-                  <input type="number" v-model="purchaseAmt" placeholder='请输入申购金额' />
+                  <input type="number" v-model="purchaseAmt" :placeholder="$t('purchase.tip1')" />
                   <span class='unit'>万份</span>
                 </div>
               </div>
@@ -146,9 +146,37 @@
         currentProduct: null,
         customer_id: '',
         purchaseAmt: '',
-        purchaseBtnTxt: '申购',
         btnLoading: false,
         btnDisabled: false,
+      }
+    },
+    computed: {
+      purchaseBtnTxt() {
+        return this.$i18n.t('purchase.purchaseBtnTxt')
+      },
+      tip() {
+        return this.$i18n.t('common.tip')
+      },
+      tip1() {
+        return this.$i18n.t('purchase.tip1')
+      },
+      tip2() {
+        return this.$i18n.t('purchase.tip2')
+      },
+      tip3() {
+        return this.$i18n.t('purchase.tip3')
+      },
+      tip4() {
+        return this.$i18n.t('purchase.tip4')
+      },
+      tip5() {
+        return this.$i18n.t('purchase.tip5')
+      },
+      tip6() {
+        return this.$i18n.t('purchase.tip6')
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
       }
     },
     created() {
@@ -202,7 +230,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
           }
@@ -232,7 +260,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(that.netWork, {
               duration: 1500
             })
           }
@@ -258,15 +286,14 @@
         var that = this
         let param = this.purchaseAmt
         if (this.checkPurchase(that, param)) {
-          weui.confirm('您确认要申购当前产品' + param + '万份吗', () => {
-            this.purchaseBtnTxt = "申购中"
+          weui.confirm(that.tip6 + '为' + param + '万份?', () => {
             this.btnDisabled = true
             this.btnLoading = true
             this.mySubmit(that, param)
           }, () => {
             console.log('已取消')
           }, {
-            title: '申购提示'
+            title: this.tip5
           })
         }
       },
@@ -277,23 +304,23 @@
         var min = curPlan.min_money / 10000
         var step = curPlan.step_money / 10000
         if (!amt) {
-          weui.alert('请输入申购份额', {
-            title: '提示'
+          weui.alert(that.tip1, {
+            title: that.tip
           })
           return false
         } else if (amt < min) {
-          weui.alert('最小申购份额为' +min+ '万份', {
-            title: '提示'
+          weui.alert(that.tip2 + '为' + min + '万份', {
+            title: that.tip
           })
           return false
         } else if (amt > 100000) {
-          weui.alert('最大申购份额为100000万份', {
-            title: '提示'
+          weui.alert(that.tip3, {
+            title: that.tip
           })
           return false
         } else if (amt % step !== 0) {
-          weui.alert('申购递增份额为' +step+ '万份', {
-            title: '提示'
+          weui.alert(that.tip4 + '为' + step + '万份', {
+            title: that.tip
           })
           return false
         } else {
@@ -324,7 +351,6 @@
               weui.toast(res.msg, {
                 duration: 1500
               })
-              that.purchaseBtnTxt = "申购"
               that.btnDisabled = false
               that.btnLoading = false
               return false
@@ -333,7 +359,6 @@
               duration: 1500
             })
             setTimeout(() => {
-              that.purchaseBtnTxt = "申购"
               that.btnDisabled = false
               that.btnLoading = false
               that.$router.push({
@@ -343,10 +368,9 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(that.netWork, {
               duration: 1500
             })
-            that.purchaseBtnTxt = "申购"
             that.btnDisabled = false
             that.btnLoading = false
           }
@@ -435,12 +459,13 @@
 }
 .select_type i {
   position: absolute;
-  right: 15px;
+  right: 0;
   top: 0;
   line-height: 40px;
   z-index: 0;
 }
 .select_type input {
+  width: 100%;
   flex: 1;
   height: 40px;
   font-size: 18px;
@@ -465,6 +490,7 @@
 }
 .input_con input {
   position:relative;
+  width: 100%;
   height:40px;
   flex:1;
   border-radius: 0;

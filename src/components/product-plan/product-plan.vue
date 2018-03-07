@@ -24,11 +24,11 @@
               </div>
               <div class="item_body">
                 <div class="item__left">
-                  <span>方案名称：</span>
+                  <span>{{$t('purchase.schemeName')}}：</span>
                   <span class="new_data">{{item.product_name}}</span>
                 </div>
                 <div class="item__right">
-                  <span>申购份额：</span>
+                  <span>{{$t('purchase.bidShare')}}：</span>
                   <span class="all_data">{{item.subscribe_money}}万份</span>
                 </div>
               </div>
@@ -43,22 +43,22 @@
                 </div>
               </div>
               <div class="item_foot" v-if="item.subscribe_time">
-                <span>申购时间：</span>
+                <span>{{$t('purchase.purchaseTime')}}：</span>
                 <span>{{item.subscribe_time}}</span>
               </div>
               <div class="item_action" v-if="item.isSqXgfaBtn && item.status === 'SHTG'">
                 <div style="flex: 1;">
-                  <button style='flex:1' class="redeemAllBtn" @click="modifyAction(item)">申请更改方案</button>
+                  <button style='flex:1' class="redeemAllBtn" @click="modifyAction(item)">{{$t('plan.applyModify')}}</button>
                 </div>
               </div>
               <div class="item_action" v-if="item.isSqXgfaBtn === false && item.status === 'SHTG'">
                 <div style="flex: 1;">
-                  <button style='flex:1;background:rgba(0,0,0,.1)' class="redeemAllBtn" disabled="true">结算前三个交易日不能修改</button>
+                  <button style='flex:1;background:rgba(0,0,0,.1)' class="redeemAllBtn" disabled="true">{{$t('plan.tip')}}</button>
                 </div>
               </div>
               <div class="item_action" v-if="item.qxSqXgfaBtn">
                 <div style="flex: 1;">
-                  <button style='flex:1' class="redeemAllBtn" @click="cancelAction(item)">取消更改</button>
+                  <button style='flex:1' class="redeemAllBtn" @click="cancelAction(item)">{{$t('plan.cancelModify')}}</button>
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="box">
-      <navbar :title="$t('navigator.redeem')" @back="back" :showClose="showClose"></navbar>
+      <navbar :title="$t('navigator.applyRedeem')" @back="back" :showClose="showClose"></navbar>
       <div class="content">
         <div class="item_head">
           <i class="iconfont icon-item"></i>
@@ -226,6 +226,7 @@
   font-size: 14px;
   display: flex;
   align-items: center;
+  width:50%;
 }
 .new_data,.all_data{
   font-size: 16px;

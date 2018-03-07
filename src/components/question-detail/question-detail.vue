@@ -4,7 +4,7 @@
       <navbar :title="$t('navigator.questionDetail')" @back="back" :showClose="showClose"></navbar>
       <div class="box">
         <div class="title"><span>{{curNotice.title}}</span></div>
-        <div class="pub_time"><span>发布时间：{{curNotice.pub_time}}</span></div>
+        <div class="pub_time"><span>{{$t('notice.releaseTime')}}：{{curNotice.pub_time}}</span></div>
         <div class="content" v-html="content"></div>
       </div>
     </div>

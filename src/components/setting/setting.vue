@@ -5,16 +5,16 @@
       <div class="list">
         <div class="item" @click="toModifyPwd()">
           <i class="iconfont icon-config" style="color:#2196F3;"></i>
-          <span class="text">修改密码</span>
+          <span class="text">{{$t('setting.modifyPwd')}}</span>
           <i class="iconfont icon-goto fc999"></i>
         </div>
         <div class="item" @click="toSwitchLanguage()">
           <i class="iconfont icon-config" style="color:#2196F3;"></i>
-          <span class="text">切换语言</span>
+          <span class="text">{{$t('setting.language')}}</span>
           <span class="value" >{{currentLanguage}}</span>
         </div>
         <div class="btn_area">
-          <button class="btn" @click="loginOut()">退出账号</button>
+          <button class="btn" @click="loginOut()">{{$t('setting.logOut')}}</button>
         </div>
       </div>
     </div>

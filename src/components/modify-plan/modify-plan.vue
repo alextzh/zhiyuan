@@ -342,6 +342,7 @@
   font-size: 14px;
   display: flex;
   align-items: center;
+  width: 50%;
 }
 .new_data,.all_data{
   font-size: 16px;
@@ -385,12 +386,13 @@
 }
 .select_type i {
   position: absolute;
-  right: 15px;
+  right: 0;
   top: 0;
   line-height: 40px;
   z-index: 0;
 }
 .select_type input {
+  width: 100%;
   flex: 1;
   height: 40px;
   font-size: 18px;
@@ -415,6 +417,7 @@
 }
 .input_con input {
   position:relative;
+  width: 100%;
   height:40px;
   flex:1;
   border-radius: 0;

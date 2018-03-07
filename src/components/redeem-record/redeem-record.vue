@@ -23,17 +23,17 @@
               </div>
               <div class="item_body">
                 <div class="item__left">
-                  <span>赎回份额：</span>
+                  <span>{{$t('purchaseRecord.redeemShare')}}：</span>
                   <span class="new_data">{{item.money}}万份</span>
                 </div>
                 <div class="item__right">
-                  <span>申请时间：</span>
+                  <span>{{$t('redeemRecord.applyTime')}}：</span>
                   <span class="all_data">{{item.redeem_time}}</span>
                 </div>
               </div>
               <div class="item_action" v-if="item.isQxshBtn">
                 <div style="flex: 1;">
-                  <button class="redeemAllBtn" @click="cancelAction(item)">取消赎回申请</button>
+                  <button class="redeemAllBtn" @click="cancelAction(item)">{{$t('redeemRecord.cancelRedeem')}}</button>
                 </div>
               </div>
             </div>
@@ -325,6 +325,7 @@
     font-size: 14px;
     display: flex;
     align-items: center;
+    width: 50%;
   }
   .new_data,.all_data{
     font-size: 16px;

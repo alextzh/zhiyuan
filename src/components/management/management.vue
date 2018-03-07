@@ -28,15 +28,15 @@
               </div>
               <div class="item_action" v-if="item.sign_url && item.status === 'DQ'">
                 <div style="flex: 1;">
-                  <a class="btn" :href="item.sign_url">签合同</a>
+                  <a class="btn" :href="item.sign_url">{{$t('management.signContract')}}</a>
                 </div>
               </div>
               <div class="item_action" v-else>
                 <div style="flex: 1;margin-right:10px;">
-                  <a class="btn" :href="item.download_url">下载</a>
+                  <a class="btn" :href="item.download_url">{{$t('management.download')}}</a>
                 </div>
                 <div style="flex: 1;">
-                  <a class="btn" :href="item.viewpdf_url">预览</a>
+                  <a class="btn" :href="item.viewpdf_url">{{$t('management.view')}}</a>
                 </div>
               </div>
             </div>

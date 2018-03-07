@@ -219,6 +219,7 @@
   font-size: 14px;
   display: flex;
   align-items: center;
+  width:50%;
 }
 .new_data,.all_data{
   font-size: 16px;
