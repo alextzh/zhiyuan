@@ -80,10 +80,16 @@
       },
       netWork() {
         return this.$i18n.t('common.network')
+      },
+      confirm() {
+        return this.$i18n.t('common.confirm')
+      },
+      cancel() {
+        return this.$i18n.t('common.cancel')
       }
     },
     created() {
-      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
     },
     mounted() {
     },
@@ -106,14 +112,23 @@
         }
         var flag = this.checkPassword(param) && this.checkNewPassword(param)
         if (flag) {
-          weui.confirm(this.tip7, () => {
-            this.btnDisabled = true
-            this.btnLoading = true
-            this.mySubmit(param)
-          }, () => {
-            console.log('已取消')
-          }, {
-            title: this.modifyTip
+          weui.confirm(this.tip7, {
+            title: this.modifyTip,
+            buttons: [{
+              label: this.cancel,
+              type: 'default',
+              onClick: () => {
+                console.log('已取消')
+              }
+            }, {
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => {
+                this.btnDisabled = true
+                this.btnLoading = true
+                this.mySubmit(param)
+              }
+            }]
           })
         }
       },
@@ -121,12 +136,22 @@
         var password = param.password.trim()
         if (!password) {
           weui.alert(this.tip1, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else if (password.length < 6 || password.length > 20) {
           weui.alert(this.tip4, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else {
@@ -138,22 +163,42 @@
         var password2 = param.password2.trim()
         if (!password1 || !password2) {
           weui.alert(this.tip2, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else if (password1.length < 6 || password1.length > 20) {
           weui.alert(this.tip5, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else if (password2.length < 6 || password2.length > 20) {
           weui.alert(this.tip5, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else if (password1 !== password2) {
           weui.alert(this.tip6, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else {

@@ -139,7 +139,7 @@
       }
     },
     created() {
-      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
       this.loading = weui.loading(this.loadingTip)
       this.pageData.customer_id = getUserInfo().id
     },

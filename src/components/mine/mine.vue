@@ -89,6 +89,11 @@ export default {
       isShowPlan: false
     }
   },
+  computed: {
+    netWork() {
+      return this.$i18n.t('common.network')
+    }
+  },
   created() {
     var lang = this.$i18n.locale
     console.log(this.$i18n.locale)
@@ -128,7 +133,7 @@ export default {
         },
         error: (err) => {
           console.log(err)
-          weui.toast('网络异常', {
+          weui.toast(this.netWork, {
             duration: 1500
           })
         }

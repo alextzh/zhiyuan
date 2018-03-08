@@ -173,7 +173,9 @@ export default {
     addTip: 'Additional tips',
     modifyTip: 'Modify prompt',
     redeemTip: 'Redemption tips',
-    quitTip: 'Quit tips'
+    quitTip: 'Quit tips',
+    confirm: 'Confirm',
+    cancel: 'Cancel'
   },
 
   scroll: {

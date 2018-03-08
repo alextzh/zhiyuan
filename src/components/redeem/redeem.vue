@@ -109,9 +109,15 @@
       netWork() {
         return this.$i18n.t('common.network')
       },
+      confirm() {
+        return this.$i18n.t('common.confirm')
+      },
+      cancel() {
+        return this.$i18n.t('common.cancel')
+      }
     },
     created() {
-      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
       this.currentProduct = getProduct()
     },
     mounted() {
@@ -124,14 +130,23 @@
       formSubmit() {
         let param = this.redeemAmt
         if (this.checkRedeem(param)) {
-          weui.confirm(`${this.tip5}${param}万份?`, () => {
-            this.btnDisabled = true
-            this.btnLoading = true
-            this.mySubmit(param)
-          }, () => {
-            console.log('已取消')
-          }, {
-            title: this.redeemTip
+          weui.confirm(`${this.tip5}${param}万份?`, {
+            title: this.redeemTip,
+            buttons: [{
+              label: this.cancel,
+              type: 'default',
+              onClick: () => {
+                console.log('已取消')
+              }
+            }, {
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => {
+                this.btnDisabled = true
+                this.btnLoading = true
+                this.mySubmit(param)
+              }
+            }]
           })
         }
       },
@@ -141,22 +156,42 @@
         var max = getProduct().subscribe_money
         if (!amt) {
           weui.alert(this.tip1, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else if (amt < 1) {
           weui.alert(this.tip2, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else if (amt > max) {
           weui.alert(this.tip3, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else if (amt % 1 !== 0) {
           weui.alert(this.tip4, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else {

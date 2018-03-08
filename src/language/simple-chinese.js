@@ -173,7 +173,9 @@ export default {
     addTip: '追加提示',
     modifyTip: '修改提示',
     redeemTip: '赎回提示',
-    quitTip: '退出提示'
+    quitTip: '退出提示',
+    confirm: '确定',
+    cancel: '取消'
   },
 
   scroll: {

@@ -177,10 +177,16 @@
       },
       netWork() {
         return this.$i18n.t('common.network')
+      },
+      confirm() {
+        return this.$i18n.t('common.confirm')
+      },
+      cancel() {
+        return this.$i18n.t('common.cancel')
       }
     },
     created() {
-      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
       this.currentProduct = getProduct()
       this.customer_id = getUserInfo().id
     },
@@ -286,14 +292,23 @@
         var that = this
         let param = this.purchaseAmt
         if (this.checkPurchase(that, param)) {
-          weui.confirm(`${that.tip6}${param}万份?`, () => {
-            this.btnDisabled = true
-            this.btnLoading = true
-            this.mySubmit(that, param)
-          }, () => {
-            console.log('已取消')
-          }, {
-            title: this.tip5
+          weui.confirm(`${this.tip6}${param}万份?`, {
+            title: this.tip5,
+            buttons: [{
+              label: this.cancel,
+              type: 'default',
+              onClick: () => {
+                console.log('已取消')
+              }
+            }, {
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => {
+                this.btnDisabled = true
+                this.btnLoading = true
+                this.mySubmit(that, param)
+              }
+            }]
           })
         }
       },
@@ -305,22 +320,42 @@
         var step = curPlan.step_money / 10000
         if (!amt) {
           weui.alert(that.tip1, {
-            title: that.tip
+            title: that.tip,
+            buttons: [{
+              label: that.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else if (amt < min) {
           weui.alert(`${that.tip2}${min}万份`, {
-            title: that.tip
+            title: that.tip,
+            buttons: [{
+              label: that.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else if (amt > 100000) {
           weui.alert(that.tip3, {
-            title: that.tip
+            title: that.tip,
+            buttons: [{
+              label: that.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else if (amt % step !== 0) {
           weui.alert(`${that.tip4}${step}万份`, {
-            title: that.tip
+            title: that.tip,
+            buttons: [{
+              label: that.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else {

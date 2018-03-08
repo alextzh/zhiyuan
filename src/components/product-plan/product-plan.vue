@@ -123,10 +123,16 @@
       },
       tip1() {
         return this.$i18n.t('plan.tip1')
+      },
+      confirm() {
+        return this.$i18n.t('common.confirm')
+      },
+      cancel() {
+        return this.$i18n.t('common.cancel')
       }
     },
     created() {
-      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
       this.loading = weui.loading(this.loadingTip)
       this.customer_id = getUserInfo().id
     },
@@ -201,44 +207,53 @@
       },
       cancelAction(e) {
         var edit_item_id = e.edit_item_id
-        weui.confirm(this.tip1, () => {
-          $.ajax({
-            type: "POST",
-            url: API.api + '/api/v1/product/qxXgFA',
-            data: {
-              edit_item_id: edit_item_id
-            },
-            dataType: "jsonp",
-            headers: {
-              'content-type': 'application/x-www-form-urlencoded'
-            },
-            success: (res) => {
-              if (!res.ret) {
-                weui.toast(res.msg, {
-                  duration: 1500
-                })
-                return false
-              }
-              weui.toast(res.msg, {
-                duration: 1500
-              })
-              setTimeout(() => {
-                this.$router.push({
-                  path: '/' + this.$i18n.locale
-                })
-              }, 1500)
-            },
-            error: (err) => {
-              console.log(err)
-              weui.toast(this.netWork, {
-                duration: 1500
+        weui.confirm(this.tip1, {
+          title: this.cancelTip,
+          buttons: [{
+            label: this.cancel,
+            type: 'default',
+            onClick: () => {
+              console.log('已取消')
+            }
+          }, {
+            label: this.confirm,
+            type: 'primary',
+            onClick: () => {
+              $.ajax({
+                type: "POST",
+                url: API.api + '/api/v1/product/qxXgFA',
+                data: {
+                  edit_item_id: edit_item_id
+                },
+                dataType: "jsonp",
+                headers: {
+                  'content-type': 'application/x-www-form-urlencoded'
+                },
+                success: (res) => {
+                  if (!res.ret) {
+                    weui.toast(res.msg, {
+                      duration: 1500
+                    })
+                    return false
+                  }
+                  weui.toast(res.msg, {
+                    duration: 1500
+                  })
+                  setTimeout(() => {
+                    this.$router.push({
+                      path: '/' + this.$i18n.locale
+                    })
+                  }, 1500)
+                },
+                error: (err) => {
+                  console.log(err)
+                  weui.toast(this.netWork, {
+                    duration: 1500
+                  })
+                }
               })
             }
-          })
-        }, () => {
-          console.log('已取消')
-        }, {
-          title: this.cancelTip
+          }]
         })
       }
     },

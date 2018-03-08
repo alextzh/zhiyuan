@@ -8,11 +8,11 @@
           <span class="text">{{$t('setting.modifyPwd')}}</span>
           <i class="iconfont icon-goto fc999"></i>
         </div>
-        <!-- <div class="item" @click="toSwitchLanguage()">
+        <div class="item" @click="toSwitchLanguage()">
           <i class="iconfont icon-config" style="color:#2196F3;"></i>
           <span class="text">{{$t('setting.language')}}</span>
           <span class="value" >{{currentLanguage}}</span>
-        </div> -->
+        </div>
         <div class="btn_area">
           <button class="btn" @click="loginOut()">{{$t('setting.logOut')}}</button>
         </div>
@@ -32,7 +32,7 @@
     data() {
       return {
         showClose: false,
-        pickerArr: [{label: '简体中文', value: 0, type: 'zh'}, {label: 'English', value: 1, type: 'en'}],
+        pickerArr: [{label: '简体中文', value: 0, type: 'zh'}, {label: 'English', value: 1, type: 'en'}, {label: '繁体中文', value: 2, type: 'tw'}],
         currentLanguage: ''
       }
     },
@@ -42,16 +42,24 @@
       },
       tip1() {
         return this.$i18n.t('setting.tip1')
+      },
+      confirm() {
+        return this.$i18n.t('common.confirm')
+      },
+      cancel() {
+        return this.$i18n.t('common.cancel')
       }
     },
     created() {
-      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
     },
     mounted() {
       if (this.$i18n.locale === 'zh') {
         this.currentLanguage = '简体中文'
-      } else if(this.$i18n.locale === 'en') {
+      } else if (this.$i18n.locale === 'en') {
         this.currentLanguage = 'English'
+      } else if (this.$i18n.locale === 'tw') {
+        this.currentLanguage = '繁体中文'
       }
     },
     methods: {
@@ -59,15 +67,24 @@
         this.$router.back()
       },
       loginOut() {
-        weui.confirm(this.tip1, () => {
-          clearStorage()
-          this.$router.push({
-            path: '/login/' + this.$i18n.locale
-          })
-        }, () => {
-          console.log('已取消')
-        }, {
-          title: this.quitTip
+        weui.confirm(this.tip1, {
+          title: this.quitTip,
+          buttons: [{
+            label: this.cancel,
+            type: 'default',
+            onClick: () => {
+              console.log('已取消')
+            }
+          }, {
+            label: this.confirm,
+            type: 'primary',
+            onClick: () => {
+              clearStorage()
+              this.$router.push({
+                path: '/login/' + this.$i18n.locale
+              })
+            }
+          }]
         })
       },
       toModifyPwd() {

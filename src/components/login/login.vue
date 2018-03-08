@@ -91,10 +91,16 @@
       },
       netWork() {
         return this.$i18n.t('common.network')
+      },
+      confirm() {
+        return this.$i18n.t('common.confirm')
+      },
+      cancel() {
+        return this.$i18n.t('common.cancel')
       }
     },
     created() {
-      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
     },
     methods: {
       onFocus() {
@@ -121,7 +127,12 @@
           return true
         } else {
           weui.alert(this.tip1, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         }
@@ -130,12 +141,22 @@
         let pwd = param.password.trim()
         if (pwd.length <= 0) {
           weui.alert(this.tip2, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else if (pwd.length < 6 || pwd.length > 20) {
           weui.alert(this.tip3, {
-            title: this.tip
+            title: this.tip,
+            buttons: [{
+              label: this.confirm,
+              type: 'primary',
+              onClick: () => { console.log('ok') }
+            }]
           })
           return false
         } else {

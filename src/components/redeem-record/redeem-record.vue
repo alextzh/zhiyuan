@@ -109,10 +109,16 @@
       },
       loadingTip() {
         return this.$i18n.t('common.loading')
+      },
+      confirm() {
+        return this.$i18n.t('common.confirm')
+      },
+      cancel() {
+        return this.$i18n.t('common.cancel')
       }
     },
     created() {
-      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
+      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
       this.loading = weui.loading(this.loadingTip)
       this.pageData.customer_id = getUserInfo().id
     },
@@ -225,44 +231,53 @@
       },
       cancelAction(e) {
         let redeem_id = e.id
-        weui.confirm(this.tip1, () => {
-          $.ajax({
-            type: "POST",
-            url: API.api + '/api/v1/redeem/qxApply',
-            data: {
-              redeem_id: redeem_id
-            },
-            dataType: "jsonp",
-            headers: {
-              'content-type': 'application/x-www-form-urlencoded'
-            },
-            success: (res) => {
-              if (!res.ret) {
-                weui.toast(res.msg, {
-                  duration: 1500
-                })
-                return false
-              }
-              weui.toast(res.msg, {
-                duration: 1500
-              })
-              setTimeout(() => {
-                this.$router.push({
-                  path: '/' + this.$i18n.locale
-                })
-              }, 1500)
-            },
-            error: (err) => {
-              console.log(err)
-              weui.toast(this.netWork, {
-                duration: 1500
+        weui.confirm(this.tip1, {
+          title: this.cancelTip,
+          buttons: [{
+            label: this.cancel,
+            type: 'default',
+            onClick: () => {
+              console.log('已取消')
+            }
+          }, {
+            label: this.confirm,
+            type: 'primary',
+            onClick: () => {
+              $.ajax({
+                type: "POST",
+                url: API.api + '/api/v1/redeem/qxApply',
+                data: {
+                  redeem_id: redeem_id
+                },
+                dataType: "jsonp",
+                headers: {
+                  'content-type': 'application/x-www-form-urlencoded'
+                },
+                success: (res) => {
+                  if (!res.ret) {
+                    weui.toast(res.msg, {
+                      duration: 1500
+                    })
+                    return false
+                  }
+                  weui.toast(res.msg, {
+                    duration: 1500
+                  })
+                  setTimeout(() => {
+                    this.$router.push({
+                      path: '/' + this.$i18n.locale
+                    })
+                  }, 1500)
+                },
+                error: (err) => {
+                  console.log(err)
+                  weui.toast(this.netWork, {
+                    duration: 1500
+                  })
+                }
               })
             }
-          })
-        }, () => {
-          console.log('已取消')
-        }, {
-          title: this.cancelTip
+          }]
         })
       }
     },
