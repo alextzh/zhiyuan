@@ -7,15 +7,15 @@
           <div class="input_area">
             <div class="input_form">
               <i class="iconfont icon-oldpwd"></i>
-              <input v-model="password" minlength="6" maxlength="20" type="password" placeholder="请输入原密码" @focus="focus" />
+              <input v-model="password" minlength="6" maxlength="20" type="password" :placeholder="$t('modifyPwd.tip1')" @focus="focus" />
             </div>
             <div class="input_form">
               <i class="iconfont icon-newpwd"></i>
-              <input v-model="password1" minlength="6" maxlength="20" type="password" placeholder="请输入新密码" @focus="focus" />
+              <input v-model="password1" minlength="6" maxlength="20" type="password" :placeholder="$t('modifyPwd.tip2')" @focus="focus" />
             </div>
             <div class="input_form">
               <i class="iconfont icon-surepwd"></i>
-              <input v-model="password2" minlength="6" maxlength="20" type="password" placeholder="请再次输入新密码" @focus="focus" />
+              <input v-model="password2" minlength="6" maxlength="20" type="password" :placeholder="$t('modifyPwd.tip3')" @focus="focus" />
             </div>
           </div>
           <div class="btn_area">
@@ -43,9 +43,43 @@
         password: '',
         password1: '',
         password2: '',
-        modifyBtnTxt: "修改",
         btnLoading: false,
         btnDisabled: false
+      }
+    },
+    computed: {
+      modifyBtnTxt() {
+        return this.$i18n.t('modifyPwd.modifyBtnTxt')
+      },
+      tip() {
+        return this.$i18n.t('common.tip')
+      },
+      tip1() {
+        return this.$i18n.t('modifyPwd.tip1')
+      },
+      tip2() {
+        return this.$i18n.t('modifyPwd.tip2')
+      },
+      tip3() {
+        return this.$i18n.t('modifyPwd.tip3')
+      },
+      tip4() {
+        return this.$i18n.t('modifyPwd.tip4')
+      },
+      tip5() {
+        return this.$i18n.t('modifyPwd.tip5')
+      },
+      tip6() {
+        return this.$i18n.t('modifyPwd.tip6')
+      },
+      tip7() {
+        return this.$i18n.t('modifyPwd.tip7')
+      },
+      modifyTip() {
+        return this.$i18n.t('common.modifyTip')
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
       }
     },
     created() {
@@ -72,28 +106,27 @@
         }
         var flag = this.checkPassword(param) && this.checkNewPassword(param)
         if (flag) {
-          weui.confirm('您确认要修改密码吗', () => {
-            this.modifyBtnTxt = "修改中"
+          weui.confirm(this.tip7, () => {
             this.btnDisabled = true
             this.btnLoading = true
             this.mySubmit(param)
           }, () => {
             console.log('已取消')
           }, {
-            title: '修改提示'
+            title: this.modifyTip
           })
         }
       },
       checkPassword(param) {
         var password = param.password.trim()
         if (!password) {
-          weui.alert('请输入原密码', {
-            title: '提示'
+          weui.alert(this.tip1, {
+            title: this.tip
           })
           return false
         } else if (password.length < 6 || password.length > 20) {
-          weui.alert('请输入6-20位原密码', {
-            title: '提示'
+          weui.alert(this.tip4, {
+            title: this.tip
           })
           return false
         } else {
@@ -104,23 +137,23 @@
         var password1 = param.password1.trim()
         var password2 = param.password2.trim()
         if (!password1 || !password2) {
-          weui.alert('请输入新密码', {
-            title: '提示'
+          weui.alert(this.tip2, {
+            title: this.tip
           })
           return false
         } else if (password1.length < 6 || password1.length > 20) {
-          weui.alert('请输入6-20位新密码', {
-            title: '提示'
+          weui.alert(this.tip5, {
+            title: this.tip
           })
           return false
         } else if (password2.length < 6 || password2.length > 20) {
-          weui.alert('请输入6-20位新密码', {
-            title: '提示'
+          weui.alert(this.tip5, {
+            title: this.tip
           })
           return false
         } else if (password1 !== password2) {
-          weui.alert('两次新密码输入不一致', {
-            title: '提示'
+          weui.alert(this.tip6, {
+            title: this.tip
           })
           return false
         } else {
@@ -146,7 +179,6 @@
               weui.toast(data.msg, {
                 duration: 1500
               })
-              this.modifyBtnTxt = "修改"
               this.btnDisabled = false
               this.btnLoading = false
               return false
@@ -155,7 +187,6 @@
               duration: 1500
             })
             setTimeout(() => {
-              this.modifyBtnTxt = "修改"
               this.btnDisabled = false
               this.btnLoading = false
               this.$router.push({
@@ -165,10 +196,9 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
-            this.modifyBtnTxt = "修改"
             this.btnDisabled = false
             this.btnLoading = false
           }

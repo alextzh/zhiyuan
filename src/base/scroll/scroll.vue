@@ -123,12 +123,12 @@
     },
     computed: {
       pullUpTxt() {
-        const moreTxt = (this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad.txt.more) || '加载更多'
-        const noMoreTxt = (this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad.txt.noMore) || '没有更多了'
+        const moreTxt = this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad.txt.more || this.$i18n.t('scroll.defaultLoadTxtMore')
+        const noMoreTxt = this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad.txt.noMore || this.$i18n.t('scroll.defaultLoadTxtNoMore')
         return this.pullUpDirty ? moreTxt : noMoreTxt
       },
       refreshTxt() {
-        return (this.pullDownRefresh && this.pullDownRefresh.txt) || '刷新成功'
+        return (this.pullDownRefresh && this.pullDownRefresh.txt) || this.$i18n.t('scroll.defaultRefreshTxt')
       }
     },
     created() {

@@ -9,24 +9,24 @@
         </div>
         <div class="item_body">
           <div class="item__left">
-            <span>申购份额：</span>
+            <span>{{$t('purchase.bidShare')}}：</span>
             <span class="new_data">{{currentProduct.subscribe_money}}万份</span>
           </div>
           <div class="item__right">
-            <span>申购时间：</span>
+            <span>{{$t('purchase.purchaseTime')}}：</span>
             <span class="all_data">{{currentProduct.subscribe_time}}</span>
           </div>
         </div>
         <div class="item_foot" v-if="currentProduct.recast_start_time">
-          <span>复投开始：</span>
+          <span>{{$t('purchaseRecord.addStart')}}：</span>
           <span>{{currentProduct.recast_start_time}}</span>
         </div>
         <div class="item_foot" v-if="currentProduct.recast_end_time">
-          <span>复投结束：</span>
+          <span>{{$t('purchaseRecord.addEnd')}}：</span>
           <span>{{currentProduct.recast_end_time}}</span>
         </div>
         <div class="item_foot" style='display:flex'>
-          <span>结算时间：</span>
+          <span>{{$t('purchase.settlementTime')}}：</span>
           <div style="flex:1;display:flex;flex-wrap:wrap;">
             <div style="display:flex;width:50%;" v-for="(t, i) in currentProduct.settlement_time" :key="i">
               <span style='flex:1'>{{t}}</span>
@@ -39,11 +39,11 @@
           <div class="input_form">
             <i class="iconfont icon-redeemed"></i>
             <span class='unit'>万份</span>
-            <input type="number" v-model="redeemAmt" maxlength="20" placeholder="请输入赎回份额" />
+            <input type="number" v-model="redeemAmt" maxlength="20" :placeholder="$t('redeem.tip1')" />
           </div>
           <div class="redeem_tip">
             <i class="iconfont icon-risk"></i>
-            <span>赎回剩余份额必须大于等于100万份</span>
+            <span>{{$t('redeem.tip2')}}</span>
           </div>
         </div>
         <div class="btn_area">
@@ -53,12 +53,10 @@
       <div class="redeem_rule">
         <div class="rule_title">
           <i class="iconfont icon-rule"></i>
-          <span class="tit"> 赎回管理规则</span>
+          <span class="tit">{{$t('redeem.rule.title')}}</span>
         </div>
-        <span>1.最小赎回份额为1万份，递增份额为1万份；</span>
-        <span>2.全部赎回时只能赎回申购份额；</span>
-        <span>3.部分赎回时赎回后剩余赎回份额不低于最小申购份额；</span>
-        <span>4.查看赎回记录请到我的页面；</span>
+        <span>1.{{$t('redeem.rule.one')}}</span>
+        <span>2.{{$t('redeem.rule.two')}}</span>
       </div>
     </div>
   </transition>
@@ -79,10 +77,38 @@
         showClose: false,
         currentProduct: null,
         redeemAmt: '',
-        redeemBtnTxt: '申请赎回',
         btnLoading: false,
         btnDisabled: false
       }
+    },
+    computed: {
+      redeemBtnTxt() {
+        return this.$i18n.t('redeem.redeemBtnTxt')
+      },
+      tip() {
+        return this.$i18n.t('common.tip')
+      },
+      tip1() {
+        return this.$i18n.t('redeem.tip1')
+      },
+      tip2() {
+        return this.$i18n.t('redeem.tip3')
+      },
+      tip3() {
+        return this.$i18n.t('redeem.rule.two')
+      },
+      tip4() {
+        return this.$i18n.t('redeem.tip4')
+      },
+      tip5() {
+        return this.$i18n.t('redeem.tip5')
+      },
+      redeemTip() {
+        return this.$i18n.t('common.redeemTip')
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
+      },
     },
     created() {
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
@@ -98,15 +124,14 @@
       formSubmit() {
         let param = this.redeemAmt
         if (this.checkRedeem(param)) {
-          weui.confirm('您确认要赎回' + param + '万份吗', () => {
-            this.redeemBtnTxt = "申请赎回中"
+          weui.confirm(`${this.tip5}${param}万份?`, () => {
             this.btnDisabled = true
             this.btnLoading = true
             this.mySubmit(param)
           }, () => {
             console.log('已取消')
           }, {
-            title: '赎回提示'
+            title: this.redeemTip
           })
         }
       },
@@ -115,23 +140,23 @@
         var amt = param
         var max = getProduct().subscribe_money
         if (!amt) {
-          weui.alert('请输入赎回份额', {
-            title: '提示'
+          weui.alert(this.tip1, {
+            title: this.tip
           })
           return false
         } else if (amt < 1) {
-          weui.alert('最小赎回份额为1万份', {
-            title: '提示'
+          weui.alert(this.tip2, {
+            title: this.tip
           })
           return false
         } else if (amt > max) {
-          weui.alert('赎回份额不能大于申购份额', {
-            title: '提示'
+          weui.alert(this.tip3, {
+            title: this.tip
           })
           return false
         } else if (amt % 1 !== 0) {
-          weui.alert('赎回递增份额为1万份', {
-            title: '提示'
+          weui.alert(this.tip4, {
+            title: this.tip
           })
           return false
         } else {
@@ -159,7 +184,6 @@
               weui.toast(res.msg, {
                 duration: 1500
               })
-              this.redeemBtnTxt = "申请赎回"
               this.btnDisabled = false
               this.btnLoading = false
               return false
@@ -168,7 +192,6 @@
               duration: 1500
             })
             setTimeout(() => {
-              this.redeemBtnTxt = "申请赎回"
               this.btnDisabled = false
               this.btnLoading = false
               this.$router.push({
@@ -178,10 +201,9 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast(res.msg, {
+            weui.toast(this.netWork, {
               duration: 1500
             })
-            this.redeemBtnTxt = "申请赎回"
             this.btnDisabled = false
             this.btnLoading = false
           }

@@ -9,34 +9,34 @@
         </div>
         <div class="item_body">
           <div class="item__left">
-            <span>申购份额：</span>
+            <span>{{$t('purchase.bidShare')}}：</span>
             <span class="new_data">{{currentProduct.subscribe_money}}万份</span>
           </div>
           <div class="item__right">
-            <span>申购时间：</span>
+            <span>{{$t('purchase.purchaseTime')}}：</span>
             <span class="all_data">{{currentProduct.subscribe_time}}</span>
           </div>
         </div>
         <div class="item_body">
           <div class="item__left">
-            <span>最小份额：</span>
+            <span>{{$t('addApply.minShare')}}：</span>
             <span class="new_data">{{currentProduct.min_money / 10000}}万份</span>
           </div>
           <div class="item__right">
-            <span>申购状态：</span>
+            <span>{{$t('addApply.purchaseStatus')}}：</span>
             <span class="all_data">{{currentProduct.subscribe_status}}</span>
           </div>
         </div>
         <div class="item_foot" v-if="currentProduct.recast_start_time">
-          <span>复投开始：</span>
+          <span>{{$t('purchaseRecord.addStart')}}：</span>
           <span>{{currentProduct.recast_start_time}}</span>
         </div>
         <div class="item_foot" v-if="currentProduct.recast_end_time">
-          <span>复投结束：</span>
+          <span>{{$t('purchaseRecord.addEnd')}}：</span>
           <span>{{currentProduct.recast_end_time}}</span>
         </div>
         <div class="item_foot" style='display:flex'>
-          <span>结算时间：</span>
+          <span>{{$t('purchase.settlementTime')}}：</span>
           <div style="flex:1;display:flex;flex-wrap:wrap;">
             <div style="display:flex;width:50%;" v-for="(t, i) in currentProduct.settlement_time" :key="i">
               <span style='flex:1'>{{t}}</span>
@@ -48,7 +48,7 @@
         <div style="padding: 0 15px;">
           <div class="select_type" v-if="pickerArr.length > 1">
             <i class="iconfont icon-unfold"></i>
-            <span class="type_title">方案类型：</span>
+            <span class="type_title">{{$t('purchase.schemeType')}}：</span>
             <input type="text" palceholder="请选择方案类型" @click="selectPlan" readonly :value="curValue" />
           </div>
         </div>
@@ -56,7 +56,7 @@
           <div class="input_form">
             <i class="iconfont icon-redeemed"></i>
             <span class='unit'>万份</span>
-            <input type="number" v-model="subscribeAmt" maxlength="20" placeholder="请输入追加申购份额" />
+            <input type="number" v-model="subscribeAmt" maxlength="20" :placeholder="$t('addApply.tip1')" />
           </div>
         </div>
         <div class="btn_area">
@@ -88,10 +88,40 @@
         currentPlan: null,
         currentProduct: null,
         subscribeAmt: '',
-        currentChannel: 'JSYH',
-        subscribeBtnTxt: '追加申购',
         btnLoading: false,
         btnDisabled: false
+      }
+    },
+    computed: {
+      subscribeBtnTxt() {
+        return this.$i18n.t('addApply.subscribeBtnTxt')
+      },
+      tip() {
+        return this.$i18n.t('common.tip')
+      },
+      tip1() {
+        return this.$i18n.t('addApply.tip1')
+      },
+      tip2() {
+        return this.$i18n.t('addApply.tip2')
+      },
+      tip3() {
+        return this.$i18n.t('addApply.tip3')
+      },
+      tip4() {
+        return this.$i18n.t('addApply.tip4')
+      },
+      tip5() {
+        return this.$i18n.t('addApply.tip5')
+      },
+      tip6() {
+        return this.$i18n.t('addApply.tip6')
+      },
+      addTip() {
+        return this.$i18n.t('common.addTip')
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
       }
     },
     created() {
@@ -143,7 +173,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
           }
@@ -163,45 +193,44 @@
           }
         })
       },
-      // 提交赎回
+      // 提交追加
       formSubmit: function () {
         var that = this
         let param = this.subscribeAmt
         let planName = this.currentPlan.name
         if (this.checkSubscribe(that, param)) {
-          weui.confirm('您确认要追加' + planName + '申购份额' + param + '万份吗', () => {
-            this.subscribeBtnTxt = "追加申购中"
+          weui.confirm(`${this.tip5}${planName}${this.tip6}${param}万份?`, () => {
             this.btnDisabled = true
             this.btnLoading = true
             this.mySubmit(that, param)
           }, () => {
             console.log('已取消')
           }, {
-            title: '追加提示'
+            title: this.addTip
           })
         }
       },
-      // 校验追加金额
+      // 校验追加份额
       checkSubscribe: function (that, param) {
         var amt = param
         if (!amt) {
-          weui.alert('请输入追加申购份额', {
-            title: '提示'
+          weui.alert(that.tip1, {
+            title: that.tip
           })
           return false
         } else if (amt < 1) {
-          weui.alert('最小追加份额为1万份', {
-            title: '提示'
+          weui.alert(that.tip2, {
+            title: that.tip
           })
           return false
         } else if (amt > 100000) {
-          weui.alert('最大追加份额为100000万份', {
-            title: '提示'
+          weui.alert(that.tip3, {
+            title: that.tip
           })
           return false
         } else if (amt % 1 !== 0) {
-          weui.alert('追加递增份额为1万份', {
-            title: '提示'
+          weui.alert(that.tip4, {
+            title: that.tip
           })
           return false
         } else {
@@ -229,7 +258,6 @@
               weui.toast(res.msg, {
                 duration: 1500
               })
-              this.subscribeBtnTxt = "追加申购"
               this.btnDisabled = false
               this.btnLoading = false
               return false
@@ -238,7 +266,6 @@
               duration: 1500
             })
             setTimeout(() => {
-              this.subscribeBtnTxt = "追加申购"
               this.btnDisabled = false
               this.btnLoading = false
               this.$router.push({
@@ -248,10 +275,9 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
-            this.subscribeBtnTxt = "追加申购"
             this.btnDisabled = false
             this.btnLoading = false
           }

@@ -34,11 +34,11 @@
               </div>
               <div class="item_body" v-if="item.status === 'XGDSH'">
                 <div class="item__left">
-                  <span>目标方案：</span>
+                  <span>{{$t('plan.targetScheme')}}：</span>
                   <span class="new_data">{{item.target_product_name}}</span>
                 </div>
                 <div class="item__right">
-                  <span>修改份额：</span>
+                  <span>{{$t('plan.modifyShare')}}：</span>
                   <span class="all_data">{{item.edit_money / 10000}}万份</span>
                 </div>
               </div>
@@ -111,11 +111,23 @@
           threshold: parseInt(this.pullDownRefreshThreshold),
           stop: parseInt(this.pullDownRefreshStop)
         } : false
+      },
+      loadingTip() {
+        return this.$i18n.t('common.loading')
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
+      },
+      cancelTip() {
+        return this.$i18n.t('common.cancelTip')
+      },
+      tip1() {
+        return this.$i18n.t('plan.tip1')
       }
     },
     created() {
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
-      this.loading = weui.loading('加载中')
+      this.loading = weui.loading(this.loadingTip)
       this.customer_id = getUserInfo().id
     },
     mounted() {
@@ -161,7 +173,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
           }
@@ -189,7 +201,7 @@
       },
       cancelAction(e) {
         var edit_item_id = e.edit_item_id
-        weui.confirm('您确认要取消修改当前产品吗', () => {
+        weui.confirm(this.tip1, () => {
           $.ajax({
             type: "POST",
             url: API.api + '/api/v1/product/qxXgFA',
@@ -218,7 +230,7 @@
             },
             error: (err) => {
               console.log(err)
-              weui.toast('网络异常', {
+              weui.toast(this.netWork, {
                 duration: 1500
               })
             }
@@ -226,7 +238,7 @@
         }, () => {
           console.log('已取消')
         }, {
-          title: '取消提示'
+          title: this.cancelTip
         })
       }
     },

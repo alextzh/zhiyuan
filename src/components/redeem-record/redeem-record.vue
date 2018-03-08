@@ -78,8 +78,6 @@
         pullDownRefreshStop: 60,
         pullUpLoad: true,
         pullUpLoadThreshold: 0,
-        pullUpLoadMoreTxt: '加载更多',
-        pullUpLoadNoMoreTxt: '没有更多数据了',
         startY: 0,
         hasData: false,
         totalPage: 0
@@ -97,14 +95,25 @@
       },
       pullUpLoadObj: function () {
         return this.pullUpLoad ? {
-          threshold: parseInt(this.pullUpLoadThreshold),
-          txt: {more: this.pullUpLoadMoreTxt, noMore: this.pullUpLoadNoMoreTxt}
+          threshold: parseInt(this.pullUpLoadThreshold)
         } : false
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
+      },
+      cancelTip() {
+        return this.$i18n.t('common.cancelTip')
+      },
+      tip1() {
+        return this.$i18n.t('redeemRecord.tip1')
+      },
+      loadingTip() {
+        return this.$i18n.t('common.loading')
       }
     },
     created() {
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
-      this.loading = weui.loading('加载中')
+      this.loading = weui.loading(this.loadingTip)
       this.pageData.customer_id = getUserInfo().id
     },
     mounted() {
@@ -150,7 +159,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
           }
@@ -188,7 +197,7 @@
             },
             error: (err) => {
               console.log(err)
-              weui.toast('网络异常', {
+              weui.toast(this.netWork, {
                 duration: 1500
               })
             }
@@ -216,7 +225,7 @@
       },
       cancelAction(e) {
         let redeem_id = e.id
-        weui.confirm('您确认要取消当前赎回申请吗', () => {
+        weui.confirm(this.tip1, () => {
           $.ajax({
             type: "POST",
             url: API.api + '/api/v1/redeem/qxApply',
@@ -245,7 +254,7 @@
             },
             error: (err) => {
               console.log(err)
-              weui.toast('网络异常', {
+              weui.toast(this.netWork, {
                 duration: 1500
               })
             }
@@ -253,7 +262,7 @@
         }, () => {
           console.log('已取消')
         }, {
-          title: '取消提示'
+          title: this.cancelTip
         })
       }
     },

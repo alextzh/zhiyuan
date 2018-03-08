@@ -22,7 +22,7 @@
               </div>
               <div class="item_body">
                 <div class="item__left">
-                  <span>合同名称：</span>
+                  <span>{{$t('management.contractName')}}：</span>
                   <span class="new_data">{{item.doc_title}}</span>
                 </div>
               </div>
@@ -88,11 +88,17 @@
           threshold: parseInt(this.pullDownRefreshThreshold),
           stop: parseInt(this.pullDownRefreshStop)
         } : false
+      },
+      loadingTip() {
+        return this.$i18n.t('common.loading')
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
       }
     },
     created() {
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
-      this.loading = weui.loading('加载中')
+      this.loading = weui.loading(this.loadingTip)
       this.customer_id = getUserInfo().id
     },
     mounted() {
@@ -138,7 +144,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
           }

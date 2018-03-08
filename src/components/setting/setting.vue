@@ -8,11 +8,11 @@
           <span class="text">{{$t('setting.modifyPwd')}}</span>
           <i class="iconfont icon-goto fc999"></i>
         </div>
-        <div class="item" @click="toSwitchLanguage()">
+        <!-- <div class="item" @click="toSwitchLanguage()">
           <i class="iconfont icon-config" style="color:#2196F3;"></i>
           <span class="text">{{$t('setting.language')}}</span>
           <span class="value" >{{currentLanguage}}</span>
-        </div>
+        </div> -->
         <div class="btn_area">
           <button class="btn" @click="loginOut()">{{$t('setting.logOut')}}</button>
         </div>
@@ -36,6 +36,14 @@
         currentLanguage: ''
       }
     },
+    computed: {
+      quitTip() {
+        return this.$i18n.t('common.quitTip')
+      },
+      tip1() {
+        return this.$i18n.t('setting.tip1')
+      }
+    },
     created() {
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
     },
@@ -51,7 +59,7 @@
         this.$router.back()
       },
       loginOut() {
-        weui.confirm('您确认要退出该账户吗', () => {
+        weui.confirm(this.tip1, () => {
           clearStorage()
           this.$router.push({
             path: '/login/' + this.$i18n.locale
@@ -59,7 +67,7 @@
         }, () => {
           console.log('已取消')
         }, {
-          title: '退出提示'
+          title: this.quitTip
         })
       },
       toModifyPwd() {

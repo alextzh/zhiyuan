@@ -30,7 +30,7 @@ button:active{
 }
 .no_data{
   position:fixed;
-  top:0;
+  top:50px;
   bottom:0;
   width:100%;
   display:flex;

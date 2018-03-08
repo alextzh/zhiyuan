@@ -58,11 +58,13 @@ export default {
     bidShare: '申购份额',
     maxNumber: '最大人数',
     tip1: '请输入申购份额',
-    tip2: '最小申购份额',
+    tip2: '最小申购份额为',
     tip3: '最大申购份额为100000万份',
-    tip4: '申购递增份额',
+    tip4: '申购递增份额为',
     tip5: '申购提示',
-    tip6: '您确认要申购当前产品',
+    tip6: '您确认要申购当前产品为',
+    tip7: '申购递增份额为1万份',
+    tip8: '您确认要修改申购份额为',
     purchaseBtnTxt: '申购'
   },
 
@@ -76,12 +78,29 @@ export default {
     modifyAdd: '修改追加',
     cancelAdd: '取消追加',
     applyRedeem: '申请赎回',
-    applyAdd: '申请追加'
+    applyAdd: '申请追加',
+    tip1: '您确认要取消当前申购申请吗',
+    tip2: '您确认要取消当前追加请求吗'
+  },
+
+  redeem: {
+    tip1: '请输入赎回份额',
+    tip2: '赎回剩余份额必须大于等于100万份',
+    tip3: '最小赎回份额为1万份',
+    tip4: '赎回递增份额为1万份',
+    tip5: '您确认要赎回当前产品',
+    redeemBtnTxt: '申请赎回',
+    rule: {
+      title: '赎回管理规则',
+      one: '最小赎回份额为1万份，递增份额为1万份',
+      two: '赎回份额不能大于申购份额'
+    }
   },
 
   redeemRecord: {
     applyTime: '申请时间',
-    cancelRedeem: '取消赎回'
+    cancelRedeem: '取消赎回',
+    tip1: '您确认要取消当前赎回申请吗'
   },
 
   plan: {
@@ -89,10 +108,40 @@ export default {
     modifyShare: '修改份额',
     applyModify: '申请修改方案',
     cancelModify: '取消修改方案',
-    tip: '结算前三个交易日不能修改'
+    tip: '结算前三个交易日不能修改',
+    tip1: '您确认要取消修改当前方案吗'
+  },
+
+  modifyPlan: {
+    selectPlan: '选择方案',
+    changeShare: '更改份额',
+    modifyBtnTxt: '更改方案',
+    tip1: '请输入更改份额',
+    tip2: '最小更改份额为',
+    tip3: '更改份额不能大于申购份额',
+    tip4: '更改递增份额为',
+    tip5: '您确认要更改方案为'
+  },
+
+  addApply: {
+    minShare: '最小份额',
+    purchaseStatus: '申购状态',
+    tip1: '请输入追加份额',
+    tip2: '最小追加份额为1万份',
+    tip3: '最大追加份额为100000万份',
+    tip4: '追加递增份额为1万份',
+    tip5: '您确认要追加',
+    tip6: '申购份额为',
+    tip7: '您确认要修改追加份额为',
+    subscribeBtnTxt: '追加'
+  },
+
+  modifyAdd: {
+    subscribeBtnTxt: '提交修改',
   },
 
   management: {
+    contractName: '合同名称',
     download: '下载',
     view: '预览',
     signContract: '签合同'
@@ -101,13 +150,36 @@ export default {
   setting: {
     language: '切换语言',
     modifyPwd: '修改密码',
-    logOut: '退出'
+    logOut: '退出',
+    tip1: '您确认要退出该账户吗'
+  },
+
+  modifyPwd: {
+    tip1: '请输入原密码',
+    tip2: '请输入新密码',
+    tip3: '请再次输入新密码',
+    tip4: '请输入6-20位原密码',
+    tip5: '请输入6-20位新密码',
+    tip6: '两次新密码输入不一致',
+    tip7: '您确认要修改密码吗',
+    modifyBtnTxt: '修改'
   },
 
   common: {
     tip: '提示',
     network: '网络异常',
-    loading: '加载中'
+    loading: '加载中',
+    cancelTip: '取消提示',
+    addTip: '追加提示',
+    modifyTip: '修改提示',
+    redeemTip: '赎回提示',
+    quitTip: '退出提示'
+  },
+
+  scroll: {
+    defaultLoadTxtMore: '加载更多',
+    defaultLoadTxtNoMore: '没有更多数据了',
+    defaultRefreshTxt: '刷新成功'
   }
 
 }

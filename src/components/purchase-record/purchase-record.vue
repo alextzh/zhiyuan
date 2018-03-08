@@ -145,11 +145,26 @@
           threshold: parseInt(this.pullDownRefreshThreshold),
           stop: parseInt(this.pullDownRefreshStop)
         } : false
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
+      },
+      loadingTip() {
+        return this.$i18n.t('common.loading')
+      },
+      cancelTip() {
+        return this.$i18n.t('common.cancelTip')
+      },
+      tip1() {
+        return this.$i18n.t('purchaseRecord.tip1')
+      },
+      tip2() {
+        return this.$i18n.t('purchaseRecord.tip2')
       }
     },
     created() {
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
-      this.loading = weui.loading('加载中')
+      this.loading = weui.loading(this.loadingTip)
       this.pageData.customer_id = getUserInfo().id
     },
     mounted() {
@@ -193,7 +208,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
           }
@@ -247,7 +262,7 @@
       // 取消追加
       cancelFt(e) {
         let account_id = e.account_id
-        weui.confirm('您确认要取消追加当前产品吗', () => {
+        weui.confirm(this.tip2, () => {
           $.ajax({
             type: "POST",
             url: API.api + '/api/v1/subscribe/qxRecast',
@@ -276,7 +291,7 @@
             },
             error: (err) => {
               console.log(err)
-              weui.toast('网络异常', {
+              weui.toast(this.netWork, {
                 duration: 1500
               })
             }
@@ -284,7 +299,7 @@
         }, () => {
           console.log('已取消')
         }, {
-          title: '取消提示'
+          title: this.cancelTip
         })
       },
       // 修改申购
@@ -298,7 +313,7 @@
       cancelAction(e) {
         let customer_id = getUserInfo().id
         let subscribe_id = e.subscribe_id
-        weui.confirm('您确认要删除申购记录吗', () => {
+        weui.confirm(this.tip1, () => {
           $.ajax({
             type: "POST",
             url: API.api + '/api/v1/subscribe/qxApply',
@@ -328,7 +343,7 @@
             },
             error: (err) => {
               console.log(err)
-              weui.toast('网络异常', {
+              weui.toast(this.netWork, {
                 duration: 1500
               })
             }
@@ -336,7 +351,7 @@
         }, () => {
           console.log('已取消')
         }, {
-          title: '删除提示'
+          title: this.cancelTip
         })
       }
     },

@@ -91,8 +91,6 @@
         pullDownRefreshStop: 40,
         pullUpLoad: true,
         pullUpLoadThreshold: 0,
-        pullUpLoadMoreTxt: '加载更多',
-        pullUpLoadNoMoreTxt: '没有更多数据了',
         startY: 0,
         hasData: false,
         totalPage: 0
@@ -110,9 +108,14 @@
       },
       pullUpLoadObj: function () {
         return this.pullUpLoad ? {
-          threshold: parseInt(this.pullUpLoadThreshold),
-          txt: {more: this.pullUpLoadMoreTxt, noMore: this.pullUpLoadNoMoreTxt}
+          threshold: parseInt(this.pullUpLoadThreshold)
         } : false
+      },
+      loadingTip() {
+        return this.$i18n.t('common.loading')
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
       }
     },
     watch: {
@@ -137,7 +140,7 @@
     },
     created() {
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
-      this.loading = weui.loading('加载中')
+      this.loading = weui.loading(this.loadingTip)
       this.pageData.customer_id = getUserInfo().id
     },
     mounted() {
@@ -183,7 +186,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
           }
@@ -221,7 +224,7 @@
             },
             error: (err) => {
               console.log(err)
-              weui.toast('网络异常', {
+              weui.toast(this.netWork, {
                 duration: 1500
               })
             }

@@ -44,9 +44,17 @@
         hasData: false
       }
     },
+    computed: {
+      netWork() {
+        return this.$i18n.t('common.network')
+      },
+      loadingTip() {
+        return this.$i18n.t('common.loading')
+      }
+    },
     created() {
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : 'en'
-      this.loading = weui.loading('加载中')
+      this.loading = weui.loading(this.loadingTip)
     },
     mounted() {
       setTimeout(() => {
@@ -85,7 +93,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
           }

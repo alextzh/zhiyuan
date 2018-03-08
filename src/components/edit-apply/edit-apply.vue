@@ -9,26 +9,26 @@
         </div>
         <div class="item_body">
           <div class="item__left">
-            <span>申购份额：</span>
+            <span>{{$t('purchase.bidShare')}}：</span>
             <span class="new_data">{{currentProduct.subscribe_money}}万份</span>
           </div>
           <div class="item__right">
-            <span>申购时间：</span>
+            <span>{{$t('purchase.purchaseTime')}}：</span>
             <span class="all_data">{{currentProduct.subscribe_time}}</span>
           </div>
         </div>
         <div class="item_body">
           <div class="item__left">
-            <span>最小份额：</span>
+            <span>{{$t('addApply.minShare')}}：</span>
             <span class="new_data">{{currentProduct.min_money / 10000}}万份</span>
           </div>
           <div class="item__right">
-            <span>申购状态：</span>
+            <span>{{$t('addApply.purchaseStatus')}}：</span>
             <span class="all_data">{{currentProduct.subscribe_status}}</span>
           </div>
         </div>
         <div class="item_foot" style='display:flex'>
-          <span>结算时间：</span>
+          <span>{{$t('purchase.settlementTime')}}：</span>
           <div style="flex:1;display:flex;flex-wrap:wrap;">
             <div style="display:flex;width:50%;" v-for="(t, i) in currentProduct.settlement_time" :key="i">
               <span style='flex:1'>{{t}}</span>
@@ -41,7 +41,7 @@
           <div class="input_form">
             <i class="iconfont icon-redeemed"></i>
             <span class='unit'>万份</span>
-            <input type="number" v-model="subscribeAmt" maxlength="20" placeholder="请输入申购份额" />
+            <input type="number" v-model="subscribeAmt" maxlength="20" :placeholder="$t('purchase.tip1')" />
           </div>
         </div>
         <div class="btn_area">
@@ -67,9 +67,37 @@
         showClose: false,
         currentProduct: null,
         subscribeAmt: '',
-        subscribeBtnTxt: '提交修改',
         btnLoading: false,
         btnDisabled: false
+      }
+    },
+    computed: {
+      subscribeBtnTxt() {
+        return this.$i18n.t('modifyAdd.subscribeBtnTxt')
+      },
+      tip() {
+        return this.$i18n.t('common.tip')
+      },
+      tip1() {
+        return this.$i18n.t('purchase.tip1')
+      },
+      tip2() {
+        return this.$i18n.t('purchase.tip2')
+      },
+      tip3() {
+        return this.$i18n.t('purchase.tip3')
+      },
+      tip4() {
+        return this.$i18n.t('purchase.tip7')
+      },
+      tip5() {
+        return this.$i18n.t('purchase.tip8')
+      },
+      modifyTip() {
+        return this.$i18n.t('common.modifyTip')
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
       }
     },
     created() {
@@ -82,45 +110,44 @@
       back() {
         this.$router.back()
       },
-      // 提交赎回
+      // 提交修改申购
       formSubmit: function () {
         var that = this
         let param = this.subscribeAmt
         if (this.checkSubscribe(that, param)) {
-          weui.confirm('您确认要修改申购份额为' + param + '万份吗', () => {
-            this.subscribeBtnTxt = "提交修改中"
+          weui.confirm(`${this.tip5}${param}万份?`, () => {
             this.btnDisabled = true
             this.btnLoading = true
             this.mySubmit(param)
           }, () => {
             console.log('已取消')
           }, {
-            title: '修改提示'
+            title: this.modifyTip
           })
         }
       },
-      // 校验追加金额
+      // 校验申购份额
       checkSubscribe: function (that, param) {
         var amt = param
         var min = that.currentProduct.min_money / 10000
         if (!amt) {
-          weui.alert('请输入申购份额', {
-            title: '提示'
+          weui.alert(that.tip1, {
+            title: that.tip
           })
           return false
         } else if (amt < min) {
-          weui.alert('最小申购份额为' +min+ '万份', {
-            title: '提示'
+          weui.alert(`${that.tip2}${min}万份`, {
+            title: that.tip
           })
           return false
         } else if (amt > 100000) {
-          weui.alert('最大申购份额为100000万份', {
-            title: '提示'
+          weui.alert(that.tip3, {
+            title: that.tip
           })
           return false
         } else if (amt % 1 !== 0) {
-          weui.alert('申购递增份额为1万份', {
-            title: '提示'
+          weui.alert(that.tip4, {
+            title: that.tip
           })
           return false
         } else {
@@ -148,7 +175,6 @@
               weui.toast(data.msg, {
                 duration: 1500
               })
-              this.subscribeBtnTxt = "提交修改"
               this.btnDisabled = false
               this.btnLoading = false
               return false
@@ -157,7 +183,6 @@
               duration: 1500
             })
             setTimeout(() => {
-              this.subscribeBtnTxt = "提交修改"
               this.btnDisabled = false
               this.btnLoading = false
               this.$router.push({
@@ -167,10 +192,9 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
-            this.subscribeBtnTxt = "提交修改"
             this.btnDisabled = false
             this.btnLoading = false
           }

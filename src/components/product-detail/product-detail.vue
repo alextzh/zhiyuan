@@ -286,7 +286,7 @@
         var that = this
         let param = this.purchaseAmt
         if (this.checkPurchase(that, param)) {
-          weui.confirm(that.tip6 + '为' + param + '万份?', () => {
+          weui.confirm(`${that.tip6}${param}万份?`, () => {
             this.btnDisabled = true
             this.btnLoading = true
             this.mySubmit(that, param)
@@ -309,7 +309,7 @@
           })
           return false
         } else if (amt < min) {
-          weui.alert(that.tip2 + '为' + min + '万份', {
+          weui.alert(`${that.tip2}${min}万份`, {
             title: that.tip
           })
           return false
@@ -319,7 +319,7 @@
           })
           return false
         } else if (amt % step !== 0) {
-          weui.alert(that.tip4 + '为' + step + '万份', {
+          weui.alert(`${that.tip4}${step}万份`, {
             title: that.tip
           })
           return false

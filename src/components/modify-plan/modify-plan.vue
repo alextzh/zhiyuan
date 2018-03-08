@@ -9,20 +9,20 @@
         </div>
         <div class="item_body">
           <div class="item__left">
-            <span>方案名称：</span>
+            <span>{{$t('purchase.schemeName')}}：</span>
             <span class="new_data">{{currentProduct.product_name}}</span>
           </div>
           <div class="item__right">
-            <span>申购份额：</span>
+            <span>{{$t('purchase.bidShare')}}：</span>
             <span class="all_data">{{currentProduct.subscribe_money}}万份</span>
           </div>
         </div>
         <div class="item_foot">
-          <span>申购时间：</span>
+          <span>{{$t('purchase.purchaseTime')}}：</span>
           <span>{{currentProduct.subscribe_time}}</span>
         </div>
         <div class="item_foot" style="display: flex;" v-if="currentProduct.describe">
-          <span>产品简介：</span>
+          <span>{{$t('purchase.productIntroduction')}}：</span>
           <div style="flex: 1;">
             <span style="line-height: 1;">{{currentProduct.describe}}</span>
           </div>
@@ -34,33 +34,33 @@
             <div style="padding: 0 10px;">
               <div class="select_type" v-if="pickerArr.length > 1">
                 <i class="iconfont icon-unfold"></i>
-                <span class="type_title">选择方案：</span>
+                <span class="type_title">{{$t('modifyPlan.selectPlan')}}：</span>
                 <input type="text" palceholder="请选择方案类型" @click="selectPlan" readonly :value="curValue" />
               </div>
             </div>
             <div style="padding: 0 10px 5px;" v-if="showArr.length > 1">
               <div class="item_body">
                 <div class="item__left">
-                  <span>方案名称：</span>
+                  <span>{{$t('purchase.schemeName')}}：</span>
                   <span class="new_data">{{currentPlan.name}}</span>
                 </div>
                 <div class="item__right">
-                  <span>最大人数：</span>
+                  <span>{{$t('purchase.maxNumber')}}：</span>
                   <span class="all_data">{{currentPlan.max_amount}}</span>
                 </div>
               </div>
               <div class="item_body">
                 <div class="item__left">
-                  <span>最小份额：</span>
+                  <span>{{$t('addApply.minShare')}}：</span>
                   <span class="new_data">{{currentPlan.min_money / 10000}}万份</span>
                 </div>
                 <div class="item__right">
-                  <span>递增份额：</span>
+                  <span>{{$t('purchase.increasingShare')}}：</span>
                   <span class="all_data">{{currentPlan.step_money / 10000}}万份</span>
                 </div>
               </div>
               <div class="item_foot" style='display:flex'>
-                <span>结算时间：</span>
+                <span>{{$t('purchase.settlementTime')}}：</span>
                 <div style="flex:1;display:flex;flex-wrap:wrap;">
                   <div style="display:flex;width:50%;" v-for="(t, i) in currentPlan.settlement_time" :key="i">
                     <span style="flex:1">{{t}}</span>
@@ -68,7 +68,7 @@
                 </div>
               </div>
               <div class="item_foot" style="display: flex;">
-                <span>方案详情：</span>
+                <span>{{$t('purchase.schemeDetail')}}：</span>
                 <div style="flex: 1;">
                   <span>{{currentPlan.describe}}</span>
                 </div>
@@ -76,9 +76,9 @@
             </div>
             <div v-if="flag" style="padding: 0 10px;">
               <div class="input_area">
-                <div class="input_title">更改份额：</div>
+                <div class="input_title">{{$t('modifyPlan.changeShare')}}：</div>
                 <div class="input_con">
-                  <input type="number" v-model="purchaseAmt" placeholder='请输入更改份额' />
+                  <input type="number" v-model="purchaseAmt" :placeholder="$t('modifyPlan.tip1')" />
                   <span class='unit'>万份</span>
                 </div>
               </div>
@@ -115,10 +115,38 @@
         currentProduct: null,
         customer_id: '',
         purchaseAmt: '',
-        modifyBtnTxt: '更改方案',
         btnLoading: false,
         btnDisabled: false,
         flag: false
+      }
+    },
+    computed: {
+      modifyBtnTxt() {
+        return this.$i18n.t('modifyPlan.modifyBtnTxt')
+      },
+      tip() {
+        return this.$i18n.t('common.tip')
+      },
+      tip1() {
+        return this.$i18n.t('modifyPlan.tip1')
+      },
+      tip2() {
+        return this.$i18n.t('modifyPlan.tip2')
+      },
+      tip3() {
+        return this.$i18n.t('modifyPlan.tip3')
+      },
+      tip4() {
+        return this.$i18n.t('modifyPlan.tip4')
+      },
+      tip5() {
+        return this.$i18n.t('modifyPlan.tip5')
+      },
+      modifyTip() {
+        return this.$i18n.t('common.modifyTip')
+      },
+      netWork() {
+        return this.$i18n.t('common.network')
       }
     },
     created() {
@@ -176,7 +204,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(this.netWork, {
               duration: 1500
             })
           }
@@ -207,15 +235,14 @@
         let param = this.purchaseAmt
         let curPlan = this.currentPlan
         if (this.checkPurchase(that, param)) {
-          weui.confirm(`您确认要更改方案为${curPlan.name}${param}万份吗`, () => {
-            this.modifyBtnTxt = "更改方案中"
+          weui.confirm(`${this.tip5}${curPlan.name}${param}万份?`, () => {
             this.btnDisabled = true
             this.btnLoading = true
             this.mySubmit(that, param)
           }, () => {
             console.log('已取消')
           }, {
-            title: '更改提示'
+            title: this.modifyTip
           })
         }
       },
@@ -228,23 +255,23 @@
         var step = curPlan.step_money / 10000
 
         if (!amt) {
-          weui.alert('请输入更改份额', {
-            title: '提示'
+          weui.alert(that.tip1, {
+            title: that.tip
           })
           return false
         } else if (amt < min) {
-          weui.alert('最小更改份额为' +min+ '万份', {
-            title: '提示'
+          weui.alert(`${that.tip2}${min}万份`, {
+            title: that.tip
           })
           return false
         } else if (amt > max) {
-          weui.alert('更改份额不能大于申购份额', {
-            title: '提示'
+          weui.alert(that.tip3, {
+            title: that.tip
           })
           return false
         } else if (amt % step !== 0) {
-          weui.alert('更改递增份额为' +step+ '万份', {
-            title: '提示'
+          weui.alert(`${that.tip4}${step}万份`, {
+            title: that.tip
           })
           return false
         } else {
@@ -252,7 +279,7 @@
         }
       },
       /**
-       * 提交申购金额
+       * 提交方案更改
       */
       mySubmit: (that, param) => {
         var purchaseAmt = parseInt(param)
@@ -275,7 +302,6 @@
               weui.toast(res.msg, {
                 duration: 1500
               })
-              that.modifyBtnTxt = "更改方案"
               that.btnDisabled = false
               that.btnLoading = false
               return false
@@ -284,7 +310,6 @@
               duration: 1500
             })
             setTimeout(() => {
-              that.modifyBtnTxt = "更改方案"
               that.btnDisabled = false
               that.btnLoading = false
               that.$router.push({
@@ -294,10 +319,9 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
+            weui.toast(that.netWork, {
               duration: 1500
             })
-            that.modifyBtnTxt = "更改方案"
             that.btnDisabled = false
             that.btnLoading = false
           }
