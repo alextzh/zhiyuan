@@ -2,15 +2,15 @@
 export default {
 
   navigator: {
-    notice: 'Zhiyuan Notice',
+    notice: 'Announcement',
     product: 'Product List',
-    purchase: 'purchase',
-    purchaseRecord: 'Purchase Record',
-    redeemRecord: 'Redeem Record',
-    plan: 'Plan Modification',
-    contract: 'Contract Management',
-    question: 'Common Problem',
-    contact: 'Contact Us',
+    purchase: 'Purchase',
+    purchaseRecord: 'PurchaseRecord',
+    redeemRecord: 'RedeemRecord',
+    plan: 'PlanModify',
+    contract: 'Contract',
+    question: 'Question',
+    contact: 'ContactUs',
     setting: 'Setting',
     password: 'Password Modification',
     applyRedeem: 'Apply Redeem',
