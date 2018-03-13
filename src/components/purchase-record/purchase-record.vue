@@ -23,13 +23,13 @@
                 <span class="item_state" style='color: #2E3094;' v-if="item.subscribe_status === '已赎回'">{{item.subscribe_status}}</span>
               </div>
               <div class="item_body">
-                <div class="item__left">
+                <div class="item__left" style="width:44%;">
                   <span>{{$t('purchase.bidShare')}}：</span>
                   <span class="new_data">{{item.subscribe_money}}万份</span>
                 </div>
-                <div class="item__right">
-                  <span>{{$t('purchase.purchaseTime')}}：</span>
-                  <span class="all_data">{{item.subscribe_time}}</span>
+                <div class="item__right" style="width:56%;text-align:right;">
+                  <span style="flex:1;">{{$t('purchase.purchaseTime')}}：</span>
+                  <span class="all_data" style="flex:0 auto;">{{item.subscribe_time}}</span>
                 </div>
               </div>
               <div class="item_body" v-if="item.recast_money">
@@ -436,7 +436,7 @@
   }
   .item_state{
     float: right;
-    padding:0 10px;
+    padding:0;
     background:#fff;
     color:#ff5251;
   }
@@ -453,7 +453,7 @@
     width: 50%;
   }
   .new_data,.all_data{
-    font-size: 16px;
+    font-size: 14px;
     color: #ff5251;
     flex: 1;
     text-overflow: ellipsis;

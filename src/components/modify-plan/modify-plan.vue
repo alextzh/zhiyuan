@@ -8,13 +8,13 @@
           <span class="title">{{currentProduct.base_name}}</span>
         </div>
         <div class="item_body">
-          <div class="item__left">
+          <div class="item__left" style="width:58%;">
             <span>{{$t('purchase.schemeName')}}：</span>
             <span class="new_data">{{currentProduct.product_name}}</span>
           </div>
-          <div class="item__right">
-            <span>{{$t('purchase.bidShare')}}：</span>
-            <span class="all_data">{{currentProduct.subscribe_money}}万份</span>
+          <div class="item__right" style="width:42%;text-align:right;">
+            <span style="flex:1;">{{$t('purchase.bidShare')}}：</span>
+            <span class="all_data" style="flex:0 auto;">{{currentProduct.subscribe_money}}万份</span>
           </div>
         </div>
         <div class="item_foot">
@@ -40,13 +40,13 @@
             </div>
             <div style="padding: 0 10px 5px;" v-if="showArr.length > 1">
               <div class="item_body">
-                <div class="item__left">
+                <div class="item__left" style="width:65%;">
                   <span>{{$t('purchase.schemeName')}}：</span>
                   <span class="new_data">{{currentPlan.name}}</span>
                 </div>
-                <div class="item__right">
-                  <span>{{$t('purchase.maxNumber')}}：</span>
-                  <span class="all_data">{{currentPlan.max_amount}}</span>
+                <div class="item__right" style="width:35%;text-align:right;">
+                  <span style="flex:1;">{{$t('purchase.maxNumber')}}：</span>
+                  <span class="all_data" style="flex:0 auto;">{{currentPlan.max_amount}}</span>
                 </div>
               </div>
               <div class="item_body">
@@ -54,9 +54,9 @@
                   <span>{{$t('addApply.minShare')}}：</span>
                   <span class="new_data">{{currentPlan.min_money / 10000}}万份</span>
                 </div>
-                <div class="item__right">
-                  <span>{{$t('purchase.increasingShare')}}：</span>
-                  <span class="all_data">{{currentPlan.step_money / 10000}}万份</span>
+                <div class="item__right" style="text-align:right;">
+                  <span style="flex:1;">{{$t('purchase.increasingShare')}}：</span>
+                  <span class="all_data" style="flex:0 auto;">{{currentPlan.step_money / 10000}}万份</span>
                 </div>
               </div>
               <div class="item_foot" style='display:flex'>
@@ -404,7 +404,7 @@
   width: 50%;
 }
 .new_data,.all_data{
-  font-size: 16px;
+  font-size: 14px;
   color: #ff5251;
   flex: 1;
   text-overflow: ellipsis;

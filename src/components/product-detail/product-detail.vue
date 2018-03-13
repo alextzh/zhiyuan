@@ -12,9 +12,9 @@
             <span>{{$t('purchase.productType')}}：</span>
             <span class="new_data">{{currentProduct.type}}</span>
           </div>
-          <div class="item__right">
-            <span>{{$t('purchase.productStatus')}}：</span>
-            <span class="all_data">{{currentProduct.status}}</span>
+          <div class="item__right" style="text-align:right;">
+            <span style="flex:1;">{{$t('purchase.productStatus')}}：</span>
+            <span class="all_data" style="flex:0 auto;">{{currentProduct.status}}</span>
           </div>
         </div>
         <div class="item_body">
@@ -22,9 +22,9 @@
             <span>{{$t('purchase.minShare')}}：</span>
             <span class="new_data">{{currentProduct.start_money / 10000}}万份</span>
           </div>
-          <div class="item__right">
-            <span>{{$t('purchase.increasingShare')}}：</span>
-            <span class="all_data">1万份</span>
+          <div class="item__right" style="text-align:right;">
+            <span style="flex:1;">{{$t('purchase.increasingShare')}}：</span>
+            <span class="all_data" style="flex:0 auto;">1万份</span>
           </div>
         </div>
         <div class="item_foot" v-if="currentProduct.status !== '操盘中'">
@@ -54,13 +54,13 @@
             </div>
             <div style="padding: 10px;" v-if="showArr.length === 1">
               <div class="item_body">
-                <div class="item__left">
+                <div class="item__left" style="width:65%;">
                   <span>{{$t('purchase.productName')}}：</span>
                   <span class="new_data">{{currentPlan.name}}</span>
                 </div>
-                <div class="item__right">
-                  <span>{{$t('purchase.maxNumber')}}：</span>
-                  <span class="all_data">{{currentPlan.max_amount}}</span>
+                <div class="item__right" style="width:35%;text-align:right;">
+                  <span style="flex:1;">{{$t('purchase.maxNumber')}}：</span>
+                  <span class="all_data" style="flex:0 auto;">{{currentPlan.max_amount}}</span>
                 </div>
               </div>
               <div class="item_foot" style='display:flex'>
@@ -80,13 +80,13 @@
             </div>
             <div style="padding: 0 10px 5px;" v-if="showArr.length > 1">
               <div class="item_body">
-                <div class="item__left">
+                <div class="item__left" style="width:65%;">
                   <span>{{$t('purchase.schemeName')}}：</span>
                   <span class="new_data">{{currentPlan.name}}</span>
                 </div>
-                <div class="item__right">
-                  <span>{{$t('purchase.maxNumber')}}：</span>
-                  <span class="all_data">{{currentPlan.max_amount}}</span>
+                <div class="item__right" style="width:35%;text-align:right;">
+                  <span style="flex:1;">{{$t('purchase.maxNumber')}}：</span>
+                  <span class="all_data" style="flex:0 auto;">{{currentPlan.max_amount}}</span>
                 </div>
               </div>
               <div class="item_foot" style='display:flex'>
@@ -453,7 +453,7 @@
   width: 50%;
 }
 .new_data,.all_data{
-  font-size: 16px;
+  font-size: 14px;
   color: #ff5251;
   flex: 1;
   text-overflow: ellipsis;

@@ -22,7 +22,8 @@ export default {
     applyAdd: 'Apply Add',
     modifyPurchase: 'Modify Purchase',
     modifyAdd: 'Modify Additional',
-    modifyPlan: 'Modify Plan'
+    modifyPlan: 'Modify Plan',
+    previewContract: 'Preview Contract'
   },
 
   login: {

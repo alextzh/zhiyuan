@@ -8,13 +8,13 @@
           <span class="title">{{currentProduct.name}}</span>
         </div>
         <div class="item_body">
-          <div class="item__left">
+          <div class="item__left" style="width:44%;">
             <span>{{$t('purchase.bidShare')}}：</span>
             <span class="new_data">{{currentProduct.subscribe_money}}万份</span>
           </div>
-          <div class="item__right">
-            <span>{{$t('purchase.purchaseTime')}}：</span>
-            <span class="all_data">{{currentProduct.subscribe_time}}</span>
+          <div class="item__right" style="width:56%;text-align:right;">
+            <span style="flex:1;">{{$t('purchase.purchaseTime')}}：</span>
+            <span class="all_data" style="flex:0 auto;">{{currentProduct.subscribe_time}}</span>
           </div>
         </div>
         <div class="item_body">
@@ -22,9 +22,9 @@
             <span>{{$t('addApply.minShare')}}：</span>
             <span class="new_data">{{currentProduct.min_money / 10000}}万份</span>
           </div>
-          <div class="item__right">
-            <span>{{$t('addApply.purchaseStatus')}}：</span>
-            <span class="all_data">{{currentProduct.subscribe_status}}</span>
+          <div class="item__right" style="text-align:right;">
+            <span style="flex:1;">{{$t('addApply.purchaseStatus')}}：</span>
+            <span class="all_data" style="flex:0 auto;">{{currentProduct.subscribe_status}}</span>
           </div>
         </div>
         <div class="item_foot" style='display:flex'>
@@ -277,7 +277,7 @@
   width: 50%;
 }
 .new_data,.all_data{
-  font-size: 16px;
+  font-size: 14px;
   color: #ff5251;
   flex: 1;
   text-overflow: ellipsis;

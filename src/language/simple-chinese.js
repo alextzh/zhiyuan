@@ -22,7 +22,8 @@ export default {
     applyAdd: '申请追加',
     modifyPurchase: '修改申购',
     modifyAdd: '修改追加',
-    modifyPlan: '修改方案'
+    modifyPlan: '修改方案',
+    previewContract: '合同预览'
   },
 
   login: {

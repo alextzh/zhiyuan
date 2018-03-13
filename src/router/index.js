@@ -24,7 +24,7 @@ const QuestionDetail = () => import('components/question-detail/question-detail'
 const Setting = () => import('components/setting/setting')
 const ModifyPwd = () => import('components/modify-pwd/modify-pwd')
 const Management = () => import('components/management/management')
-// const Canvas = () => import('components/canvas/canvas')
+const ViewPdf = () => import('components/view-pdf/view-pdf')
 const Weixin = () => import('components/weixin/weixin')
 const NoFound = () => import('components/no-found/no-found')
 
@@ -195,14 +195,13 @@ const router = new Router({
       },
       component: Management
     },
-    // {
-    //   path: '/canvas',
-    //   name: 'canvas',
-    //   meta: {
-    //     requireAuth: true
-    //   },
-    //   component: Canvas
-    // },
+    {
+      path: '/preview-contract/:lang',
+      meta: {
+        requireAuth: true
+      },
+      component: ViewPdf
+    },
     {
       path: '/weixin',
       name: 'weixin',

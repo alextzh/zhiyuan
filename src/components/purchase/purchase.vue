@@ -22,13 +22,13 @@
                   <span>{{$t('purchase.productType')}}：</span>
                   <span class="new_data">{{item.type}}</span>
                 </div>
-                <div class="item__right">
-                  <span>{{$t('purchase.productStatus')}}：</span>
-                  <span class="all_data" style="color: #D9D6CF;" v-if="item.status === '已发布'">{{item.status}}</span>
-                  <span class="all_data" style="color: #FE4C40;" v-if="item.status === '申购中'">{{item.status}}</span>
-                  <span class="all_data" style="color: #ADA0A5;" v-if="item.status === '申购结束'">{{item.status}}</span>
-                  <span class="all_data" style="color: #FD5B78;" v-if="item.status === '操盘中'">{{item.status}}</span>
-                  <span class="all_data" style="color: #483C32;" v-if="item.status === '已结束'">{{item.status}}</span>
+                <div class="item__right" style="text-align:right;">
+                  <span style="flex:1;">{{$t('purchase.productStatus')}}：</span>
+                  <span class="all_data" style="color: #D9D6CF;flex:0 auto;" v-if="item.status === '已发布'">{{item.status}}</span>
+                  <span class="all_data" style="color: #FE4C40;flex:0 auto;" v-if="item.status === '申购中'">{{item.status}}</span>
+                  <span class="all_data" style="color: #ADA0A5;flex:0 auto;" v-if="item.status === '申购结束'">{{item.status}}</span>
+                  <span class="all_data" style="color: #FD5B78;flex:0 auto;" v-if="item.status === '操盘中'">{{item.status}}</span>
+                  <span class="all_data" style="color: #483C32;flex:0 auto;" v-if="item.status === '已结束'">{{item.status}}</span>
                 </div>
               </div>
               <div class="item_foot" v-if="item.status !== '操盘中'">
@@ -345,7 +345,7 @@
     width: 50%;
   }
   .new_data,.all_data{
-    font-size: 16px;
+    font-size: 14px;
     color: #ff5251;
     flex: 1;
     text-overflow: ellipsis;

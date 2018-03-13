@@ -23,13 +23,13 @@
                 <span class="item_state" style='color: #2E3094;' v-if="item.status === 'YSH'">已赎回</span>
               </div>
               <div class="item_body">
-                <div class="item__left">
+                <div class="item__left" style="width:58%;">
                   <span>{{$t('purchase.schemeName')}}：</span>
                   <span class="new_data">{{item.product_name}}</span>
                 </div>
-                <div class="item__right">
-                  <span>{{$t('purchase.bidShare')}}：</span>
-                  <span class="all_data">{{item.subscribe_money}}万份</span>
+                <div class="item__right" style="width:42%;text-align:right;">
+                  <span style="flex:1;">{{$t('purchase.bidShare')}}：</span>
+                  <span class="all_data" style="flex:0 auto;">{{item.subscribe_money}}万份</span>
                 </div>
               </div>
               <div class="item_body" v-if="item.status === 'XGDSH'">
@@ -311,7 +311,7 @@
   }
   .item_state{
     float: right;
-    padding:0 10px;
+    padding:0;
     background:#fff;
     color:#ff5251;
   }
@@ -328,7 +328,7 @@
     width: 50%;
   }
   .new_data,.all_data{
-    font-size: 16px;
+    font-size: 14px;
     color: #ff5251;
     flex: 1;
     text-overflow: ellipsis;

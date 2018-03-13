@@ -36,7 +36,7 @@
                   <a class="btn" :href="item.download_url">{{$t('management.download')}}</a>
                 </div>
                 <div style="flex: 1;">
-                  <a class="btn" :href="item.viewpdf_url">{{$t('management.view')}}</a>
+                  <a class="btn" href="javascript:;" @click="toView(item.viewpdf_url)">{{$t('management.view')}}</a>
                 </div>
               </div>
             </div>
@@ -62,6 +62,7 @@
   import {getUserInfo, setProduct} from 'common/js/storage'
   import 'weui'
   import weui from 'weui.js'
+  import { mapMutations } from 'vuex'
 
   export default {
     data() {
@@ -153,7 +154,16 @@
       onPullingDown() {
         // 更新数据
         this.getContractList()
-      }
+      },
+      toView(url) {
+        this.setViewUrl(url)
+        this.$router.push({
+          path: '/preview-contract/' + this.$i18n.locale
+        })
+      },
+      ...mapMutations({
+        setViewUrl: 'SET_VIEW_URL'
+      })
     },
     components: {
       Scroll,
@@ -225,7 +235,7 @@
     align-items: center;
   }
   .new_data,.all_data{
-    font-size: 16px;
+    font-size: 14px;
     color: #ff5251;
     flex: 1;
     text-overflow: ellipsis;
