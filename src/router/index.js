@@ -24,7 +24,8 @@ const QuestionDetail = () => import('components/question-detail/question-detail'
 const Setting = () => import('components/setting/setting')
 const ModifyPwd = () => import('components/modify-pwd/modify-pwd')
 const Management = () => import('components/management/management')
-const ViewPdf = () => import('components/view-pdf/view-pdf')
+const PreviewContract = () => import('components/preview-contract/preview-contract')
+const SignContract = () => import('components/sign-contract/sign-contract')
 const Weixin = () => import('components/weixin/weixin')
 const NoFound = () => import('components/no-found/no-found')
 
@@ -200,7 +201,14 @@ const router = new Router({
       meta: {
         requireAuth: true
       },
-      component: ViewPdf
+      component: PreviewContract
+    },
+    {
+      path: '/sign-contract/:lang',
+      meta: {
+        requireAuth: true
+      },
+      component: SignContract
     },
     {
       path: '/weixin',

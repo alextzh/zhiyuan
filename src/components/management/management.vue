@@ -28,12 +28,15 @@
               </div>
               <div class="item_action" v-if="item.sign_url && item.status === 'DQ'">
                 <div style="flex: 1;">
-                  <a class="btn" :href="item.sign_url">{{$t('management.signContract')}}</a>
+                  <a class="btn" href="javascript:;" @click="toSign(item.sign_url)">{{$t('management.signContract')}}</a>
                 </div>
               </div>
               <div class="item_action" v-else>
-                <div style="flex: 1;margin-right:10px;">
+                <div style="flex: 1;margin-right:10px;" v-if="device === 'Android' || device === 'WindowsPhone'">
                   <a class="btn" :href="item.download_url">{{$t('management.download')}}</a>
+                </div>
+                <div style="flex: 1;margin-right:10px;" v-if="device === 'iPhone'">
+                  <a class="btn" href="javascript:;" @click="toDownload">{{$t('management.download')}}</a>
                 </div>
                 <div style="flex: 1;">
                   <a class="btn" href="javascript:;" @click="toView(item.viewpdf_url)">{{$t('management.view')}}</a>
@@ -64,6 +67,9 @@
   import weui from 'weui.js'
   import { mapMutations } from 'vuex'
 
+  const u = navigator.userAgent
+  const website = 'https://wwww.baidu.com'
+
   export default {
     data() {
       return {
@@ -77,7 +83,8 @@
         pullDownRefreshThreshold: 90,
         pullDownRefreshStop: 60,
         startY: 0,
-        hasData: false
+        hasData: false,
+        device: ''
       }
     },
     computed: {
@@ -95,12 +102,31 @@
       },
       netWork() {
         return this.$i18n.t('common.network')
+      },
+      downloadTip() {
+        return this.$i18n.t('common.downloadTip')
+      },
+      tip() {
+        return this.$i18n.t('management.tip')
+      },
+      download() {
+        return this.$i18n.t('management.download')
+      },
+      confirm() {
+        return this.$i18n.t('common.confirm')
       }
     },
     created() {
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
       this.loading = weui.loading(this.loadingTip)
       this.customer_id = getUserInfo().id
+      if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) { //安卓手机
+        this.device = "Android"
+      } else if (u.indexOf('iPhone') > -1) { //苹果手机
+        this.device = "iPhone"
+      } else if (u.indexOf('Windows Phone') > -1) { //winphone手机
+        this.device = "WindowsPhone"
+      }
     },
     mounted() {
       setTimeout(() => {
@@ -155,14 +181,33 @@
         // 更新数据
         this.getContractList()
       },
+      toSign(url) {
+        this.setSignUrl(url)
+        this.$router.push({
+          path: '/sign-contract/' + this.$i18n.locale
+        })
+      },
       toView(url) {
         this.setViewUrl(url)
         this.$router.push({
           path: '/preview-contract/' + this.$i18n.locale
         })
       },
+      toDownload() {
+        weui.alert(`${this.tip} ${website} ${this.download}`, {
+          title: this.downloadTip,
+          buttons: [{
+            label: this.confirm,
+            type: 'primary',
+            onClick: () => {
+              console.log('ok')
+            }
+          }]
+        })
+      },
       ...mapMutations({
-        setViewUrl: 'SET_VIEW_URL'
+        setViewUrl: 'SET_VIEW_URL',
+        setSignUrl: 'SET_SIGN_URL'
       })
     },
     components: {

@@ -26,9 +26,9 @@
                   <span>{{$t('purchaseRecord.redeemShare')}}：</span>
                   <span class="new_data">{{item.money}}万份</span>
                 </div>
-                <div class="item__right">
-                  <span>{{$t('redeemRecord.applyTime')}}：</span>
-                  <span class="all_data">{{item.redeem_time}}</span>
+                <div class="item__right" style="text-align:right;">
+                  <span style="flex:1;">{{$t('redeemRecord.applyTime')}}：</span>
+                  <span class="all_data" style="flex:0 auto;">{{item.redeem_time}}</span>
                 </div>
               </div>
               <div class="item_action" v-if="item.isQxshBtn">
@@ -352,7 +352,7 @@
     width: 50%;
   }
   .new_data,.all_data{
-    font-size: 16px;
+    font-size: 14px;
     color: #ff5251;
     flex: 1;
     text-overflow: ellipsis;

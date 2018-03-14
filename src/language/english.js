@@ -23,7 +23,8 @@ export default {
     modifyPurchase: 'Modify Purchase',
     modifyAdd: 'Modify Additional',
     modifyPlan: 'Modify Plan',
-    previewContract: 'Preview Contract'
+    previewContract: 'Preview Contract',
+    signContract: 'Sign Contract'
   },
 
   login: {
@@ -145,7 +146,8 @@ export default {
     contractName: 'ContractName',
     download: 'Download',
     view: 'View',
-    signContract: 'Sign Contract'
+    signContract: 'Sign Contract',
+    tip: 'Please use the PC to open the URL'
   },
 
   setting: {
@@ -175,6 +177,7 @@ export default {
     modifyTip: 'Modify prompt',
     redeemTip: 'Redemption tips',
     quitTip: 'Quit tips',
+    downloadTip: 'Download prompt',
     confirm: 'Confirm',
     cancel: 'Cancel'
   },

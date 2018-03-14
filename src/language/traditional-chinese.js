@@ -23,7 +23,8 @@ export default {
     modifyPurchase: '修改申購',
     modifyAdd: '修改追加',
     modifyPlan: '修改方案',
-    previewContract: '合同預覽'
+    previewContract: '合同預覽',
+    signContract: '簽署合同'
   },
 
   login: {
@@ -145,7 +146,8 @@ export default {
     contractName: '合同名稱',
     download: '下載',
     view: '預覽',
-    signContract: '簽合同'
+    signContract: '簽合同',
+    tip: '請使用PC端打開網址'
   },
 
   setting: {
@@ -175,6 +177,7 @@ export default {
     modifyTip: '修改提示',
     redeemTip: '贖回提示',
     quitTip: '退出提示',
+    downloadTip: '下載提示',
     confirm: '確定',
     cancel: '取消'
   },

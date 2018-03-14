@@ -1,6 +1,7 @@
 /* eslint-disable */
 const state = {
-  viewUrl: ''
+  viewUrl: '',
+  signUrl: ''
 }
 
 export default state
