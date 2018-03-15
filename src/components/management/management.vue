@@ -60,7 +60,6 @@
   import $ from 'jquery'
   import Scroll from 'base/scroll/scroll'
   import Navbar from 'base/navbar/navbar'
-  import {rendererZhMoneyWan, _normalizeDate} from 'common/js/tool'
   import * as API from 'common/js/http'
   import {getUserInfo, setProduct} from 'common/js/storage'
   import 'weui'
@@ -68,7 +67,7 @@
   import { mapMutations } from 'vuex'
 
   const u = navigator.userAgent
-  const website = 'https://wwww.baidu.com'
+  const website = 'http://ht.iysdd.com'
 
   export default {
     data() {

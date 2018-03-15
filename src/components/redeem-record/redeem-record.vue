@@ -335,7 +335,7 @@
   }
   .item_state{
     float: right;
-    padding:0 10px;
+    padding:0;
     background:#fff;
     color:#ff5251;
   }

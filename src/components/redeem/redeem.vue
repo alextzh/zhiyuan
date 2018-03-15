@@ -345,6 +345,7 @@
 }
 .redeem_tip {
   line-height: 15px;
+  padding-top: 5px;
 }
 .redeem_tip i{
   font-size: 12px;
