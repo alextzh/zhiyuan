@@ -224,7 +224,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(i18n.locale)
   if (to.matched.some(r => r.meta.requireAuth)) {
     if (getUserInfo().id) {
       next()

@@ -10,7 +10,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import Navbar from 'base/navbar/navbar'
   import { mapGetters } from 'vuex'
 

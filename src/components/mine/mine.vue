@@ -74,10 +74,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
 import $ from 'jquery'
 import * as API from 'common/js/http'
-import Navbar from 'base/navbar/navbar'
 import {getUserInfo} from 'common/js/storage'
 import 'weui'
 import weui from 'weui.js'
@@ -96,9 +94,8 @@ export default {
   },
   created() {
     var lang = this.$i18n.locale
-    console.log(this.$i18n.locale)
     if (lang !== this.$route.params.lang) {
-      let newPath = this.$route.path.substring(0, -2) + lang
+      const newPath = this.$route.path.substring(0, -2) + lang
       this.$router.replace(newPath)
     }
     this.userInfo = getUserInfo()
@@ -113,14 +110,14 @@ export default {
      * 是否显示更改方案
     */
     hasProductPlan() {
-      let customer_id = getUserInfo().id
+      const customer_id = getUserInfo().id
       $.ajax({
-        type: "POST",
+        type: 'POST',
         url: API.api + '/api/v1/product/myFAproducts',
         data: {
           customer_id: customer_id
         },
-        dataType: "jsonp",
+        dataType: 'jsonp',
         headers: {
           'content-type': 'application/x-www-form-urlencoded'
         },

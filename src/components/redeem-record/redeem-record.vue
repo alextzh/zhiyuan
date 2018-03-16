@@ -50,7 +50,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Scroll from 'base/scroll/scroll'
   import Navbar from 'base/navbar/navbar'
@@ -84,16 +83,16 @@
       }
     },
     computed: {
-      scrollbarObj: function () {
+      scrollbarObj: function() {
         return this.scrollbar ? {fade: this.scrollbarFade} : false
       },
-      pullDownRefreshObj: function () {
+      pullDownRefreshObj: function() {
         return this.pullDownRefresh ? {
           threshold: parseInt(this.pullDownRefreshThreshold),
           stop: parseInt(this.pullDownRefreshStop)
         } : false
       },
-      pullUpLoadObj: function () {
+      pullUpLoadObj: function() {
         return this.pullUpLoad ? {
           threshold: parseInt(this.pullUpLoadThreshold)
         } : false
@@ -134,10 +133,10 @@
       _getRedeemRecord() {
         this.pageData.page = 1
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/redeem/myRedeems',
           data: this.pageData,
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
@@ -155,7 +154,7 @@
             setTimeout(() => {
               this.loading.hide()
             }, 20)
-            let list = res.obj.list
+            const list = res.obj.list
             this.totalPage = res.obj.totalPage
             this.redeemRecord = this._normalizeList(list)
             this.hasData = false
@@ -180,10 +179,10 @@
           }, 20)
         } else {
           $.ajax({
-            type: "POST",
+            type: 'POST',
             url: API.api + '/api/v1/redeem/myRedeems',
             data: this.pageData,
-            dataType: "jsonp",
+            dataType: 'jsonp',
             headers: {
               'content-type': 'application/x-www-form-urlencoded'
             },
@@ -195,7 +194,7 @@
                 this.hasData = true
                 return false
               }
-              let list = res.obj.list
+              const list = res.obj.list
               this.redeemRecord = this.redeemRecord.concat(this._normalizeList(list))
               setTimeout(() => {
                 this.$refs.scroll.forceUpdate()
@@ -230,7 +229,7 @@
         }
       },
       cancelAction(e) {
-        let redeem_id = e.id
+        const redeem_id = e.id
         weui.confirm(this.tip1, {
           title: this.cancelTip,
           buttons: [{
@@ -244,12 +243,12 @@
             type: 'primary',
             onClick: () => {
               $.ajax({
-                type: "POST",
+                type: 'POST',
                 url: API.api + '/api/v1/redeem/qxApply',
                 data: {
                   redeem_id: redeem_id
                 },
-                dataType: "jsonp",
+                dataType: 'jsonp',
                 headers: {
                   'content-type': 'application/x-www-form-urlencoded'
                 },

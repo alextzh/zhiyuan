@@ -20,7 +20,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import Navbar from 'base/navbar/navbar'
   import {clearStorage} from 'common/js/storage'
   import 'weui'
@@ -106,7 +105,7 @@
       changeLanguage(lang) {
         if (this.$route.params.lang !== lang) {
           this.$i18n.locale = lang
-          let newPath = this.$route.path.substring(0, -2) + lang
+          const newPath = this.$route.path.substring(0, -2) + lang
           this.$router.replace(newPath)
         }
       }

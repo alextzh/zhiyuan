@@ -33,13 +33,13 @@
                 </div>
               </div>
               <div class="item_body" v-if="item.status === 'XGDSH'">
-                <div class="item__left">
+                <div class="item__left" style="width:58%;">
                   <span>{{$t('plan.targetScheme')}}：</span>
                   <span class="new_data">{{item.target_product_name}}</span>
                 </div>
-                <div class="item__right">
-                  <span>{{$t('plan.modifyShare')}}：</span>
-                  <span class="all_data">{{item.edit_money / 10000}}万份</span>
+                <div class="item__right" style="width:42%;text-align:right;">
+                  <span style="flex:1;">{{$t('plan.modifyShare')}}：</span>
+                  <span class="all_data" style="flex:0 auto;">{{item.edit_money / 10000}}万份</span>
                 </div>
               </div>
               <div class="item_foot" v-if="item.subscribe_time">
@@ -75,11 +75,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Scroll from 'base/scroll/scroll'
   import Navbar from 'base/navbar/navbar'
-  import {rendererZhMoneyWan, _normalizeDate} from 'common/js/tool'
+  import {rendererZhMoneyWan} from 'common/js/tool'
   import * as API from 'common/js/http'
   import {getUserInfo, setProduct} from 'common/js/storage'
   import 'weui'
@@ -103,10 +102,10 @@
       }
     },
     computed: {
-      scrollbarObj: function () {
+      scrollbarObj: function() {
         return this.scrollbar ? {fade: this.scrollbarFade} : false
       },
-      pullDownRefreshObj: function () {
+      pullDownRefreshObj: function() {
         return this.pullDownRefresh ? {
           threshold: parseInt(this.pullDownRefreshThreshold),
           stop: parseInt(this.pullDownRefreshStop)
@@ -147,12 +146,12 @@
       },
       _getProductPlanList() {
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/product/myFAproducts',
           data: {
             customer_id: this.customer_id
           },
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
@@ -170,7 +169,7 @@
             setTimeout(() => {
               this.loading.hide()
             }, 20)
-            let list = res.obj
+            const list = res.obj
             this.productPlanList = this._normalizeList(list)
             this.hasData = false
             setTimeout(() => {
@@ -220,12 +219,12 @@
             type: 'primary',
             onClick: () => {
               $.ajax({
-                type: "POST",
+                type: 'POST',
                 url: API.api + '/api/v1/product/qxXgFA',
                 data: {
                   edit_item_id: edit_item_id
                 },
-                dataType: "jsonp",
+                dataType: 'jsonp',
                 headers: {
                   'content-type': 'application/x-www-form-urlencoded'
                 },

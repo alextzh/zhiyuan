@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 
   navigator: {
@@ -139,7 +138,7 @@ export default {
   },
 
   modifyAdd: {
-    subscribeBtnTxt: '提交修改',
+    subscribeBtnTxt: '提交修改'
   },
 
   management: {

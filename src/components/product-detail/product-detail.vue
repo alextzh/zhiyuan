@@ -124,7 +124,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import Navbar from 'base/navbar/navbar'
   import {getUserInfo, getProduct} from 'common/js/storage'
   import {_normalizeStr} from 'common/js/tool'
@@ -147,7 +146,7 @@
         customer_id: '',
         purchaseAmt: '',
         btnLoading: false,
-        btnDisabled: false,
+        btnDisabled: false
       }
     },
     computed: {
@@ -205,13 +204,13 @@
       */
       getSubProductList(that, cid, pid) {
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/product/listByBaseId',
           data: {
             base_product_id: pid
           },
           async: false,
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
@@ -247,13 +246,13 @@
       */
       itemIsCanPurchase: (that, cid, product_id) => {
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/subscribe/validate',
           data: {
             product_id: product_id,
             customer_id: cid
           },
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
@@ -278,7 +277,7 @@
           container: 'body',
           defaultValue: [0],
           onChange: (result) => {
-              console.log('change' + result)
+            console.log('change' + result)
           },
           onConfirm: (result) => {
             this.currentPlan = this.showArr[result]
@@ -290,7 +289,7 @@
       // 表单提交
       formSubmit() {
         var that = this
-        let param = this.purchaseAmt
+        const param = this.purchaseAmt
         if (this.checkPurchase(that, param)) {
           weui.confirm(`${this.tip6}${param}万份?`, {
             title: this.tip5,
@@ -365,11 +364,11 @@
       /**
        * 提交申购金额
       */
-      mySubmit:(that, param) => {
+      mySubmit: (that, param) => {
         var product_id = that.currentPlan.id
         var purchaseAmt = parseInt(param)
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/subscribe/addApply',
           data: {
             product_id: product_id,
@@ -377,7 +376,7 @@
             source: 'wx_xcx',
             subscribe_money: purchaseAmt * 10000
           },
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },

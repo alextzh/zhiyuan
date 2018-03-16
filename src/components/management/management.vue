@@ -56,12 +56,11 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Scroll from 'base/scroll/scroll'
   import Navbar from 'base/navbar/navbar'
   import * as API from 'common/js/http'
-  import {getUserInfo, setProduct} from 'common/js/storage'
+  import {getUserInfo} from 'common/js/storage'
   import 'weui'
   import weui from 'weui.js'
   import { mapMutations } from 'vuex'
@@ -87,10 +86,10 @@
       }
     },
     computed: {
-      scrollbarObj: function () {
+      scrollbarObj: function() {
         return this.scrollbar ? {fade: this.scrollbarFade} : false
       },
-      pullDownRefreshObj: function () {
+      pullDownRefreshObj: function() {
         return this.pullDownRefresh ? {
           threshold: parseInt(this.pullDownRefreshThreshold),
           stop: parseInt(this.pullDownRefreshStop)
@@ -119,12 +118,12 @@
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
       this.loading = weui.loading(this.loadingTip)
       this.customer_id = getUserInfo().id
-      if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) { //安卓手机
-        this.device = "Android"
-      } else if (u.indexOf('iPhone') > -1) { //苹果手机
-        this.device = "iPhone"
-      } else if (u.indexOf('Windows Phone') > -1) { //winphone手机
-        this.device = "WindowsPhone"
+      if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) { // 安卓手机
+        this.device = 'Android'
+      } else if (u.indexOf('iPhone') > -1) { // 苹果手机
+        this.device = 'iPhone'
+      } else if (u.indexOf('Windows Phone') > -1) { // winphone手机
+        this.device = 'WindowsPhone'
       }
     },
     mounted() {
@@ -138,12 +137,12 @@
       },
       getContractList() {
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/contract/myContract',
           data: {
             customer_id: this.customer_id
           },
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
@@ -161,7 +160,7 @@
             setTimeout(() => {
               this.loading.hide()
             }, 20)
-            let list = res.rows
+            const list = res.rows
             this.contractList = list
             this.hasData = false
             setTimeout(() => {

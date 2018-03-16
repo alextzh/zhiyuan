@@ -1,4 +1,3 @@
-/* eslint-disable */
 const state = {
   viewUrl: '',
   signUrl: ''

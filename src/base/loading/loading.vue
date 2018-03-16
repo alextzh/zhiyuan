@@ -4,7 +4,6 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-/* eslint-disable */
   const COMPONENT_NAME = 'loading'
   
   export default {

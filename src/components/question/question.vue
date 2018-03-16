@@ -32,7 +32,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Scroll from 'base/scroll/scroll'
   import Navbar from 'base/navbar/navbar'
@@ -57,10 +56,10 @@
       }
     },
     computed: {
-      scrollbarObj: function () {
+      scrollbarObj: function() {
         return this.scrollbar ? {fade: this.scrollbarFade} : false
       },
-      pullDownRefreshObj: function () {
+      pullDownRefreshObj: function() {
         return this.pullDownRefresh ? {
           threshold: parseInt(this.pullDownRefreshThreshold),
           stop: parseInt(this.pullDownRefreshStop)
@@ -88,9 +87,9 @@
       },
       _getNoticeList() {
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/question/all',
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
@@ -108,7 +107,7 @@
             setTimeout(() => {
               this.loading.hide()
             }, 20)
-            let list = res.obj
+            const list = res.obj
             this.noticeList = list
             this.hasData = false
             setTimeout(() => {

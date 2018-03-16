@@ -63,7 +63,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Navbar from 'base/navbar/navbar'
   import {getUserInfo, getProduct} from 'common/js/storage'
@@ -128,7 +127,7 @@
       },
       // 提交赎回
       formSubmit() {
-        let param = this.redeemAmt
+        const param = this.redeemAmt
         if (this.checkRedeem(param)) {
           weui.confirm(`${this.tip5}${param}万份?`, {
             title: this.redeemTip,
@@ -203,14 +202,14 @@
         var customer_id = getUserInfo().id
         var subscribe_id = getProduct().subscribe_id
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/redeem/addRedeem',
           data: {
             subscribe_id: subscribe_id,
             customer_id: customer_id,
             redeem_money: redeemAmt * 10000
           },
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },

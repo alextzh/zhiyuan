@@ -11,7 +11,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   export default{
     name: 'navbar',
     props: {
@@ -29,7 +28,7 @@
       },
       styleObj: { // 设置背景、字体颜色
         type: Object,
-        default: function () {
+        default: function() {
           return {
             color: '#ffffff',
             background: '#ff5251'

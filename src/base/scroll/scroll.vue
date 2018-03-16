@@ -42,7 +42,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import BScroll from 'better-scroll'
   import Loading from 'base/loading/loading'
   import Bubble from 'base/bubble/bubble'
@@ -57,7 +56,7 @@
     props: {
       data: {
         type: Array,
-        default: function () {
+        default: function() {
           return []
         }
       },
@@ -147,7 +146,7 @@
         if (this.$refs.listWrapper && (this.pullDownRefresh || this.pullUpLoad)) {
           this.$refs.listWrapper.style.minHeight = `${getRect(this.$refs.wrapper).height + 1}px`
         }
-        let options = {
+        const options = {
           probeType: this.probeType,
           click: this.click,
           scrollY: this.freeScroll || this.direction === DIRECTION_V,

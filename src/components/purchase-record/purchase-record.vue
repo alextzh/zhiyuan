@@ -108,7 +108,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Scroll from 'base/scroll/scroll'
   import Navbar from 'base/navbar/navbar'
@@ -137,10 +136,10 @@
       }
     },
     computed: {
-      scrollbarObj: function () {
+      scrollbarObj: function() {
         return this.scrollbar ? {fade: this.scrollbarFade} : false
       },
-      pullDownRefreshObj: function () {
+      pullDownRefreshObj: function() {
         return this.pullDownRefresh ? {
           threshold: parseInt(this.pullDownRefreshThreshold),
           stop: parseInt(this.pullDownRefreshStop)
@@ -184,10 +183,10 @@
       },
       _getPurchaseList() {
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/subscribe/allByCustomerId',
           data: this.pageData,
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
@@ -205,7 +204,7 @@
             setTimeout(() => {
               this.loading.hide()
             }, 20)
-            let list = res.obj
+            const list = res.obj
             this.purchaseList = this._normalizeList(list)
             this.hasData = false
             setTimeout(() => {
@@ -238,8 +237,8 @@
       },
       _normalizeStr(str) {
         str = str || ''
-        let arr = str.split(',')
-        let newArr = arr.map(item => {
+        const arr = str.split(',')
+        const newArr = arr.map(item => {
           return item
         })
         return newArr
@@ -267,7 +266,7 @@
       },
       // 取消追加
       cancelFt(e) {
-        let account_id = e.account_id
+        const account_id = e.account_id
         weui.confirm(this.tip2, {
           title: this.cancelTip,
           buttons: [{
@@ -281,12 +280,12 @@
             type: 'primary',
             onClick: () => {
               $.ajax({
-                type: "POST",
+                type: 'POST',
                 url: API.api + '/api/v1/subscribe/qxRecast',
                 data: {
                   account_id: account_id
                 },
-                dataType: "jsonp",
+                dataType: 'jsonp',
                 headers: {
                   'content-type': 'application/x-www-form-urlencoded'
                 },
@@ -326,8 +325,8 @@
       },
       // 删除申购记录
       cancelAction(e) {
-        let customer_id = getUserInfo().id
-        let subscribe_id = e.subscribe_id
+        const customer_id = getUserInfo().id
+        const subscribe_id = e.subscribe_id
         weui.confirm(this.tip1, {
           title: this.cancelTip,
           buttons: [{
@@ -341,13 +340,13 @@
             type: 'primary',
             onClick: () => {
               $.ajax({
-                type: "POST",
+                type: 'POST',
                 url: API.api + '/api/v1/subscribe/qxApply',
                 data: {
                   customer_id: customer_id,
                   subscribe_id: subscribe_id
                 },
-                dataType: "jsonp",
+                dataType: 'jsonp',
                 headers: {
                   'content-type': 'application/x-www-form-urlencoded'
                 },

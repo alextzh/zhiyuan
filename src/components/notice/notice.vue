@@ -28,7 +28,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Navbar from 'base/navbar/navbar'
   import * as API from 'common/js/http'
@@ -67,9 +66,9 @@
       },
       _getNoticeList() {
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/notice/caption',
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
@@ -87,7 +86,7 @@
             setTimeout(() => {
               this.loading.hide()
             }, 20)
-            let list = res.rows
+            const list = res.rows
             this.noticeList = list
             this.hasData = false
           },

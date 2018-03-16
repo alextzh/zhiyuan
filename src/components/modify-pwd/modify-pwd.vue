@@ -28,7 +28,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Navbar from 'base/navbar/navbar'
   import * as API from 'common/js/http'
@@ -99,13 +98,13 @@
       },
       focus() {
         setTimeout(() => {
-          let pannel = document.getElementById('box')
+          const pannel = document.getElementById('box')
           pannel.scrollIntoView(true)
           pannel.scrollIntoViewIfNeeded()
         }, 200)
       },
       formSubmit() {
-        let param = {
+        const param = {
           password: this.password,
           password1: this.password1,
           password2: this.password2
@@ -206,16 +205,16 @@
         }
       },
       mySubmit(param) {
-        let customer_id = getUserInfo().id
+        const customer_id = getUserInfo().id
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/login/updatePwd',
           data: {
             old_pwd: param.password.trim(),
             new_pwd: param.password1.trim(),
             customer_id: customer_id
           },
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },

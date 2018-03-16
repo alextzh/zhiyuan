@@ -1,4 +1,3 @@
-/* eslint-disable */
 import storage from 'good-storage'
 
 const USER_KEY = '__user__'

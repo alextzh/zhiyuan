@@ -3,7 +3,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   export default {
     props: {
       y: {
@@ -49,7 +48,7 @@
     methods: {
       _draw() {
         const bubble = this.$refs.bubble
-        let ctx = bubble.getContext('2d')
+        const ctx = bubble.getContext('2d')
         ctx.clearRect(0, 0, bubble.width, bubble.height)
         this._drawBubble(ctx)
         this._drawArrow(ctx)

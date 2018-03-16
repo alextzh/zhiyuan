@@ -94,7 +94,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import Navbar from 'base/navbar/navbar'
   import {getUserInfo, getProduct} from 'common/js/storage'
   import {_normalizeStr} from 'common/js/tool'
@@ -175,13 +174,13 @@
       */
       getSubProductList(that, bid) {
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/product/listByBaseId',
           data: {
             base_product_id: bid
           },
           async: false,
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
@@ -222,7 +221,7 @@
           container: 'body',
           defaultValue: [0],
           onChange: (result) => {
-              console.log('change' + result)
+            console.log('change' + result)
           },
           onConfirm: (result) => {
             this.currentPlan = this.showArr[result]
@@ -238,8 +237,8 @@
       // 表单提交
       formSubmit() {
         var that = this
-        let param = this.purchaseAmt
-        let curPlan = this.currentPlan
+        const param = this.purchaseAmt
+        const curPlan = this.currentPlan
         if (this.checkPurchase(that, param)) {
           weui.confirm(`${this.tip5}${curPlan.name}${param}万份?`, {
             title: this.modifyTip,
@@ -321,14 +320,14 @@
         var target_product_id = that.currentPlan.id
         var subscribe_id = that.currentProduct.id
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/subscribe/editFA',
           data: {
             subscribe_id: subscribe_id,
             target_product_id: target_product_id,
             eidt_money: purchaseAmt * 10000
           },
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },

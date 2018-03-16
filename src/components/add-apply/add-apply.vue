@@ -68,7 +68,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Navbar from 'base/navbar/navbar'
   import {getUserInfo, getProduct} from 'common/js/storage'
@@ -148,12 +147,12 @@
       */
       getSubProductList(id) {
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/product/listByBaseId',
           data: {
             base_product_id: id
           },
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
@@ -189,7 +188,7 @@
           container: 'body',
           defaultValue: [0],
           onChange: (result) => {
-              console.log('change' + result)
+            console.log('change' + result)
           },
           onConfirm: (result) => {
             this.currentPlan = this.showArr[result]
@@ -198,10 +197,10 @@
         })
       },
       // 提交追加
-      formSubmit: function () {
+      formSubmit: function() {
         var that = this
-        let param = this.subscribeAmt
-        let planName = this.currentPlan.name
+        const param = this.subscribeAmt
+        const planName = this.currentPlan.name
         if (this.checkSubscribe(that, param)) {
           weui.confirm(`${this.tip5}${planName}${this.tip6}${param}万份?`, {
             title: this.addTip,
@@ -224,7 +223,7 @@
         }
       },
       // 校验追加份额
-      checkSubscribe: function (that, param) {
+      checkSubscribe: function(that, param) {
         var amt = param
         if (!amt) {
           weui.alert(that.tip1, {
@@ -270,19 +269,19 @@
           return true
         }
       },
-      mySubmit: function (that, param) {
+      mySubmit: function(that, param) {
         var subscribeAmt = parseInt(param)
         var product_id = that.currentPlan.id
         var customer_id = getUserInfo().id
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/subscribe/addRecast',
           data: {
             product_id: product_id,
             customer_id: customer_id,
             money: subscribeAmt * 10000
           },
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },

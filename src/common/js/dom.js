@@ -1,7 +1,6 @@
-/* eslint-disable */
 export function getRect(el) {
   if (el instanceof window.SVGElement) {
-    let rect = el.getBoundingClientRect()
+    const rect = el.getBoundingClientRect()
     return {
       top: rect.top,
       left: rect.left,

@@ -61,7 +61,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Scroll from 'base/scroll/scroll'
   import Navbar from 'base/navbar/navbar'
@@ -97,16 +96,16 @@
       }
     },
     computed: {
-      scrollbarObj: function () {
+      scrollbarObj: function() {
         return this.scrollbar ? {fade: this.scrollbarFade} : false
       },
-      pullDownRefreshObj: function () {
+      pullDownRefreshObj: function() {
         return this.pullDownRefresh ? {
           threshold: parseInt(this.pullDownRefreshThreshold),
           stop: parseInt(this.pullDownRefreshStop)
         } : false
       },
-      pullUpLoadObj: function () {
+      pullUpLoadObj: function() {
         return this.pullUpLoad ? {
           threshold: parseInt(this.pullUpLoadThreshold)
         } : false
@@ -155,10 +154,10 @@
       _getProductList() {
         this.pageData.page = 1
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/product/baseList',
           data: this.pageData,
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
@@ -176,7 +175,7 @@
             setTimeout(() => {
               this.loading.hide()
             }, 20)
-            let list = res.obj.list
+            const list = res.obj.list
             this.totalPage = res.obj.totalPage
             this.productList = this._normalizeList(list)
             this.hasData = false
@@ -201,10 +200,10 @@
           }, 20)
         } else {
           $.ajax({
-            type: "POST",
+            type: 'POST',
             url: API.api + '/api/v1/product/baseList',
             data: this.pageData,
-            dataType: "jsonp",
+            dataType: 'jsonp',
             headers: {
               'content-type': 'application/x-www-form-urlencoded'
             },
@@ -216,7 +215,7 @@
                 this.hasData = true
                 return false
               }
-              let list = res.obj.list
+              const list = res.obj.list
               this.productList = this.productList.concat(this._normalizeList(list))
               setTimeout(() => {
                 this.$refs.scroll.forceUpdate()
@@ -261,8 +260,8 @@
       },
       _normalizeStr(str) {
         str = str || ''
-        let arr = str.split(',')
-        let newArr = arr.map(item => {
+        const arr = str.split(',')
+        const newArr = arr.map(item => {
           return item
         })
         return newArr

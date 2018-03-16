@@ -59,10 +59,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Navbar from 'base/navbar/navbar'
-  import {getUserInfo, getProduct} from 'common/js/storage'
+  import {getProduct} from 'common/js/storage'
   import * as API from 'common/js/http'
   import 'weui'
   import weui from 'weui.js'
@@ -123,9 +122,9 @@
         this.$router.back()
       },
       // 提交修改追加
-      formSubmit: function () {
+      formSubmit: function() {
         var that = this
-        let param = this.subscribeAmt
+        const param = this.subscribeAmt
         if (this.checkSubscribe(that, param)) {
           weui.confirm(`${this.tip5}${param}万份?`, {
             title: this.modifyTip,
@@ -148,7 +147,7 @@
         }
       },
       // 校验追加金额
-      checkSubscribe: function (that, param) {
+      checkSubscribe: function(that, param) {
         var amt = param
         if (!amt) {
           weui.alert(that.tip1, {
@@ -194,23 +193,23 @@
           return true
         }
       },
-      mySubmit: function (param) {
+      mySubmit: function(param) {
         var subscribeAmt = parseInt(param)
-        let account_id = getProduct().account_id
+        const account_id = getProduct().account_id
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/subscribe/editRecast',
           data: {
             account_id: account_id,
             money: subscribeAmt * 10000
           },
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
           success: (res) => {
             if (!res.ret) {
-              weui.toast(data.msg, {
+              weui.toast(res.msg, {
                 duration: 1500
               })
               this.btnDisabled = false

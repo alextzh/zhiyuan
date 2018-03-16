@@ -53,7 +53,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-/* eslint-disable */
   import $ from 'jquery'
   import Navbar from 'base/navbar/navbar'
   import {getUserInfo, getProduct} from 'common/js/storage'
@@ -117,9 +116,9 @@
         this.$router.back()
       },
       // 提交修改申购
-      formSubmit: function () {
+      formSubmit: function() {
         var that = this
-        let param = this.subscribeAmt
+        const param = this.subscribeAmt
         if (this.checkSubscribe(that, param)) {
           weui.confirm(`${this.tip5}${param}万份?`, {
             title: this.modifyTip,
@@ -142,7 +141,7 @@
         }
       },
       // 校验申购份额
-      checkSubscribe: function (that, param) {
+      checkSubscribe: function(that, param) {
         var amt = param
         var min = that.currentProduct.min_money / 10000
         if (!amt) {
@@ -189,25 +188,25 @@
           return true
         }
       },
-      mySubmit: function (param) {
+      mySubmit: function(param) {
         var subscribeAmt = parseInt(param)
         var customer_id = getUserInfo().id
         var subscribe_id = getProduct().subscribe_id
         $.ajax({
-          type: "POST",
+          type: 'POST',
           url: API.api + '/api/v1/subscribe/editApply',
           data: {
             customer_id: customer_id,
             subscribe_id: subscribe_id,
             subscribe_money: subscribeAmt * 10000
           },
-          dataType: "jsonp",
+          dataType: 'jsonp',
           headers: {
             'content-type': 'application/x-www-form-urlencoded'
           },
           success: (res) => {
             if (!res.ret) {
-              weui.toast(data.msg, {
+              weui.toast(res.msg, {
                 duration: 1500
               })
               this.btnDisabled = false
