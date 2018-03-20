@@ -23,7 +23,9 @@ export default {
     modifyAdd: 'Modify Additional',
     modifyPlan: 'Modify Plan',
     previewContract: 'Preview Contract',
-    signContract: 'Sign Contract'
+    signContract: 'Sign Contract',
+    transferApply: 'Transfer Apply',
+    transferRecord: 'Transfer Record'
   },
 
   login: {

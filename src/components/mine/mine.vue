@@ -19,12 +19,12 @@
             </div>
             <p class="weui-grid__label">{{$t('navigator.notice')}}</p>
           </a>
-          <a href="javascript:;" class="weui-grid" @click="toPurchase">
+          <!-- <a href="javascript:;" class="weui-grid" @click="toPurchase">
             <div class="weui-grid__icon">
               <img src="./shengou.svg" alt="">
             </div>
             <p class="weui-grid__label">{{$t('navigator.purchase')}}</p>
-          </a>
+          </a> -->
           <a href="javascript:;" class="weui-grid" @click="toPurchaseRecord">
             <div class="weui-grid__icon">
               <img src="./shengoujilu.svg" alt="">

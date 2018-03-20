@@ -23,7 +23,9 @@ export default {
     modifyAdd: '修改追加',
     modifyPlan: '修改方案',
     previewContract: '合同預覽',
-    signContract: '簽署合同'
+    signContract: '簽署合同',
+    transferApply: '划款申請',
+    transferRecord: '划款記錄'
   },
 
   login: {
