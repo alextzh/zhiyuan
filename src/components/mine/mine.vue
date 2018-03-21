@@ -19,17 +19,29 @@
             </div>
             <p class="weui-grid__label">{{$t('navigator.notice')}}</p>
           </a>
-          <!-- <a href="javascript:;" class="weui-grid" @click="toPurchase">
+          <a href="javascript:;" class="weui-grid" @click="toPurchase">
             <div class="weui-grid__icon">
               <img src="./shengou.svg" alt="">
             </div>
             <p class="weui-grid__label">{{$t('navigator.purchase')}}</p>
-          </a> -->
+          </a>
           <a href="javascript:;" class="weui-grid" @click="toPurchaseRecord">
             <div class="weui-grid__icon">
               <img src="./shengoujilu.svg" alt="">
             </div>
             <p class="weui-grid__label">{{$t('navigator.purchaseRecord')}}</p>
+          </a>
+          <a href="javascript:;" class="weui-grid" @click="toTransfer">
+            <div class="weui-grid__icon">
+              <img src="./shengou.svg" alt="">
+            </div>
+            <p class="weui-grid__label">{{$t('navigator.transferApply')}}</p>
+          </a>
+          <a href="javascript:;" class="weui-grid" @click="toTransferRecord">
+            <div class="weui-grid__icon">
+              <img src="./shengoujilu.svg" alt="">
+            </div>
+            <p class="weui-grid__label">{{$t('navigator.transferRecord')}}</p>
           </a>
           <a href="javascript:;" class="weui-grid" @click="toRedeemRecord">
             <div class="weui-grid__icon">
@@ -144,6 +156,16 @@ export default {
     toPurchaseRecord() {
       this.$router.push({
         path: '/purchase-record/' + this.$i18n.locale
+      })
+    },
+    toTransfer() {
+      this.$router.push({
+        path: '/transfer-apply/' + this.$i18n.locale
+      })
+    },
+    toTransferRecord() {
+      this.$router.push({
+        path: '/transfer-record/' + this.$i18n.locale
       })
     },
     toRedeemRecord() {

@@ -11,6 +11,8 @@ const NoticeItem = () => import('components/notice-item/notice-item')
 const NoticeDetail = () => import('components/notice-detail/notice-detail')
 const Purchase = () => import('components/purchase/purchase')
 const ProductDetail = () => import('components/product-detail/product-detail')
+const TransferApply = () => import('components/transfer-apply/transfer-apply')
+const TransferRecord = () => import('components/transfer-record/transfer-record')
 const PurchaseRecord = () => import('components/purchase-record/purchase-record')
 const AddApply = () => import('components/add-apply/add-apply')
 const EditApply = () => import('components/edit-apply/edit-apply')
@@ -91,6 +93,22 @@ const router = new Router({
         requireAuth: true
       },
       component: ProductDetail
+    },
+    {
+      path: '/transfer-apply/:lang',
+      name: 'transferApply',
+      meta: {
+        requireAuth: true
+      },
+      component: TransferApply
+    },
+    {
+      path: '/transfer-record/:lang',
+      name: 'transferRecord',
+      meta: {
+        requireAuth: true
+      },
+      component: TransferRecord
     },
     {
       path: '/purchase-record/:lang',

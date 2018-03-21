@@ -58,6 +58,7 @@
     background: #ff5251;
     color: #fff;
     width: 100%;
+    z-index: 999;
     .back,.close{
       position: absolute;
       width: 50px;

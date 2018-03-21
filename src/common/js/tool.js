@@ -1,3 +1,5 @@
+import crypto from 'crypto'
+
 // 截取年月日
 export function _normalizeDate(date) {
   return date.substr(0, 10)
@@ -88,4 +90,13 @@ export function renderPage(pdf, numPages, currPage) {
       return renderPage(pdf, numPages, currPage)
     }
   })
+}
+
+export function getMd5() {
+  const timestamp = new Date().getTime()
+  const key = 'zhiyuancp'
+  const str = `${timestamp}${key}`
+  const md5 = crypto.createHash('md5')
+  md5.update(str)
+  return md5.digest('hex')
 }

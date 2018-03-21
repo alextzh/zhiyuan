@@ -6,11 +6,17 @@ import store from './store'
 import fastclick from 'fastclick'
 import AMap from 'vue-amap'
 import i18n from './language'
-import 'common/js/browser'
+import {post, fetch, patch, put} from 'common/js/api'
+// import 'common/js/browser'
 
 import 'common/css/index.css'
 
 fastclick.attach(document.body)
+
+Vue.prototype.$post = post
+Vue.prototype.$fetch = fetch
+Vue.prototype.$patch = patch
+Vue.prototype.$put = put
 
 Vue.use(AMap)
 // 初始化vue-amap
