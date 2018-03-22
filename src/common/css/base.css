@@ -54,3 +54,7 @@ input[type="button"],
 button {  
   -webkit-appearance: none !important;
 }
+.weui-btn_disabled.weui-btn_primary{color:hsla(0,0%,100%,.6)}
+button[disabled] {
+  background-color: #a9a9a9!important;
+}

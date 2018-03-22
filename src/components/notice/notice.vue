@@ -31,6 +31,7 @@
   import $ from 'jquery'
   import Navbar from 'base/navbar/navbar'
   import * as API from 'common/js/http'
+  import {getMd5} from 'common/js/tool'
   import 'weui'
   import weui from 'weui.js'
 
@@ -68,9 +69,11 @@
         $.ajax({
           type: 'POST',
           url: API.api + '/api/v1/notice/caption',
-          dataType: 'jsonp',
+          dataType: 'json',
           headers: {
-            'content-type': 'application/x-www-form-urlencoded'
+            'content-type': 'application/x-www-form-urlencoded',
+            'secret_key': getMd5(),
+            'time_stamp': new Date().getTime()
           },
           success: (res) => {
             if (!res.ret) {

@@ -96,7 +96,7 @@
 <script type="text/ecmascript-6">
   import Navbar from 'base/navbar/navbar'
   import {getUserInfo, getProduct} from 'common/js/storage'
-  import {_normalizeStr} from 'common/js/tool'
+  import {_normalizeStr, getMd5} from 'common/js/tool'
   import $ from 'jquery'
   import * as API from 'common/js/http'
   import Plan from 'common/js/plan'
@@ -180,9 +180,11 @@
             base_product_id: bid
           },
           async: false,
-          dataType: 'jsonp',
+          dataType: 'json',
           headers: {
-            'content-type': 'application/x-www-form-urlencoded'
+            'content-type': 'application/x-www-form-urlencoded',
+            'secret_key': getMd5(),
+            'time_stamp': new Date().getTime()
           },
           success: (res) => {
             var list = res.obj.list.reverse()
@@ -327,9 +329,11 @@
             target_product_id: target_product_id,
             eidt_money: purchaseAmt * 10000
           },
-          dataType: 'jsonp',
+          dataType: 'json',
           headers: {
-            'content-type': 'application/x-www-form-urlencoded'
+            'content-type': 'application/x-www-form-urlencoded',
+            'secret_key': getMd5(),
+            'time_stamp': new Date().getTime()
           },
           success: (res) => {
             if (!res.ret) {

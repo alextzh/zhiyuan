@@ -111,7 +111,7 @@
   import $ from 'jquery'
   import Scroll from 'base/scroll/scroll'
   import Navbar from 'base/navbar/navbar'
-  import {rendererZhMoneyWan, _normalizeDate} from 'common/js/tool'
+  import {rendererZhMoneyWan, _normalizeDate, getMd5} from 'common/js/tool'
   import * as API from 'common/js/http'
   import {getUserInfo, setProduct} from 'common/js/storage'
   import 'weui'
@@ -186,9 +186,11 @@
           type: 'POST',
           url: API.api + '/api/v1/subscribe/allByCustomerId',
           data: this.pageData,
-          dataType: 'jsonp',
+          dataType: 'json',
           headers: {
-            'content-type': 'application/x-www-form-urlencoded'
+            'content-type': 'application/x-www-form-urlencoded',
+            'secret_key': getMd5(),
+            'time_stamp': new Date().getTime()
           },
           success: (res) => {
             if (!res.ret) {
@@ -285,9 +287,11 @@
                 data: {
                   account_id: account_id
                 },
-                dataType: 'jsonp',
+                dataType: 'json',
                 headers: {
-                  'content-type': 'application/x-www-form-urlencoded'
+                  'content-type': 'application/x-www-form-urlencoded',
+                  'secret_key': getMd5(),
+                  'time_stamp': new Date().getTime()
                 },
                 success: (res) => {
                   if (!res.ret) {
@@ -346,9 +350,11 @@
                   customer_id: customer_id,
                   subscribe_id: subscribe_id
                 },
-                dataType: 'jsonp',
+                dataType: 'json',
                 headers: {
-                  'content-type': 'application/x-www-form-urlencoded'
+                  'content-type': 'application/x-www-form-urlencoded',
+                  'secret_key': getMd5(),
+                  'time_stamp': new Date().getTime()
                 },
                 success: (res) => {
                   if (!res.ret) {

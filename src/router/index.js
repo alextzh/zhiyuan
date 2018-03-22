@@ -229,7 +229,7 @@ const router = new Router({
       component: SignContract
     },
     {
-      path: '/weixin',
+      path: '/weixin/:lang',
       name: 'weixin',
       component: Weixin
     },

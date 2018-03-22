@@ -68,7 +68,18 @@ export default {
     tip6: '您確認要申購當前產品為',
     tip7: '申購遞增份額為1萬份',
     tip8: '您確認要修改申購份額為',
-    purchaseBtnTxt: '申購'
+    tip9: '請輸入划款份額',
+    tip10: '划款遞增份額為1份',
+    tip11: '最大划款份額為100000萬份',
+    tip12: '您確定要划款 ',
+    tip13: ' 份額嗎',
+    tip14: '划款提示',
+    tip15: '請輸入划款備註(選填)',
+    purchaseBtnTxt: '申購',
+    transferShare: '划款份額',
+    transferNote: '划款備註',
+    transferBtnTxt: '申請划款',
+    transferChannel: '划款渠道'
   },
 
   purchaseRecord: {

@@ -89,6 +89,7 @@
 import $ from 'jquery'
 import * as API from 'common/js/http'
 import {getUserInfo} from 'common/js/storage'
+import {getMd5} from 'common/js/tool'
 import 'weui'
 import weui from 'weui.js'
 
@@ -129,9 +130,11 @@ export default {
         data: {
           customer_id: customer_id
         },
-        dataType: 'jsonp',
+        dataType: 'json',
         headers: {
-          'content-type': 'application/x-www-form-urlencoded'
+          'content-type': 'application/x-www-form-urlencoded',
+          'secret_key': getMd5(),
+          'time_stamp': new Date().getTime()
         },
         success: (res) => {
           if (!res.ret) {

@@ -2,46 +2,6 @@
   <transition name="slide">
     <div class="box">
       <navbar :title="$t('navigator.transferApply')" @back="back" :showClose="showClose"></navbar>
-      <div class="content" v-if="currentProduct">
-        <div class="item_head">
-          <i class="iconfont icon-item"></i>
-          <span class="title">{{currentProduct.name}}</span>
-        </div>
-        <div class="item_body">
-          <div class="item__left">
-            <span>{{$t('purchase.productType')}}：</span>
-            <span class="new_data">{{currentProduct.type}}</span>
-          </div>
-          <div class="item__right" style="text-align:right;">
-            <span style="flex:1;">{{$t('purchase.productStatus')}}：</span>
-            <span class="all_data" style="flex:0 auto;">{{currentProduct.status}}</span>
-          </div>
-        </div>
-        <div class="item_body">
-          <div class="item__left">
-            <span>{{$t('purchase.minShare')}}：</span>
-            <span class="new_data">{{currentProduct.start_money / 10000}}万份</span>
-          </div>
-          <div class="item__right" style="text-align:right;">
-            <span style="flex:1;">{{$t('purchase.increasingShare')}}：</span>
-            <span class="all_data" style="flex:0 auto;">1万份</span>
-          </div>
-        </div>
-        <div class="item_foot" v-if="currentProduct.status !== '操盘中'">
-          <span>{{$t('purchase.purchaseTime')}}：</span>
-          <span>{{currentProduct.sg_start_time}} <span style="color:#ff5251;">~</span> {{currentProduct.sg_end_time}}</span>
-        </div>
-        <div class="item_foot">
-          <span>{{$t('purchase.diskTime')}}：</span>
-          <span>{{currentProduct.caopan_time}}</span>
-        </div>
-        <div class="item_foot" style="display: flex;" v-if="currentProduct.describe">
-          <span>{{$t('purchase.productIntroduction')}}：</span>
-          <div style="flex: 1;">
-            <span style="line-height: 1;">{{currentProduct.describe}}</span>
-          </div>
-        </div>
-      </div>
       <div style="padding: 10px;width: 100%;box-sizing: border-box;margin-top:50px;" v-if="!hasData">
         <div class="form_box">
           <form class="form_area" method="post" @submit.prevent="formSubmit()">
@@ -105,15 +65,29 @@
               </div>
             </div>
             <div style="padding: 0 10px;">
-              <div class="input_area">
-                <div class="input_title">{{$t('purchase.bidShare')}}：</div>
-                <div class="input_con">
-                  <input type="number" v-model="purchaseAmt" :placeholder="$t('purchase.tip1')" />
-                  <span class='unit'>万份</span>
+              <div class="select_type" v-if="pickerArr.length > 1">
+                <i class="iconfont icon-unfold"></i>
+                <span class="type_title">{{$t('purchase.transferChannel')}}：</span>
+                <input type="text" palceholder="请选择划款渠道" @click="selectChannel" readonly :value="currentChannel.label" />
+              </div>
+              <div class="input_area" style="height:auto;">
+                <div class="input_form">
+                  <i class="iconfont icon-redeemed"></i>
+                  <span class='unit'>份</span>
+                  <input type="number" v-model="purchaseAmt" :placeholder="$t('purchase.tip9')" />
+                </div>
+              </div>
+              <div class="input_area" style="height:auto;margin-top:10px;">
+                <div class="input_con" style="height:auto;">
+                  <div class="weui-cell editbox">
+                    <div class="weui-cell__bd">
+                      <textarea class="weui-textarea" v-model="describe" :placeholder="$t('purchase.tip15')" rows="3"></textarea>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="btn_area">
-                <button type="submit" :disabled="btnDisabled" :class="{'weui-btn_disabled': btnDisabled}" class="weui-btn weui-btn_primary"><i :class="{'weui-loading': btnLoading}"></i>{{purchaseBtnTxt}}</button>
+                <button type="submit" :disabled="btnDisabled" :class="{'weui-btn_disabled': btnDisabled}" class="weui-btn weui-btn_primary"><i :class="{'weui-loading': btnLoading}"></i>{{transferBtnTxt}}</button>
               </div>
             </div>
           </form>
@@ -131,7 +105,7 @@
 <script type="text/ecmascript-6">
   import Navbar from 'base/navbar/navbar'
   import {getUserInfo} from 'common/js/storage'
-  import {rendererZhMoneyWan, _normalizeDate, _normalizeStr} from 'common/js/tool'
+  import {rendererZhMoneyWan, _normalizeDate, _normalizeStr, getMd5} from 'common/js/tool'
   import $ from 'jquery'
   import * as API from 'common/js/http'
   import Plan from 'common/js/plan'
@@ -146,38 +120,40 @@
         pickerArr: [],
         curValue: '',
         currentPlan: null,
-        currentProduct: null,
         customer_id: '',
         purchaseAmt: '',
         btnLoading: false,
         btnDisabled: false,
-        hasData: false
+        hasData: false,
+        describe: '',
+        channelArr: [{type: 'VIP', label: 'VIP账户', value: 0}, {type: 'YHKZC', label: '银行卡转账', value: 1}],
+        currentChannel: null
       }
     },
     computed: {
-      purchaseBtnTxt() {
-        return this.$i18n.t('purchase.purchaseBtnTxt')
+      transferBtnTxt() {
+        return this.$i18n.t('purchase.transferBtnTxt')
       },
       tip() {
         return this.$i18n.t('common.tip')
       },
       tip1() {
-        return this.$i18n.t('purchase.tip1')
+        return this.$i18n.t('purchase.tip9')
       },
       tip2() {
-        return this.$i18n.t('purchase.tip2')
+        return this.$i18n.t('purchase.tip11')
       },
       tip3() {
-        return this.$i18n.t('purchase.tip3')
+        return this.$i18n.t('purchase.tip10')
       },
       tip4() {
-        return this.$i18n.t('purchase.tip4')
+        return this.$i18n.t('purchase.tip12')
       },
       tip5() {
-        return this.$i18n.t('purchase.tip5')
+        return this.$i18n.t('purchase.tip14')
       },
       tip6() {
-        return this.$i18n.t('purchase.tip6')
+        return this.$i18n.t('purchase.tip13')
       },
       netWork() {
         return this.$i18n.t('common.network')
@@ -192,6 +168,7 @@
     created() {
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
       this.customer_id = getUserInfo().id
+      this.currentChannel = this.channelArr[0]
     },
     mounted() {
       this.$nextTick(() => {
@@ -206,37 +183,47 @@
        * 获取申请划款可以选择的项目
       */
       getSubProductList() {
-        this.$post('/api/v1/deduct/productList').then((res) => {
-          console.log(res)
-          if (!res.ret) {
-            weui.toast(res.msg, {
+        $.ajax({
+          type: 'POST',
+          url: API.api + '/api/v1/deduct/productList',
+          dataType: 'json',
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'secret_key': getMd5(),
+            'time_stamp': new Date().getTime()
+          },
+          success: (res) => {
+            if (!res.ret) {
+              weui.toast(res.msg, {
+                duration: 1500
+              })
+              this.hasData = true
+              return false
+            }
+            var list = res.obj.reverse()
+            var pickerArr = []
+            var showArr = list
+            if (showArr.length > 0) {
+              showArr.forEach((item, index) => {
+                item.settlement_time = _normalizeStr(item.settlement_time)
+                pickerArr.push(new Plan({
+                  label: item.name,
+                  value: index
+                }))
+              })
+              this.pickerArr = pickerArr
+              this.showArr = showArr
+              this.currentPlan = showArr[0]
+              this.curValue = pickerArr[0].label
+              this.hasData = false
+            }
+          },
+          error: (err) => {
+            console.log(err)
+            weui.toast(this.netWork, {
               duration: 1500
             })
-            this.hasData = true
-            return false
           }
-          var list = res.obj.reverse()
-          var pickerArr = []
-          var showArr = list
-          if (showArr.length > 0) {
-            showArr.forEach((item, index) => {
-              item.settlement_time = _normalizeStr(item.settlement_time)
-              pickerArr.push(new Plan({
-                label: item.name,
-                value: index
-              }))
-            })
-            this.pickerArr = pickerArr
-            this.showArr = showArr
-            this.currentPlan = showArr[0]
-            this.curValue = pickerArr[0].label
-            this.hasData = false
-          }
-        }).catch(err => {
-          console.log(err)
-          weui.toast(this.netWork, {
-            duration: 1500
-          })
         })
       },
       _normalizeList(list) {
@@ -248,18 +235,23 @@
             list[i].expect_quota = rendererZhMoneyWan(list[i].expect_quota)
             list[i].sg_start_time = _normalizeDate(list[i].sg_start_time)
             list[i].sg_end_time = _normalizeDate(list[i].sg_end_time)
-            list[i].settlement_time = this._normalizeStr(list[i].settlement_time)
+            list[i].settlement_time = _normalizeStr(list[i].settlement_time)
           }
           return list
         }
       },
-      _normalizeStr(str) {
-        str = str || ''
-        const arr = str.split(',')
-        const newArr = arr.map(item => {
-          return item
+      // 选择渠道
+      selectChannel() {
+        weui.picker(this.channelArr, {
+          container: 'body',
+          defaultValue: [0],
+          onChange: (result) => {
+            console.log('change' + result)
+          },
+          onConfirm: (result) => {
+            this.currentChannel = this.channelArr[result]
+          }
         })
-        return newArr
       },
       // 方案选择
       selectPlan() {
@@ -280,7 +272,7 @@
         var that = this
         const param = this.purchaseAmt
         if (this.checkPurchase(that, param)) {
-          weui.confirm(`${this.tip6}${param}万份?`, {
+          weui.confirm(`${this.tip4}${param}${this.tip6}`, {
             title: this.tip5,
             buttons: [{
               label: this.cancel,
@@ -300,12 +292,9 @@
           })
         }
       },
-      // 校验申购金额
+      // 校验划款份额
       checkPurchase: (that, param) => {
         var amt = param
-        var curPlan = that.currentPlan
-        var min = curPlan.min_money / 10000
-        var step = curPlan.step_money / 10000
         if (!amt) {
           weui.alert(that.tip1, {
             title: that.tip,
@@ -316,8 +305,8 @@
             }]
           })
           return false
-        } else if (amt < min) {
-          weui.alert(`${that.tip2}${min}万份`, {
+        } else if (amt > 1000000000) {
+          weui.alert(that.tip2, {
             title: that.tip,
             buttons: [{
               label: that.confirm,
@@ -326,18 +315,8 @@
             }]
           })
           return false
-        } else if (amt > 100000) {
+        } else if (amt % 1 !== 0) {
           weui.alert(that.tip3, {
-            title: that.tip,
-            buttons: [{
-              label: that.confirm,
-              type: 'primary',
-              onClick: () => { console.log('ok') }
-            }]
-          })
-          return false
-        } else if (amt % step !== 0) {
-          weui.alert(`${that.tip4}${step}万份`, {
             title: that.tip,
             buttons: [{
               label: that.confirm,
@@ -351,23 +330,26 @@
         }
       },
       /**
-       * 提交申购金额
+       * 提交划款份额
       */
       mySubmit: (that, param) => {
         var product_id = that.currentPlan.id
-        var purchaseAmt = parseInt(param)
+        var transferAmt = parseInt(param)
         $.ajax({
           type: 'POST',
-          url: API.api + '/api/v1/subscribe/addApply',
+          url: API.api + '/api/v1/deduct/apply',
           data: {
             product_id: product_id,
             customer_id: that.customer_id,
-            source: 'wx_xcx',
-            subscribe_money: purchaseAmt * 10000
+            deduct_money: transferAmt,
+            describe: that.describe,
+            channel: that.currentChannel.type
           },
-          dataType: 'jsonp',
+          dataType: 'json',
           headers: {
-            'content-type': 'application/x-www-form-urlencoded'
+            'content-type': 'application/x-www-form-urlencoded',
+            'secret_key': getMd5(),
+            'time_stamp': new Date().getTime()
           },
           success: (res) => {
             if (!res.ret) {
@@ -412,27 +394,6 @@
   top: 0;
   bottom: 0;
   width: 100%;
-}
-.content {
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  padding:65px 15px 5px;
-  box-sizing:border-box;
-}
-.item_head{
-  position: relative;
-  line-height:30px;
-  padding-bottom:10px;
-}
-.item_head i{
-  color: #ff5251;
-  font-size: 18px;
-}
-.item_head .title{
-  padding-left: 10px;
-  font-size: 18px;
-  color: #212121;
 }
 .item_body{
   display: flex;
@@ -506,6 +467,29 @@
   flex: 0 1 auto;
   font-size: 14px;
 }
+.input_form{
+  position:relative;
+  box-sizing:border-box;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.input_form i{
+  font-size:18px;
+  position:absolute;
+  left:0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ff5251;
+}
+.input_form .unit{
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ff5251;
+}
 .input_con {
   display:flex;
   box-sizing:border-box;
@@ -516,6 +500,18 @@
 .input_con .unit {
   flex:0 1 auto;
   color:#ff5251;
+}
+.input_form input{
+  height:50px;
+  line-height:16px;
+  padding:17px 25px;
+  font-size: 16px;
+  flex:1;
+  border-radius: 0;
+  border-bottom:1px solid #BDBDBD;
+  box-sizing: border-box;
+  background: #fff;
+  outline: none;
 }
 .input_con input {
   position:relative;
@@ -530,6 +526,12 @@
 .btn_area{
   margin-top: 15px;
   padding:0 10px;
+}
+.editbox{
+  width: 100%;
+  border: 1px solid #BDBDBD;
+  padding: 5px;
+  box-sizing: border-box;
 }
 .noData{
   position: absolute;

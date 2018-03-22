@@ -15,7 +15,7 @@ if (system.win || system.mac || system.xll) {
     // 这里警告框会阻塞当前页面继续加载
     weui.alert('请使用移动端访问！', () => {
       // 以下代码是用javascript强行关闭当前页面
-      var opened = window.open('https://abc0pgqi.zhiyuancaopan.com/#/weixin', '_self') // https://abc0pgqi.zhiyuancaopan.com/#/weixin or https://test123.zhiyuancaopan.com/#/weixin
+      var opened = window.open('https://abc0pgqi.zhiyuancaopan.com/#/weixin/' + this.$i18n.locale, '_self') // https://abc0pgqi.zhiyuancaopan.com/#/weixin or https://test123.zhiyuancaopan.com/#/weixin
       opened.opener = null
       opened.close()
     }, {

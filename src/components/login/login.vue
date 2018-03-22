@@ -29,6 +29,7 @@
   import $ from 'jquery'
   import * as API from 'common/js/http'
   import {setUserInfo, setPosition, getPosition} from 'common/js/storage'
+  import {getMd5} from 'common/js/tool'
   import 'weui'
   import weui from 'weui.js'
 
@@ -169,10 +170,12 @@
           type: 'POST',
           url: API.api + '/api/v1/login',
           data: userInfo,
-          dataType: 'jsonp',
+          dataType: 'json',
           asyn: false,
           headers: {
-            'content-type': 'application/x-www-form-urlencoded'
+            'content-type': 'application/x-www-form-urlencoded',
+            'secret_key': getMd5(),
+            'time_stamp': new Date().getTime()
           },
           success: (data) => {
             if (!data.ret) {
@@ -192,9 +195,11 @@
                 latitude: getPosition().lat,
                 longitude: getPosition().lng
               },
-              dataType: 'jsonp',
+              dataType: 'json',
               headers: {
-                'content-type': 'application/x-www-form-urlencoded'
+                'content-type': 'application/x-www-form-urlencoded',
+                'secret_key': getMd5(),
+                'time_stamp': new Date().getTime()
               },
               success: (res) => {
                 if (!res.ret) {

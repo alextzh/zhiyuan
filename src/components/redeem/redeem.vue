@@ -66,6 +66,7 @@
   import $ from 'jquery'
   import Navbar from 'base/navbar/navbar'
   import {getUserInfo, getProduct} from 'common/js/storage'
+  import {getMd5} from 'common/js/tool'
   import * as API from 'common/js/http'
   import 'weui'
   import weui from 'weui.js'
@@ -209,9 +210,11 @@
             customer_id: customer_id,
             redeem_money: redeemAmt * 10000
           },
-          dataType: 'jsonp',
+          dataType: 'json',
           headers: {
-            'content-type': 'application/x-www-form-urlencoded'
+            'content-type': 'application/x-www-form-urlencoded',
+            'secret_key': getMd5(),
+            'time_stamp': new Date().getTime()
           },
           success: (res) => {
             if (!res.ret) {
