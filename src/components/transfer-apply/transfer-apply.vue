@@ -2,7 +2,7 @@
   <transition name="slide">
     <div class="box">
       <navbar :title="$t('navigator.transferApply')" @back="back" :showClose="showClose"></navbar>
-      <div style="padding: 10px;width: 100%;box-sizing: border-box;margin-top:50px;" v-if="!hasData">
+      <div style="padding: 10px;width: 100%;box-sizing: border-box;margin-top:50px;" v-if="showArr.length > 0">
         <div class="form_box">
           <form class="form_area" method="post" @submit.prevent="formSubmit()">
             <div style="padding: 0 10px;">
