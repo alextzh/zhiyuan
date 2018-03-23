@@ -48,55 +48,56 @@ export function _normalizeStr(str) {
   return newArr
 }
 
-export async function renderPageAsync(pdf, numPages, currPage) {
-  for (var i = 1; i <= numPages; i++) {
-    const page = await pdf.getPage(i)
-    const scale = 1.5
-    const viewport = page.getViewport(scale)
-    const box = document.getElementById('box')
-    const canvas = document.createElement('canvas')
-    const context = canvas.getContext('2d')
-    box.appendChild(canvas)
-    canvas.height = viewport.height
-    canvas.width = viewport.width
-    // Render PDF page into canvas context.
-    const renderContext = {
-      canvasContext: context,
-      viewport: viewport
-    }
-    page.render(renderContext)
-  }
-}
-
-export function renderPage(pdf, numPages, currPage) {
-  pdf.getPage(currPage++).then(page => {
-    console.log(page)
-    var scale = 1.5
-    var viewport = page.getViewport(scale)
-    var box = document.getElementById('box')
-    var canvas = document.createElement('canvas')
-    var context = canvas.getContext('2d')
-    box.appendChild(canvas)
-    canvas.height = viewport.height
-    canvas.width = viewport.width
-    // Render PDF page into canvas context.
-    var renderContext = {
-      canvasContext: context,
-      viewport: viewport
-    }
-    page.render(renderContext)
-    // next
-    if (currPage <= numPages) {
-      return renderPage(pdf, numPages, currPage)
-    }
-  })
-}
-
 export function getMd5() {
-  const timestamp = new Date().getTime()
+  const timestamp = getBJDate().getTime()
   const key = 'zhiyuancp'
   const str = `${timestamp}${key}`
   const md5 = crypto.createHash('md5')
   md5.update(str)
   return md5.digest('hex')
+}
+
+export function time_range(beginTime, endTime) {
+  var strb = beginTime.split(':')
+  if (strb.length !== 2) {
+    return false
+  }
+
+  var stre = endTime.split(':')
+  if (stre.length !== 2) {
+    return false
+  }
+
+  var b = getBJDate()
+  var e = getBJDate()
+  var n = getBJDate()
+
+  b.setHours(strb[0])
+  b.setMinutes(strb[1])
+  e.setHours(stre[0])
+  e.setMinutes(stre[1])
+
+  if (n.getTime() - b.getTime() > 0 && n.getTime() - e.getTime() < 0) {
+    return true
+  } else {
+    return false
+  }
+}
+
+export function getBJDate() {
+  var d = new Date()
+  var currentDate = new Date()
+  var tmpHours = currentDate.getHours()
+  // 算得时区
+  var time_zone = -d.getTimezoneOffset() / 60
+  // 少于0的是西区 西区应该用时区绝对值加京八区 重新设置时间（西区时间比东区时间早 所以加时区间隔）
+  if (time_zone < 0) {
+    time_zone = Math.abs(time_zone) + 8
+    currentDate.setHours(tmpHours + time_zone)
+  } else {
+    // 大于0的是东区  东区时间直接跟京八区相减
+    time_zone -= 8
+    currentDate.setHours(tmpHours - time_zone)
+  }
+  return currentDate
 }

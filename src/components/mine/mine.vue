@@ -31,18 +31,6 @@
             </div>
             <p class="weui-grid__label">{{$t('navigator.purchaseRecord')}}</p>
           </a>
-          <a href="javascript:;" class="weui-grid" @click="toTransfer">
-            <div class="weui-grid__icon">
-              <img src="./shengou.svg" alt="">
-            </div>
-            <p class="weui-grid__label">{{$t('navigator.transferApply')}}</p>
-          </a>
-          <a href="javascript:;" class="weui-grid" @click="toTransferRecord">
-            <div class="weui-grid__icon">
-              <img src="./shengoujilu.svg" alt="">
-            </div>
-            <p class="weui-grid__label">{{$t('navigator.transferRecord')}}</p>
-          </a>
           <a href="javascript:;" class="weui-grid" @click="toRedeemRecord">
             <div class="weui-grid__icon">
               <img src="./shuhuijilu.svg" alt="">
@@ -89,7 +77,7 @@
 import $ from 'jquery'
 import * as API from 'common/js/http'
 import {getUserInfo} from 'common/js/storage'
-import {getMd5} from 'common/js/tool'
+import {getMd5, getBJDate} from 'common/js/tool'
 import 'weui'
 import weui from 'weui.js'
 
@@ -134,7 +122,7 @@ export default {
         headers: {
           'content-type': 'application/x-www-form-urlencoded',
           'secret_key': getMd5(),
-          'time_stamp': new Date().getTime()
+          'time_stamp': getBJDate().getTime()
         },
         success: (res) => {
           if (!res.ret) {
@@ -159,16 +147,6 @@ export default {
     toPurchaseRecord() {
       this.$router.push({
         path: '/purchase-record/' + this.$i18n.locale
-      })
-    },
-    toTransfer() {
-      this.$router.push({
-        path: '/transfer-apply/' + this.$i18n.locale
-      })
-    },
-    toTransferRecord() {
-      this.$router.push({
-        path: '/transfer-record/' + this.$i18n.locale
       })
     },
     toRedeemRecord() {

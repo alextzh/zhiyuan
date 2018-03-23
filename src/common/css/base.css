@@ -8,6 +8,8 @@ body, html {
 }
 .weui-btn_primary {
   background: #ff5251!important;
+  border-radius: 2px!important;
+  line-height: 40px!important;
 }
 button{
   display: block;
@@ -54,7 +56,7 @@ input[type="button"],
 button {  
   -webkit-appearance: none !important;
 }
-.weui-btn_disabled.weui-btn_primary{color:hsla(0,0%,100%,.6)}
+.weui-btn_disabled.weui-btn_primary{color:#fff}
 button[disabled] {
-  background-color: #a9a9a9!important;
+  background-color: rgba(0,0,0,.2)!important;
 }

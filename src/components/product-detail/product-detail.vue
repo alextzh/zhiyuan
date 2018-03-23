@@ -126,7 +126,7 @@
 <script type="text/ecmascript-6">
   import Navbar from 'base/navbar/navbar'
   import {getUserInfo, getProduct} from 'common/js/storage'
-  import {_normalizeStr, getMd5} from 'common/js/tool'
+  import {_normalizeStr, getMd5, getBJDate} from 'common/js/tool'
   import $ from 'jquery'
   import * as API from 'common/js/http'
   import Plan from 'common/js/plan'
@@ -214,7 +214,7 @@
           headers: {
             'content-type': 'application/x-www-form-urlencoded',
             'secret_key': getMd5(),
-            'time_stamp': new Date().getTime()
+            'time_stamp': getBJDate().getTime()
           },
           success: (res) => {
             var list = res.obj.list.reverse()
@@ -258,7 +258,7 @@
           headers: {
             'content-type': 'application/x-www-form-urlencoded',
             'secret_key': getMd5(),
-            'time_stamp': new Date().getTime()
+            'time_stamp': getBJDate().getTime()
           },
           success: (res) => {
             if (!res.ret) {
@@ -384,7 +384,7 @@
           headers: {
             'content-type': 'application/x-www-form-urlencoded',
             'secret_key': getMd5(),
-            'time_stamp': new Date().getTime()
+            'time_stamp': getBJDate().getTime()
           },
           success: (res) => {
             if (!res.ret) {

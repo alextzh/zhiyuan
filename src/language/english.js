@@ -79,7 +79,7 @@ export default {
     transferShare: 'TransferShare',
     transferNote: 'TransferNote',
     transferBtnTxt: 'ApplyTransfer',
-    transferChannel: 'TransferChannel'
+    transferChannel: 'Channel'
   },
 
   purchaseRecord: {

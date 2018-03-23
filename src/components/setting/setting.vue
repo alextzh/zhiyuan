@@ -3,11 +3,23 @@
     <div class="box">
       <navbar :title="$t('navigator.setting')" @back="back" :showClose="showClose"></navbar>
       <div class="list">
+        <div class="item" @click="toTransfer()">
+          <i class="iconfont icon-tubiaolunkuo_huaban" style="color:#FF0000;"></i>
+          <span class="text">{{$t('navigator.transferApply')}}</span>
+          <i class="iconfont icon-goto fc999"></i>
+        </div>
+        <div class="item" @click="toTransferRecord()">
+          <i class="iconfont icon-record" style="color:#AB5EA2;"></i>
+          <span class="text">{{$t('navigator.transferRecord')}}</span>
+          <i class="iconfont icon-goto fc999"></i>
+        </div>
         <div class="item" @click="toModifyPwd()">
+          <i class="iconfont icon-config" style="color:#2196F3;"></i>
           <span class="text">{{$t('setting.modifyPwd')}}</span>
           <i class="iconfont icon-goto fc999"></i>
         </div>
         <div class="item" @click="toSwitchLanguage()">
+          <i class="iconfont icon-qiehuan" style="color:#ff5251;"></i>
           <span class="text">{{$t('setting.language')}}</span>
           <span class="value" >{{currentLanguage}}</span>
         </div>
@@ -82,6 +94,16 @@
               })
             }
           }]
+        })
+      },
+      toTransfer() {
+        this.$router.push({
+          path: '/transfer-apply/' + this.$i18n.locale
+        })
+      },
+      toTransferRecord() {
+        this.$router.push({
+          path: '/transfer-record/' + this.$i18n.locale
         })
       },
       toModifyPwd() {

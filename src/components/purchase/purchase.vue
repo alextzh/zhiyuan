@@ -64,7 +64,7 @@
   import $ from 'jquery'
   import Scroll from 'base/scroll/scroll'
   import Navbar from 'base/navbar/navbar'
-  import {rendererZhMoneyWan, _normalizeDate, getMd5} from 'common/js/tool'
+  import {rendererZhMoneyWan, _normalizeDate, getMd5, getBJDate} from 'common/js/tool'
   import * as API from 'common/js/http'
   import {setProduct, getUserInfo} from 'common/js/storage'
   import 'weui'
@@ -161,7 +161,7 @@
           headers: {
             'content-type': 'application/x-www-form-urlencoded',
             'secret_key': getMd5(),
-            'time_stamp': new Date().getTime()
+            'time_stamp': getBJDate().getTime()
           },
           success: (res) => {
             if (!res.ret) {
@@ -209,7 +209,7 @@
             headers: {
               'content-type': 'application/x-www-form-urlencoded',
               'secret_key': getMd5(),
-              'time_stamp': new Date().getTime()
+              'time_stamp': getBJDate().getTime()
             },
             success: (res) => {
               if (!res.ret) {

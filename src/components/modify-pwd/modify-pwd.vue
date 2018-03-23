@@ -32,7 +32,7 @@
   import Navbar from 'base/navbar/navbar'
   import * as API from 'common/js/http'
   import {getUserInfo} from 'common/js/storage'
-  import {getMd5} from 'common/js/tool'
+  import {getMd5, getBJDate} from 'common/js/tool'
   import 'weui'
   import weui from 'weui.js'
 
@@ -219,7 +219,7 @@
           headers: {
             'content-type': 'application/x-www-form-urlencoded',
             'secret_key': getMd5(),
-            'time_stamp': new Date().getTime()
+            'time_stamp': getBJDate().getTime()
           },
           success: (data) => {
             if (!data.ret) {
