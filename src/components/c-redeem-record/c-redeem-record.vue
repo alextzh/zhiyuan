@@ -1,49 +1,37 @@
 <template>
   <transition name="slide">
     <div class="m-container">
-      <navbar :title="$t('navigator.transferRecord')" :showClose="showClose" @back="back"></navbar>
+      <navbar title="赎回记录" :showClose="showClose" @back="back"></navbar>
       <div class="list">
         <scroll ref="scroll" class="scroll_list"
-                v-if="transferRecord.length > 0"
+                v-if="redeemRecord.length > 0"
                 :scrollbar="scrollbarObj"
                 :pullDownRefresh="pullDownRefreshObj"
                 :startY="parseInt(startY)"
                 @pullingDown="onPullingDown">
-          <li class="item-box" v-for="(item, index) in transferRecord" :key="index">
+          <li class="item-box" v-for="(item, index) in redeemRecord" :key="index">
             <div class="item">
               <div class="item_head">
                 <i class="iconfont icon-item"></i>
-                <span class="title">{{item.product_name}}</span>
-                <span class="item_state" style="color:#09B3CD;" v-if="item.status === 'SHTG'">审核通过</span>
-                <span class="item_state" style="color:#652D92;" v-if="item.status === 'DSH'">待审核</span>
-                <span class="item_state" style="color:#EB1C22;" v-if="item.status === 'GHJJ'">审核拒绝</span>
+                <span class="title">{{item.name}}</span>
               </div>
               <div class="item_body">
                 <div class="item__left">
-                  <span>{{$t('purchase.transferShare')}}：</span>
-                  <span class="new_data">{{item.deduct_money}}</span>
+                  <span>赎回数量：</span>
+                  <span class="new_data">{{item.sub_number}}个</span>
                 </div>
                 <div class="item__right" style="text-align:right;">
-                  <span style="flex:1;">{{$t('purchase.transferChannel')}}：</span>
-                  <span class="all_data" style="flex:0 auto;">{{item.channel}}</span>
+                  <span style="flex:1;">产品状态：</span>
+                  <span class="all_data" style="color: #652D92;flex:0 auto;" v-if="item.status === '待审核'">{{item.status}}</span>
+                  <span class="all_data" style="color: #09B3CD;flex:0 auto;" v-if="item.status === '审核通过'">{{item.status}}</span>
+                  <span class="all_data" style="color: #EB1C22;flex:0 auto;" v-if="item.status === '审核拒绝'">{{item.status}}</span>
+                  <span class="all_data" style="color: #262163;flex:0 auto;" v-if="item.status === '赎回待审核'">{{item.status}}</span>
+                  <span class="all_data" style="color: #2E3094;flex:0 auto;" v-if="item.status === '已赎回'">{{item.status}}</span>
                 </div>
               </div>
-              <div class="item_body">
-                <div class="item__left">
-                  <span>{{$t('redeemRecord.applyTime')}}：</span>
-                  <span class="new_data">{{item.create_time}}</span>
-                </div>
-              </div>
-              <div class="item_body">
-                <div class="item__left">
-                  <span>{{$t('purchase.transferNote')}}：</span>
-                  <span class="new_data">{{item.describe}}</span>
-                </div>
-              </div>
-              <div class="item_action" v-if="item.status === 'DSH'">
-                <div style="flex: 1;">
-                  <button class="redeemAllBtn" :disabled="btnDisabled" @click="cancelAction(item)">{{$t('purchase.cancelTransfer')}}</button>
-                </div>
+              <div class="item_foot">
+                <span>申请时间：</span>
+                <span>{{item.create_time}}</span>
               </div>
             </div>
           </li>
@@ -60,9 +48,9 @@
 
 <script type="text/ecmascript-6">
   import $ from 'jquery'
-  import Scroll from 'base/scroll/scroll'
+  import Scroll from 'base/c-scroll/c-scroll'
   import Navbar from 'base/navbar/navbar'
-  import {getMd5, getBJDate, time_range} from 'common/js/tool'
+  import {getMd5, getBJDate} from 'common/js/tool'
   import * as API from 'common/js/http'
   import {getUserInfo} from 'common/js/storage'
   import 'weui'
@@ -73,15 +61,17 @@
       return {
         showClose: false,
         loading: null,
-        transferRecord: [],
+        redeemRecord: [],
+        pageData: {
+          customer_id: ''
+        },
         scrollbar: true,
         scrollbarFade: true,
         pullDownRefresh: true,
         pullDownRefreshThreshold: 90,
         pullDownRefreshStop: 60,
         startY: 0,
-        hasData: false,
-        btnDisabled: false
+        hasData: false
       }
     },
     computed: {
@@ -93,50 +83,26 @@
           threshold: parseInt(this.pullDownRefreshThreshold),
           stop: parseInt(this.pullDownRefreshStop)
         } : false
-      },
-      netWork() {
-        return this.$i18n.t('common.network')
-      },
-      loadingTip() {
-        return this.$i18n.t('common.loading')
-      },
-      tip1() {
-        return this.$i18n.t('purchase.tip16')
       }
     },
     created() {
-      this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
-      this.loading = weui.loading(this.loadingTip)
-      this.customer_id = getUserInfo().id
-      this.isTransfer()
+      this.loading = weui.loading('加载中')
+      this.pageData.customer_id = getUserInfo().id
     },
     mounted() {
       setTimeout(() => {
-        this._getTransferRecord()
+        this._getRedeemRecord()
       }, 20)
-    },
-    destroyed() {
-      clearInterval(this.timer)
     },
     methods: {
       back() {
         this.$router.back()
       },
-      // 判断当前时间是否可以申请划款
-      isTransfer() {
-        if (time_range('09:00', '17:00')) {
-          this.btnDisabled = false
-        } else {
-          this.btnDisabled = true
-        }
-      },
-      _getTransferRecord() {
+      _getRedeemRecord() {
         $.ajax({
           type: 'POST',
-          url: API.api + '/api/v1/deduct/myDeducts',
-          data: {
-            customer_id: this.customer_id
-          },
+          url: API.api + '/api/v1/test/product/myRedeem',
+          data: this.pageData,
           dataType: 'json',
           headers: {
             'content-type': 'application/x-www-form-urlencoded',
@@ -157,7 +123,8 @@
             setTimeout(() => {
               this.loading.hide()
             }, 20)
-            this.transferRecord = res.rows
+            const list = res.obj
+            this.redeemRecord = list
             this.hasData = false
             setTimeout(() => {
               this.$refs.scroll.forceUpdate()
@@ -165,7 +132,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast(this.netWork, {
+            weui.toast('网络异常', {
               duration: 1500
             })
           }
@@ -173,61 +140,7 @@
       },
       onPullingDown() {
         // 更新数据
-        this._getTransferRecord()
-      },
-      // 取消划款申请
-      cancelAction(e) {
-        const transfer_id = e.id
-        weui.confirm(this.tip1, {
-          title: this.cancelTip,
-          buttons: [{
-            label: this.cancel,
-            type: 'default',
-            onClick: () => {
-              console.log('已取消')
-            }
-          }, {
-            label: this.confirm,
-            type: 'primary',
-            onClick: () => {
-              $.ajax({
-                type: 'POST',
-                url: API.api + '/api/v1/deduct/qxApply',
-                data: {
-                  id: transfer_id
-                },
-                dataType: 'json',
-                headers: {
-                  'content-type': 'application/x-www-form-urlencoded',
-                  'secret_key': getMd5(),
-                  'time_stamp': getBJDate().getTime()
-                },
-                success: (res) => {
-                  if (!res.ret) {
-                    weui.toast(res.msg, {
-                      duration: 1500
-                    })
-                    return false
-                  }
-                  weui.toast(res.msg, {
-                    duration: 1500
-                  })
-                  setTimeout(() => {
-                    this.$router.push({
-                      path: '/' + this.$i18n.locale
-                    })
-                  }, 1500)
-                },
-                error: (err) => {
-                  console.log(err)
-                  weui.toast(this.netWork, {
-                    duration: 1500
-                  })
-                }
-              })
-            }
-          }]
-        })
+        this._getRedeemRecord()
       }
     },
     components: {

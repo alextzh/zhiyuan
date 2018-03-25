@@ -1,4 +1,4 @@
-import crypto from 'crypto'
+import Md5 from './md5'
 
 // 截取年月日
 export function _normalizeDate(date) {
@@ -52,9 +52,7 @@ export function getMd5() {
   const timestamp = getBJDate().getTime()
   const key = 'zhiyuancp'
   const str = `${timestamp}${key}`
-  const md5 = crypto.createHash('md5')
-  md5.update(str)
-  return md5.digest('hex')
+  return Md5(str)
 }
 
 export function time_range(beginTime, endTime) {

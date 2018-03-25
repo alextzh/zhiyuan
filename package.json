@@ -13,11 +13,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "better-scroll": "^1.8.1",
-    "crypto": "^1.0.1",
     "fastclick": "^1.0.6",
     "good-storage": "^1.0.1",
     "jquery": "^3.3.1",
-    "pdfjs-dist": "^2.0.389",
     "vue": "^2.5.2",
     "vue-amap": "^0.4.5",
     "vue-router": "^3.0.1",

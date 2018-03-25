@@ -5,6 +5,14 @@ import {getUserInfo} from 'common/js/storage'
 
 // 懒加载路由模块导入
 const Login = () => import('components/login/login')
+const CLogin = () => import('components/c-login/c-login')
+const CMine = () => import('components/c-mine/c-mine')
+const CDetail = () => import('components/c-detail/c-detail')
+const CModifyPwd = () => import('components/c-modify-pwd/c-modify-pwd')
+const CPurchase = () => import('components/c-purchase/c-purchase')
+const CPurchaseRecord = () => import('components/c-purchase-record/c-purchase-record')
+const CRedeemRecord = () => import('components/c-redeem-record/c-redeem-record')
+const CSetting = () => import('components/c-setting/c-setting')
 const Mine = () => import('components/mine/mine')
 const Notice = () => import('components/notice/notice')
 const NoticeItem = () => import('components/notice-item/notice-item')
@@ -41,6 +49,60 @@ const router = new Router({
         requireAuth: true
       },
       component: Mine
+    },
+    {
+      path: '/c-mine',
+      meta: {
+        requireAuth: true
+      },
+      component: CMine
+    },
+    {
+      path: '/c-detail',
+      meta: {
+        requireAuth: true
+      },
+      component: CDetail
+    },
+    {
+      path: '/c-modify-pwd',
+      meta: {
+        requireAuth: true
+      },
+      component: CModifyPwd
+    },
+    {
+      path: '/c-purchase',
+      meta: {
+        requireAuth: true
+      },
+      component: CPurchase
+    },
+    {
+      path: '/c-purchase-record',
+      meta: {
+        requireAuth: true
+      },
+      component: CPurchaseRecord
+    },
+    {
+      path: '/c-redeem-record',
+      meta: {
+        requireAuth: true
+      },
+      component: CRedeemRecord
+    },
+    {
+      path: '/c-setting',
+      meta: {
+        requireAuth: true
+      },
+      component: CSetting
+    },
+    {
+      path: '/c-login',
+      name: 'c-login',
+      component: CLogin
     },
     {
       path: '/login/:lang',

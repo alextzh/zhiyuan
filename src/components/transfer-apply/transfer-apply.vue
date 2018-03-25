@@ -23,14 +23,14 @@
                   <span class="all_data" style="flex:0 auto;">{{currentPlan.max_amount}}</span>
                 </div>
               </div>
-              <div class="item_foot" style='display:flex'>
-                <span>{{$t('purchase.settlementTime')}}：</span>
-                <div style="flex:1;display:flex;flex-wrap:wrap;">
-                  <div style="display:flex;width:50%;" v-for="(t, i) in currentPlan.settlement_time" :key="i">
-                    <span style="flex:1">{{t}}</span>
-                  </div>
-                </div>
-              </div>
+              <!--<div class="item_foot" style='display:flex'>-->
+                <!--<span>{{$t('purchase.settlementTime')}}：</span>-->
+                <!--<div style="flex:1;display:flex;flex-wrap:wrap;">-->
+                  <!--<div style="display:flex;width:50%;" v-for="(t, i) in currentPlan.settlement_time" :key="i">-->
+                    <!--<span style="flex:1">{{t}}</span>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
               <div class="item_foot" style="display: flex;">
                 <span>{{$t('purchase.productDetail')}}：</span>
                 <div style="flex: 1;">
@@ -49,14 +49,14 @@
                   <span class="all_data" style="flex:0 auto;">{{currentPlan.max_amount}}</span>
                 </div>
               </div>
-              <div class="item_foot" style='display:flex'>
-                <span>{{$t('purchase.settlementTime')}}：</span>
-                <div style="flex:1;display:flex;flex-wrap:wrap;">
-                  <div style="display:flex;width:50%;" v-for="(t, i) in currentPlan.settlement_time" :key="i">
-                    <span style="flex:1">{{t}}</span>
-                  </div>
-                </div>
-              </div>
+              <!--<div class="item_foot" style='display:flex'>-->
+                <!--<span>{{$t('purchase.settlementTime')}}：</span>-->
+                <!--<div style="flex:1;display:flex;flex-wrap:wrap;">-->
+                  <!--<div style="display:flex;width:50%;" v-for="(t, i) in currentPlan.settlement_time" :key="i">-->
+                    <!--<span style="flex:1">{{t}}</span>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
               <div class="item_foot" style="display: flex;">
                 <span>{{$t('purchase.schemeDetail')}}：</span>
                 <div style="flex: 1;">
@@ -81,7 +81,7 @@
                 <div class="input_con" style="height:auto;">
                   <div class="weui-cell editbox">
                     <div class="weui-cell__bd">
-                      <textarea class="weui-textarea" v-model="describe" :placeholder="$t('purchase.tip15')" rows="3"></textarea>
+                      <textarea class="weui-textarea" v-model="describe" :placeholder="$t('purchase.tip15')" rows="5"></textarea>
                     </div>
                   </div>
                 </div>

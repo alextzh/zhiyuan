@@ -4,7 +4,7 @@
       <navbar :title="$t('navigator.setting')" @back="back" :showClose="showClose"></navbar>
       <div class="list">
         <div class="item" @click="toTransfer()">
-          <i class="iconfont icon-tubiaolunkuo_huaban" style="color:#FF0000;"></i>
+          <i class="iconfont icon-payment" style="color:#FF0000;"></i>
           <span class="text">{{$t('navigator.transferApply')}}</span>
           <i class="iconfont icon-goto fc999"></i>
         </div>
