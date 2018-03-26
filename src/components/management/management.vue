@@ -67,7 +67,7 @@
   import { mapMutations } from 'vuex'
 
   const u = navigator.userAgent
-  const website = 'http://ht.iysdd.com'
+  const website = 'https://ht.izycp.com'
 
   export default {
     data() {

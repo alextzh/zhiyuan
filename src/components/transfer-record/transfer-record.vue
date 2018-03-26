@@ -34,7 +34,7 @@
                   <span class="new_data">{{item.create_time}}</span>
                 </div>
               </div>
-              <div class="item_body">
+              <div class="item_body" v-if="item.describe">
                 <div class="item__left">
                   <span>{{$t('purchase.transferNote')}}：</span>
                   <span class="new_data">{{item.describe}}</span>
@@ -102,6 +102,15 @@
       },
       tip1() {
         return this.$i18n.t('purchase.tip16')
+      },
+      confirm() {
+        return this.$i18n.t('common.confirm')
+      },
+      cancel() {
+        return this.$i18n.t('common.cancel')
+      },
+      cancelTip() {
+        return this.$i18n.t('common.cancelTip')
       }
     },
     created() {
