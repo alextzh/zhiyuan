@@ -105,7 +105,7 @@
 <script type="text/ecmascript-6">
   import Navbar from 'base/navbar/navbar'
   import {getUserInfo} from 'common/js/storage'
-  import {rendererZhMoneyWan, _normalizeDate, _normalizeStr, getMd5, time_range, getBJDate} from 'common/js/tool'
+  import {rendererZhMoneyWan, _normalizeDate, _normalizeStr, getMd5, getBJDate, time_range} from 'common/js/tool'
   import $ from 'jquery'
   import * as API from 'common/js/http'
   import Plan from 'common/js/plan'
@@ -189,7 +189,7 @@
       },
       // 判断当前时间是否可以申请划款
       isTransfer() {
-        if (time_range('09:00', '17:00')) {
+        if (time_range('09:00', '17:30')) {
           this.btnDisabled = false
         } else {
           this.btnDisabled = true
