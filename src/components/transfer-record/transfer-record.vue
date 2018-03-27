@@ -62,7 +62,7 @@
   import $ from 'jquery'
   import Scroll from 'base/scroll/scroll'
   import Navbar from 'base/navbar/navbar'
-  import {getMd5, getBJDate, time_range} from 'common/js/tool'
+  import {getMd5, getBJDate} from 'common/js/tool'
   import * as API from 'common/js/http'
   import {getUserInfo} from 'common/js/storage'
   import 'weui'
@@ -117,28 +117,28 @@
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
       this.loading = weui.loading(this.loadingTip)
       this.customer_id = getUserInfo().id
-      this.isTransfer()
+      // this.isTransfer()
     },
     mounted() {
       setTimeout(() => {
         this._getTransferRecord()
       }, 20)
     },
-    destroyed() {
-      clearInterval(this.timer)
-    },
+    // destroyed() {
+    //   clearInterval(this.timer)
+    // },
     methods: {
       back() {
         this.$router.back()
       },
       // 判断当前时间是否可以申请划款
-      isTransfer() {
-        if (time_range('09:00', '17:30')) {
-          this.btnDisabled = false
-        } else {
-          this.btnDisabled = true
-        }
-      },
+      // isTransfer() {
+      //   if (time_range('09:00', '17:30')) {
+      //     this.btnDisabled = false
+      //   } else {
+      //     this.btnDisabled = true
+      //   }
+      // },
       _getTransferRecord() {
         $.ajax({
           type: 'POST',

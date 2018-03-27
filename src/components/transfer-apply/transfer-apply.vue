@@ -105,7 +105,7 @@
 <script type="text/ecmascript-6">
   import Navbar from 'base/navbar/navbar'
   import {getUserInfo} from 'common/js/storage'
-  import {rendererZhMoneyWan, _normalizeDate, _normalizeStr, getMd5, getBJDate, time_range} from 'common/js/tool'
+  import {rendererZhMoneyWan, _normalizeDate, _normalizeStr, getMd5, getBJDate} from 'common/js/tool'
   import $ from 'jquery'
   import * as API from 'common/js/http'
   import Plan from 'common/js/plan'
@@ -169,32 +169,31 @@
       this.$i18n.locale = this.$route.params.lang === 'zh' ? 'zh' : this.$route.params.lang === 'en' ? 'en' : 'tw'
       this.customer_id = getUserInfo().id
       this.currentChannel = this.channelArr[0]
-      this.isTransfer()
+      // this.isTransfer()
     },
     mounted() {
       this.$nextTick(() => {
         this.getSubProductList()
-        this.isTransfer()
-        this.timer = setInterval(() => {
-          this.isTransfer()
-        }, 1000)
+        // this.timer = setInterval(() => {
+        //   this.isTransfer()
+        // }, 1000)
       })
     },
-    destroyed() {
-      clearInterval(this.timer)
-    },
+    // destroyed() {
+    //   clearInterval(this.timer)
+    // },
     methods: {
       back() {
         this.$router.back()
       },
       // 判断当前时间是否可以申请划款
-      isTransfer() {
-        if (time_range('09:00', '17:30')) {
-          this.btnDisabled = false
-        } else {
-          this.btnDisabled = true
-        }
-      },
+      // isTransfer() {
+      //   if (time_range('09:00', '17:30')) {
+      //     this.btnDisabled = false
+      //   } else {
+      //     this.btnDisabled = true
+      //   }
+      // },
       /**
        * 获取申请划款可以选择的项目
       */
