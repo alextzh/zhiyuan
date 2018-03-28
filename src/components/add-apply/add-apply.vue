@@ -178,9 +178,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast(this.netWork, {
-              duration: 1500
-            })
+            weui.toast(this.netWork, 500)
           }
         })
       },
@@ -291,16 +289,12 @@
           },
           success: (res) => {
             if (!res.ret) {
-              weui.toast(res.msg, {
-                duration: 1500
-              })
+              weui.toast(res.msg, 500)
               this.btnDisabled = false
               this.btnLoading = false
               return false
             }
-            weui.toast(res.msg, {
-              duration: 1500
-            })
+            weui.toast(res.msg, 500)
             setTimeout(() => {
               this.btnDisabled = false
               this.btnLoading = false
@@ -311,9 +305,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast(this.netWork, {
-              duration: 1500
-            })
+            weui.toast(this.netWork, 500)
             this.btnDisabled = false
             this.btnLoading = false
           }

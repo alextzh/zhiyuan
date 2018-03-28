@@ -129,9 +129,7 @@
           },
           success: (res) => {
             if (!res.ret) {
-              weui.toast(res.msg, {
-                duration: 1500
-              })
+              weui.toast(res.msg, 500)
               this.hasData = true
               setTimeout(() => {
                 this.loading.hide()
@@ -151,9 +149,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
-              duration: 1500
-            })
+            weui.toast('网络异常', 500)
           }
         })
       },
@@ -177,9 +173,7 @@
             },
             success: (res) => {
               if (!res.ret) {
-                weui.toast(res.msg, {
-                  duration: 1500
-                })
+                weui.toast(res.msg, 500)
                 this.hasData = true
                 return false
               }
@@ -191,9 +185,7 @@
             },
             error: (err) => {
               console.log(err)
-              weui.toast('网络异常', {
-                duration: 1500
-              })
+              weui.toast('网络异常', 500)
             }
           })
         }

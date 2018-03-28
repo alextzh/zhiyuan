@@ -144,9 +144,7 @@
           },
           success: (data) => {
             if (!data.ret) {
-              weui.toast(data.msg, {
-                duration: 1500
-              })
+              weui.toast(data.msg, 500)
               this.loginBtnTxt = '登录'
               this.btnDisabled = false
               this.btnLoading = false
@@ -179,9 +177,7 @@
               }
             })
             setUserInfo(data.obj)
-            weui.toast(data.msg, {
-              duration: 1500
-            })
+            weui.toast(data.msg, 500)
             setTimeout(() => {
               this.loginBtnTxt = '登录'
               this.btnDisabled = false
@@ -193,9 +189,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
-              duration: 1500
-            })
+            weui.toast('网络异常', 500)
             this.loginBtnTxt = '登录'
             this.btnDisabled = false
             this.btnLoading = false

@@ -12,6 +12,7 @@ export function setUserInfo(obj) {
 export function getUserInfo() {
   return storage.session.get(USER_KEY, {})
 }
+
 export function setNotice(obj) {
   storage.session.set(NOTICE_KEY, obj)
 }

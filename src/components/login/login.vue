@@ -179,9 +179,7 @@
           },
           success: (data) => {
             if (!data.ret) {
-              weui.toast(data.msg, {
-                duration: 1500
-              })
+              weui.toast(data.msg, 500)
               this.btnDisabled = false
               this.btnLoading = false
               return false
@@ -213,9 +211,7 @@
               }
             })
             setUserInfo(data.obj)
-            weui.toast(data.msg, {
-              duration: 1500
-            })
+            weui.toast(data.msg, 500)
             setTimeout(() => {
               this.btnDisabled = false
               this.btnLoading = false
@@ -232,9 +228,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast(this.netWork, {
-              duration: 1500
-            })
+            weui.toast(this.netWork, 500)
             this.btnDisabled = false
             this.btnLoading = false
           }

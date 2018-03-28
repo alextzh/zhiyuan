@@ -116,9 +116,7 @@
           },
           success: (res) => {
             if (!res.ret) {
-              weui.toast(res.msg, {
-                duration: 1500
-              })
+              weui.toast(res.msg, 500)
               this.hasData = true
               setTimeout(() => {
                 this.loading.hide()
@@ -137,9 +135,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
-              duration: 1500
-            })
+            weui.toast('网络异常', 500)
           }
         })
       },
@@ -177,25 +173,19 @@
                 },
                 success: (res) => {
                   if (!res.ret) {
-                    weui.toast(res.msg, {
-                      duration: 1500
-                    })
+                    weui.toast(res.msg, 500)
                     return false
                   }
-                  weui.toast(res.msg, {
-                    duration: 1500
-                  })
+                  weui.toast(res.msg, 500)
                   setTimeout(() => {
                     this.$router.push({
                       path: '/c-mine'
                     })
-                  }, 1500)
+                  }, 500)
                 },
                 error: (err) => {
                   console.log(err)
-                  weui.toast('网络异常', {
-                    duration: 1500
-                  })
+                  weui.toast('网络异常', 500)
                 }
               })
             }

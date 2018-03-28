@@ -133,9 +133,7 @@ export default {
         },
         error: (err) => {
           console.log(err)
-          weui.toast(this.netWork, {
-            duration: 1500
-          })
+          weui.toast(this.netWork, 500)
         }
       })
     },

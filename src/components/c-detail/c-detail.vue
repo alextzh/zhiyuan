@@ -164,17 +164,13 @@
           },
           success: (res) => {
             if (!res.ret) {
-              weui.toast(res.msg, {
-                duration: 1500
-              })
+              weui.toast(res.msg, 500)
               that.purchaseBtnTxt = '申购'
               that.btnDisabled = false
               that.btnLoading = false
               return false
             }
-            weui.toast(res.msg, {
-              duration: 1500
-            })
+            weui.toast(res.msg, 500)
             setTimeout(() => {
               that.purchaseBtnTxt = '申购'
               that.btnDisabled = false
@@ -186,9 +182,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast('网络异常', {
-              duration: 1500
-            })
+            weui.toast('网络异常', 500)
             that.purchaseBtnTxt = '申购'
             that.btnDisabled = false
             that.btnLoading = false

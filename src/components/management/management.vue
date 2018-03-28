@@ -151,9 +151,7 @@
           },
           success: (res) => {
             if (!res.ret) {
-              weui.toast(res.msg, {
-                duration: 1500
-              })
+              weui.toast(res.msg, 500)
               this.hasData = true
               setTimeout(() => {
                 this.loading.hide()
@@ -172,9 +170,7 @@
           },
           error: (err) => {
             console.log(err)
-            weui.toast(this.netWork, {
-              duration: 1500
-            })
+            weui.toast(this.netWork, 500)
           }
         })
       },
